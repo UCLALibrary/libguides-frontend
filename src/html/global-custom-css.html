@@ -1,0 +1,371 @@
+<style type="text/css">
+header {
+    background-color: #0B6AB7;
+    margin: 0 auto 16px;
+    padding: 12px;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 0 auto;
+    max-width: 1170px;
+    width: 100%;
+}
+
+.logo {
+    align-self: center;
+}
+
+.logo a {
+    display: flex;
+}
+
+.logo .logo-ucla {
+    align-self: stretch;
+} 
+
+.links {
+    flex: 1;
+}
+
+.links ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.links li {
+    padding: 4px 16px;
+}
+
+.links a {
+    color: white;
+    font-size: 16px;
+}
+
+.links a:hover,
+.links a:focus {
+    color: white;
+}
+
+/* A-Z Databases */
+#s-lg-az-results .s-lg-az-result-title {
+    font-size: 16px;
+}
+
+.s-lg-az-result-description {
+    font-size: 14px;
+}
+
+.s-lib-box,
+.s-lib-profile-image img { 
+    box-shadow: none !important; 
+}
+</style>
+
+
+
+<link rel="shortcut icon" href="https://libapps.s3.amazonaws.com/customers/694/images/favicon.ico" />
+
+<style type="text/css">
+@font-face {
+    font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Regular.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Regular.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Semibold.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Semibold.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+figure {
+    display: inline-block;
+    border: 1px dotted gray;
+    margin: 20px; /* adjust as needed */
+}
+figure img {
+    vertical-align: top;
+}
+figure figcaption {
+    border: 1px dotted blue;
+    text-align: center;
+}
+
+</style>
+
+
+
+<!--  OLD
+<style type="text/css">
+@font-face{font-family:'AkzidenzGrotesk';src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdreg_0-webfont.eot);src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdreg_0-webfont.eot?#iefix) format('embedded-opentype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdreg_0-webfont.woff) format('woff'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdreg_0-webfont.ttf) format('truetype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdreg_0-webfont.svg#akzidenz-grotesk_stdregular) format('svg');font-weight:400;font-style:normal;}
+@font-face{font-family:'AkzidenzGrotesk';src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdmed_0-webfont.eot);src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdmed_0-webfont.eot?#iefix) format('embedded-opentype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdmed_0-webfont.woff) format('woff'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdmed_0-webfont.ttf) format('truetype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdmed_0-webfont.svg#akzidenz-grotesk_stdmedium) format('svg');font-weight:700;font-style:normal;}
+@font-face{font-family:'AkzidenzGrotesk';src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdlig_0-webfont.eot);src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdlig_0-webfont.eot?#iefix) format('embedded-opentype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdlig_0-webfont.woff) format('woff'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdlig_0-webfont.ttf) format('truetype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdlig_0-webfont.svg#akzidenz-grotesk_stdlight) format('svg');font-weight:100;font-style:normal;}
+@font-face{font-family:'AkzidenzGrotesk';src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdbol_0-webfont.eot);src:url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdbol_0-webfont.eot?#iefix) format('embedded-opentype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdbol_0-webfont.woff) format('woff'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdbol_0-webfont.ttf) format('truetype'),url(//s3.amazonaws.com/libapps/sites/705/include/akzidgrostdbol_0-webfont.svg#akzidenz-grotesk_stdbold) format('svg');font-weight:900;font-style:normal;}
+</style>
+-->
+
+
+<style type="text/css">
+/*! selected css from http://www.library.ucla.edu/sites/all/themes/uclalib_omega/css/uclalib-omega.normalize.css */
+body { margin: 0; font-family: "ProximaNova",sans-serif; font-size: 14px; color: #666; line-height: initial; }
+a { background: transparent; }
+a:active, a:hover { outline: 0; }
+a:focus, a:hover { color: #0B6AB7 }
+.menu a:focus, .menu a:hover { color: #FFFFFF; }
+h1 { font-size: 2em; margin: 0.67em 0; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+/*! manually added by SM */
+body { line-height: 1.5; }
+#s-lg-guide-tabs-title-bar { border-top: 1px solid #0B6AB7; }
+a { font-weight: 700; }
+.s-lg-book-props a { font-weight: 400; }
+.s-lg-book-title a { font-weight: 700; }
+.s-lg-book-prop-isbn { display: none; }
+.s-lg-guide-info-account a { font-weight: 400; }
+h3 { font-size: 16px; color: #666; font-weight: bold; margin-top: 10px; margin-bottom: 5px; }
+table th { font-size: 16px; color: #ffffff; font-weight: normal; }
+.top-head { margin-top: 0; }
+.s-lib-box .s-lib-box-title { font-size: 19px; font-weight: 100;}
+ul,ol { padding-left: 10px; margin-left: 10px; }
+.s-lg-link-list, .s-lg-system-list, .s-lg-rss-list { padding-left: 10px; }
+ul ul, ol ul, ul ol, ol ol { margin-bottom: 0px; margin-left: 20px; }
+.nav-tabs, .nav-pills a { font-size: 15px; font-weight: bold; }
+#s-lg-guide-name, #s-lib-public-header-title { font-size: 22px; color: #666666; font-weight: 700; }
+#s-lg-hp-nav { background: #eff3f4; }
+#s-lg-general-accordion { font-size: 14px; }
+.btn-info, .btn-info:hover, .btn-info:focus, .btn-info:active { background-color: #0B6AB7; border-color: #0B6AB7; }
+.label-info { color: #FFFFFF; background-color: #0B6AB7; font-size: 1.1em !important; }
+.l-colophon-wrapper { padding: 20px 0; }
+.page_title { color: #0B6AB7; font-size: 80%; display: none; }
+ul.s-lg-link-list {margin-bottom: 0px; }
+table th + th, table td + td { text-align: initial; }
+table th, table td { vertical-align: top; }
+blockquote { font-size: 15px; }
+</style>
+
+<style type="text/css">
+/*! hide subjects in profile boxes */
+.s-lib-profile-subjects { display: none; }
+/*! following statement intended to hide more info link on Databases, but not Links */
+[id^="s-lg-database-more-"], [id*=" s-lg-database-more-"] { display: none !important; }
+.s-lg-az-result .s-lg-label-moreinfo { display: none; }
+.s-lg-database-desc + .s-lg-label-moreinfo { display: none; }
+/*! make LibGuides footer same width and color as UCLA footer */
+#s-lib-footer-public { width: 100%; 
+//background: #ECECEC; 
+background: #ffffff;
+}
+</style>
+
+<!-- Add molecule background, gray header, breadcrumb style -->
+<style>
+.s-lg-guide-body, .s-lib-public-body { 
+//background: url("//www.library.ucla.edu/sites/all/themes/uclalib_omega/images/mol-bg.jpg") repeat scroll 0px 0px transparent; 
+margin: 0px; padding-left: 0px; padding-right: 0px; }
+.s-lib-header { padding-left: 10px; padding-right: 10px; 
+//background: #EFF3F4; 
+}
+#s-lg-guide-main, #s-lib-public-main, #s-lg-tabs-container { padding-left: 10px; padding-right: 10px; background: #FFFFFF; }
+.breadcrumb > li + li::before { color: #666; content: "» "; }
+#s-lib-admin-bc .breadcrumb li, #s-lib-bc .breadcrumb li { font-weight: 400; color: #666; font-size: 14px; }
+#s-lib-admin-bc .breadcrumb a, #s-lib-bc .breadcrumb a { font-weight: 400; }
+#s-lg-guide-desc-container { margin-bottom: 10px; padding-top: 0px; }
+#s-lg-guide-description { font-size: 14px; }
+</style>
+
+<style>
+/*! removes mouseover drop-down menus in the side navigation bar */
+.nav-pills .s-lg-subtab-ul.dropdown-menu li { display: none; visibility: hidden; }
+.nav-pills .s-lg-subtab-ul.dropdown-menu { display: none; visibility: hidden; }
+/*! remove update and views from subject and profile pages, but leave visible in popover */
+div#s-lg-profile-cols .s-lg-gmeta { display: none; visibility: hidden; }
+div#s-lg-sb-content-guides .s-lg-gmeta { display: none; visibility: hidden; }
+/*! change color of number badges in menu, make boxes and margins a bit smaller */
+.panel-default { border-color: #869FC1; }
+.panel-default > .panel-heading .badge { background-color: #0B6AB7; color: #FFFFFF; }
+div#s-lg-index-cols .panel-heading { background-color: #EFF3F4; font-size: 15px; padding: 8px 8px; font-weight: 700; }
+div#s-lg-index-cols .col-md-4 { padding-left 6px; padding-right: 6px; }
+.s-lg-gtitle a.bold { font-size: 14px; font-weight: 400; }
+div#s-lg-index-cols .alert-info a { font-size: 14px; font-weight: 400; }
+div#s-lg-index-cols ul.s-lg-guide-list { margin-left: 0px; padding-left: 10px; }
+.alert-info { color: #0B6AB7; }
+</style>
+
+<style>
+/* DEFAULT & INACTIVE TAB STYLES */
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+
+/* DEFAULT HOVER & FOCUS STYLES */
+.nav-tabs>li>a:hover {
+    border-color: #8bb8e8;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #8bb8e8;
+}
+
+/* EXAMPLE: Change tab font size & weight; make borders light gray. */
+.s-lib-jqtabs .nav-tabs > li > a {
+    font-size: 16px;
+    font-weight: bold;
+ background-color: #eaf2fb;
+    border: 1px solid #005587;
+}
+
+/* EXAMPLE: Change the tab hover color to light blue */
+.s-lib-jqtabs .nav-tabs>li>a:hover {
+    background-color: #ffd100;
+}
+/* DEFAULT ACTIVE TAB STYLES */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #ffd100;
+    border: 1px solid #fffd100;
+    border-bottom-color: transparent;
+}
+
+/* EXAMPLE: Change the tab font and background colors. */
+.s-lib-jqtabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #005587;
+    background-color: #ffd100;
+    border-color: #ffd100;
+}
+</style>
+
+<style type="text/css">
+/*! supports flex-columns */
+@media (min-width: 768px) {
+.flex-row {display: flex; flex-direction: row;}
+.s-lg-flex-col-side-nav {flex-basis: 25%; min-width: 25%; max-width: 25%;}
+.flex-grow-col {flex-grow: 6; flex-basis: 42%; width: auto; padding-left: 15px; padding-right: 15px;}
+.flex-shrink-col {width: auto; max-width: 33%; padding-left: 15px; padding-right: 15px;}
+}
+
+</style>
+
+<style>
+/*! support "CSS Tricks" */
+@media (min-width: 640px) { .box-in-box { width: 50%; float: right; margin-left: 15px; } }
+.box-in-box { border: 0px solid #BCCADC; padding: 10px 10px 0px 10px; margin-bottom: 5px; background-color: #FFFFFF; }
+div.box-in-box h3:first-child { margin-top: 0; }
+@media (min-width: 640px) { .widget-in-box { width: 50%; float: right; margin-left: 15px; } }
+.highlight-box { border: 2px solid #0B6AB7; background-color: #eaf2fb !important; }
+.highlight-box h2.s-lib-box-title { background-color: #0B6AB7; color: #FFFFFF; font-weight: 100; }
+.highlight-box .s-lib-box-content { font-weight: 700; font-size: 110%; }
+.highlight { border: 2px solid #0B6AB7; background-color: #eaf2fb !important; padding: 10px; font-weight: 700; color: #222222; }
+div.highlight { border: 2px solid #0B6AB7; background-color: #eaf2fb !important; font-weight: 700; color: #222222; }
+ul.highlight { border: 2px solid #0B6AB7; background-color: #eaf2fb !important; font-weight: 700; color: #222222; }
+/*!   OLD VERSION  div.highlight { background: #D7D9DA; padding: 10px; }
+ul.highlight { background: #D7D9DA; padding: 4px; } */
+</style>
+
+<style>
+/*! extra padding for table heads */
+table th { padding: 5px 7px; }
+/*! suppress the placeholder profile image */
+.s-lib-profile-div img[src="//s3.amazonaws.com/libapps/apps/common/images/profile.jpg"] { display: none; }
+/*! change color of info icon */
+.fa-info-circle { color: #0B6AB7; }
+/*! Hide box-level navigation for solo boxes */
+.s-lg-boxnav li.list-group-item:only-child { display: none; }
+/*! Add faint gray border to book covers, hopefully unnoticed on most, but visible on white books */
+.s-lg-book-cover img { border: 1px solid #EEEEEE ; }
+/* Hide group link in breadcrumbs */
+#s-lib-bc-group { display: none; }
+/*! hide new window icon */
+.fa-external-link { display: none; }
+</style>
+
+<style>
+/*! center gallery images */
+.carousel-inner img { margin-left: auto; margin-right: auto; }
+/*! color of lines */
+hr { border-top: 1px solid #adcde5; }
+/*! delete share link on A-Z list */
+[id^="s-lg-az-share-btn-"] { display: none; }
+/*! hide alternate names on A-Z list */
+.s-lg-az-result-keywords { display: none; }
+</style>
+
+<style>
+/*! new codes to match new accessibility upgrades Feb 2017 */
+.nav .s-lg-index-nav-btn > button { color: #0B6AB7; }
+.nav-pills > li.active > button, .nav-pills > li.active > button:focus, .nav-pills > li.active > button:hover { background-color: #0B6AB7; }
+.list-group-item { border-color: #BCCADC; }
+#s-lg-tabs-container .nav-tabs > li > a, #s-lg-tabs-container .nav-tabs > li > button, #s-lg-tabs-container .nav-pills > li > a, #s-lg-tabs-container .nav-pills > li > button { border: 1px solid #869FC1; background-color: #eaf2fb; }
+.btn-link { color: #0B6AB7; }
+.s-lg-az-trials-div h2 { color: #FFFFFF !important; }
+#s-lg-tabs-container .nav .dropdown-toggle .caret { border-top-color: #0B6AB7; }
+th h3 { color: #FFFFFF; }
+</style>
+
+<style>
+/*! Responsive design fixes */
+@media (max-width: 480px) {
+#s-lg-guide-name { clear: right; }
+}
+@media (max-width: 768px) {
+#s-lg-col-1, #s-lg-col-2 { padding-left: 0px; padding-right: 0px; }
+ul { margin-left: 0px; }
+}
+div.right { width: 45%; margin-left: 20px; float: right; }
+@media (max-width: 768px) {
+  div.right { width: 100%; margin-left: initial; float: none; }
+  }
+div.left { width: 45%;;}
+@media (max-width: 768px) {
+  div.left { width: 100%; }
+  }
+</style>
+<script src="https://ucla.libanswers.com/load_chat.php?hash=5a44dfe7cc29aaee5bba635ab13fa753"></script>
+
+<style>
+@font-face { font-family: 'icomoon'; src:  url('//s3.amazonaws.com/libapps/sites/705/include/icomoon.eot'); src:  url('//s3.amazonaws.com/libapps/sites/705/include/icomoon.eot#iefix') format('embedded-opentype'), url('//s3.amazonaws.com/libapps/sites/705/include/icomoon.ttf') format('truetype'), url('//s3.amazonaws.com/libapps/sites/705/include/icomoon.woff') format('woff'), url('//s3.amazonaws.com/libapps/sites/705/include/icomoon.svg#icomoon') format('svg'); font-weight: normal; font-style: normal; }
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-help:before {
+  content: "\e607";
+}
+</style>
+
+<!-- Control colors on LibCal MyScheduler widgets -->
+<style>
+[id^=mySched] { color: #FFFFFF !important; background-color: #0B6AB7 !important; border: none !important; }
+</style>
