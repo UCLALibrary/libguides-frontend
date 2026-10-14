@@ -1,0 +1,110 @@
+<body class="s-lib-public-body">
+        <!-- BEGIN: Page Header -->
+            {{public_header}}
+        <!-- END: Page Header -->
+        <!-- BEGIN: Content Header -->
+        <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders">
+            <div id="s-lib-bc">
+                {{breadcrumbs}}
+            </div>
+            <h1 id="s-lib-public-header-title" style="width: 66%; float:left;">{{title}}
+</h1>
+
+            <div id="s-lib-public-header-desc" style="width: 66%; float:left;">{{system_intro}}
+</div>
+        </div>
+        <!-- END: Content Header -->
+        <!-- BEGIN: Nav Bar -->
+        <div id="s-lib-public-nav" class="container s-lib-side-borders">
+            {{page_nav}}
+        </div>
+        <!-- END: Nav Bar -->
+        <!-- BEGIN: content -->
+        <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders">
+            <div  id="s-lg-index-cols"  class="row">
+                <div  id="col1"  class="col-md-9 center">
+                    <div class="clearfix">
+<div class="alert alert-warning alert-dismissible" role="alert"><button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">&times;</span></button>
+<p><strong><span style="color:#000000;">Library staff are currently working to audit our Research Guides. During this time, some guides and links might be unavailable. If you need assistance with resources, please use our </span><a href="https://www.library.ucla.edu/help/services-resources/ask-us/"><span style="color:#0000cd;">Ask Us</span></a>&nbsp;<span style="color:#000000;">page to contact a librarian. Thank you for your patience.&nbsp;</span></strong></p>
+</div>
+                        <div id="s-lg-hp-nav"> 
+                            <ul>
+                                <li>
+                                    <ul class="nav nav-pills">
+                                        {{button_all_guides}}
+<!--                                        {{button_by_group}}  -->
+                                        {{button_by_subject}}
+<!--                                     {{button_by_type}}     -->
+                                        {{button_by_owner}}
+                                <div style="color: #E8E8E8;">
+<style>
+#s-lg-guide-search { width: 200px; }
+</style>
+                                        {{search_guides}}
+                                    </div>                                   
+</ul> </li></ul>
+                        </div>
+<!--                        {{guide_list_controls}}   -->
+                    </div>
+                    <div id="s-lg-index-list" class="">
+                        {{content}}
+                    </div>
+                </div>
+                <div  id="col2"  class="col-md-3 center">
+                    {{content_boxes}}
+                </div>
+            </div>
+        </div>
+<style>
+.carousel-inner { display: inline-block; vertical-align: top; }
+.carousel-indicators { position: relative; bottom: 10px; background-color: #c1daeb; }
+.carousel-caption h4 { margin: 10px 0px 0px 0px 0px; }
+.carousel-control { color: black; }
+.carousel-caption { position: initial; left: 0; right: 0; bottom: 0; z-index: 10; padding-top: 0px; padding-bottom: 0px; padding-left: 10px; color: rgb(102,102,102); text-align: center; text-shadow: none; }
+.carousel-control { padding: 0 12px 0 12px; background-image: none !important; }
+  </style>
+
+        <!-- END: content -->
+        <!-- BEGIN: Custom Footer -->
+        {{public_footer}}
+        <!-- END: Custom Footer -->
+        <!-- BEGIN: Page Footer -->
+        <div id="s-lib-footer-public" class="s-lib-footer footer container  s-lib-side-borders">
+            <div>
+                <div id="s-lib-footer-brand">
+                    Powered by <a href="http://www.springshare.com">Springshare</a>.
+                </div>
+                <div id="s-lib-footer-rights">
+                    All rights reserved.
+                </div>
+                <div id="s-lib-footer-login-link">
+                    <a href="{{login_url}}
+">Login to LibApps</a>.
+                </div>
+           	</div>
+            <div>
+                <div id="s-lib-footer-print-link">
+                    View this page in a format suitable for <a href="#">printers and screen-readers</a>.
+                </div>
+                <div id="s-lib-footer-support-link">
+                                    </div>
+          	</div>
+        </div>
+        <!-- END: Page Footer -->
+        <div id="s-lib-alert" title="">
+                            <div id="s-lib-alert-content"></div>
+                       </div>        
+                <div id="s-lib-popover-title" class="hide">
+                    <span class="text-info"><strong>title</strong></span> 
+                    <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">&times;</button> 
+                </div>
+                <div id="s-lib-popover-content" class="hide"><i class="fa fa-refresh fa-spin"></i> Loading...
+                    <button class="btn btn-default btn-sm popclose" type="button">Close</button>
+                </div>        
+			<div id="s-lib-scroll-top" title="Back to Top">
+				<span class="fa-stack fa-lg">
+				  <i class="fa fa-square-o fa-stack-2x"></i>
+				  <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
+				</span>
+			</div>
+	</body>
