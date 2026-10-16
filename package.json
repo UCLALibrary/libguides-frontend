@@ -1,0 +1,24 @@
+{
+  "name": "libguides-frontend",
+  "version": "1.0.0",
+  "description": "Source of truth for UCLA Library's LibGuides frontend customization code, including HTML templates, CSS, and related assets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uclalibrary/libguides-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/uclalibrary/libguides-frontend/issues"
+  },
+  "homepage": "https://github.com/uclalibrary/libguides-frontend#readme",
+  "dependencies": {
+    "cheerio": "^1.2.0"
+  }
+}
