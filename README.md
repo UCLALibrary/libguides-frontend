@@ -9,11 +9,17 @@ This repository preserves the existing Bootstrap 3 frontend implementation and s
 LibGuides is hosted by Springshare. Frontend templates and global settings are managed through the LibApps administration interface.
 
 **Project goals:**
+
 - Preserve existing Bootstrap 3 templates and styles.
 - Develop and test HTML template changes locally.
 - Migrate frontend customizations to Bootstrap 5.
 - Maintain UCLA-owned frontend code in GitHub.
 - Eventually build and host compiled Sass/CSS externally.
+- Test changes using Springshare's Bootstrap 5 Transition Tool.
+
+## Production
+
+https://guides.library.ucla.edu
 
 ## Repository Structure
 
@@ -60,9 +66,9 @@ docker compose up --build
 
 Open the following URLs:
 
-| Page | Local URL |
-|---|---|
-| Homepage | http://localhost:3000/ |
+| Page                | Local URL                           |
+| ------------------- | ----------------------------------- |
+| Homepage            | http://localhost:3000/              |
 | Communication Guide | http://localhost:3000/communication |
 
 To stop the server:
