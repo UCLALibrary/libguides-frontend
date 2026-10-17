@@ -4,7 +4,9 @@
   "description": "Source of truth for UCLA Library's LibGuides frontend customization code, including HTML templates, CSS, and related assets.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node dev/server.mjs",
+    "test": "cypress run",
+    "test:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "homepage": "https://github.com/uclalibrary/libguides-frontend#readme",
   "dependencies": {
     "cheerio": "^1.2.0"
+  },
+  "devDependencies": {
+    "cypress": "^16.2.0"
   }
 }
