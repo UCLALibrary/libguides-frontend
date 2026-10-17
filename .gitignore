@@ -6,3 +6,16 @@ node_modules/
 
 cypress/e2e/examples/
 cypress/fixtures/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Chromatic generated files
+cypress/downloads/
+build-archive.log
+
+# Cypress generated files
+cypress/screenshots/
+cypress/videos/

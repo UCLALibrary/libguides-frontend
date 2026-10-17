@@ -24,6 +24,8 @@
     "cheerio": "^1.2.0"
   },
   "devDependencies": {
+    "@chromatic-com/cypress": "^1.0.0",
+    "chromatic": "^18.13.0",
     "cypress": "^16.2.0"
   }
 }
