@@ -1,8 +1,10 @@
-
 name: LibGuides CI
 
 on:
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
 
@@ -14,13 +16,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
           start: npm run dev
-          wait-on: 'http://localhost:3000'
+          wait-on: "http://localhost:3000"
           browser: chrome
+      - name: Publish Chromatic snapshots
+        if: success()
+        run: >
+          npx chromatic --cypress
+          --project-token="$CHROMATIC_PROJECT_TOKEN"
+          --auto-accept-changes="${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+          --exit-zero-on-changes=true
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Upload screenshots on failure
         if: failure()

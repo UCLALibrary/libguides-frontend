@@ -27,6 +27,8 @@ function renderTemplate(template, fixture, type) {
   const inner = (selector) => $(selector).first().html() || '';
   const text = (selector) => $(selector).first().text().trim();
 
+  const noIndex = '<meta name="robots" content="noindex, nofollow, noarchive">';
+
   const common = {
     public_header: outer('body > header'),
     public_footer: '',
@@ -100,6 +102,7 @@ function renderTemplate(template, fixture, type) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+${noIndex}
 ${head}
 </head>
 ${body}

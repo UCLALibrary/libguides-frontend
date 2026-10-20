@@ -1,5 +1,6 @@
 
 const { defineConfig } = require('cypress');
+const { installPlugin } = require("@chromatic-com/cypress");
 
 module.exports = defineConfig({
   e2e: {
@@ -8,6 +9,9 @@ module.exports = defineConfig({
     excludeSpecPattern: [
       '**/examples/**',
   ],
+  setupNodeEvents(on, config) {
+      installPlugin(on, config);
+    },
   },
   
   video: false,
