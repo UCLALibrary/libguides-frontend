@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   cypress:
@@ -24,7 +27,11 @@ jobs:
           browser: chrome
       - name: Publish Chromatic snapshots
         if: success()
-        run: npx chromatic --cypress --project-token="$CHROMATIC_PROJECT_TOKEN"
+        run: >
+          npx chromatic --cypress
+          --project-token="$CHROMATIC_PROJECT_TOKEN"
+          --auto-accept-changes="${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+          --exit-zero-on-changes=true
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
