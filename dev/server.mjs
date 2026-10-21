@@ -1,4 +1,3 @@
-
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -74,9 +73,7 @@ function renderTemplate(template, fixture, type) {
   };
 
   // Replace placeholders in the editable LibApps template.
-let body = template.replace(
-  /<!--[\s\S]*?-->|{{([A-Za-z0-9_]+)}}/g,
-  (match, key) => {
+  let body = template.replace(/<!--[\s\S]*?-->|{{([A-Za-z0-9_]+)}}/g, (match, key) => {
     // Preserve HTML comments without processing placeholders.
     if (match.startsWith('<!--')) {
       return match;
@@ -88,8 +85,7 @@ let body = template.replace(
     }
 
     return values[key];
-  }
-);
+  });
 
   // Keep the vendor and UCLA CSS from the captured page.
   // Remove scripts to avoid calling live Springshare services.
