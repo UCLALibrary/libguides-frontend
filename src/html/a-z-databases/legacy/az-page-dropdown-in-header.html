@@ -1,0 +1,397 @@
+<body class="s-lib-public-body">
+    {{skip_link}}
+    <!-- BEGIN: Page Header -->
+    {{public_header}}
+    <!-- END: Page Header -->
+    <!-- BEGIN: Content Header -->
+    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders">
+        <div id="s-lib-bc">{{breadcrumbs}}
+        </div>
+        <h1 id="s-lib-public-header-title">{{page_title}}</h1>
+        <div id="s-lib-public-header-desc">{{page_description}}</div>
+    </div>
+    <!-- END: Content Header -->
+    <!-- BEGIN: Nav Bar -->
+    <div id="s-lib-public-nav" class="container s-lib-side-borders">
+        {{page_nav}}
+    </div>
+    <!-- END: Nav Bar -->
+    <!-- BEGIN: content -->
+    <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders">
+        <section>
+            <div id="s-lg-az-search-bar" class="row">
+                <div id="az-search-col-1" class="col-md-12 center">
+                    <div id="col-subjects" class="col-md-3 center">
+                        <form role="search">
+                            <select id="s-lg-sel-subjects" name="s-lg-sel-subjects" class="chosen-select"
+                                data-placeholder="All Subjects"
+                                onchange="window.open(this.options[this.selectedIndex].value)">
+                                <option value="" selected>Browse by Subject</option>
+                                <optgroup label="Arts & Music">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4855114">
+                                        Architecture and Urban Design</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4125043">
+                                        Art</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4125049">
+                                        Design Media Arts</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254524">
+                                        Ethnomusicology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254553">
+                                        Film, Television, and Digital Media</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254516">
+                                        Music</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254516">
+                                        Musicology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254556">
+                                        Theater</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/arts#s-lg-box-4254526">
+                                        World Arts and Cultures / Dance</option>
+                                <optgroup label="Business & Law">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/bus-law#s-lg-box-4506806">
+                                        Economics</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/bus-law#s-lg-box-4254635">
+                                        Government Information</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/bus-law#s-lg-box-4254639">
+                                        Law</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/bus-law#s-lg-box-4291844">
+                                        Management and Business</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/bus-law#s-lg-box-4320310">
+                                        Public Affairs</option>
+                                <optgroup label="Education & Public Affairs">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320263">
+                                        Education</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320300">
+                                        Environment and Sustainability</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4254635">
+                                        Government Information</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320265">
+                                        Information Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320310">
+                                        Public Policy</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320311">
+                                        Social Welfare</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/public#s-lg-box-4320313">
+                                        Urban Planning</option>
+                                <optgroup label="Humanities">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4125043">
+                                        Art History</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4818549">
+                                        Asian Languages and Cultures</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4507414">
+                                        Classics</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319376">
+                                        Comparative Literature</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319376">
+                                        English</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319452">
+                                        French and Francophone Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319408">
+                                        Germanic Languages</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319453">
+                                        Italian</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4506833">
+                                        LGBT Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319383">
+                                        Linguistics</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4818552">
+                                        Near Eastern Languages and Cultures</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319595">
+                                        Philosophy</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319596">
+                                        Religion</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319458">
+                                        Slavic Languages and Cultures</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/hum#s-lg-box-4319456">
+                                        Spanish and Portuguese</option>
+                                <optgroup label="International & Area Studies">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4125040">
+                                        African Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320345">
+                                        Asian Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320355">
+                                        Chinese Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4507364">
+                                        East Asian Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320376">
+                                        Global Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320376">
+                                        International Development Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4507468v">
+                                        Islamic Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320356">
+                                        Japanese Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4507472">
+                                        Jewish Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4320358">
+                                        Korean Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4506361">
+                                        Latin American Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4506711">
+                                        Middle Eastern and North African Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4507367">
+                                        South Asian Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/region#s-lg-box-4507368">
+                                        Southeast Asian Studies</option>
+                                <optgroup label="Life & Health Sciences">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4319938">
+                                        Biology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320003">
+                                        Dentistry</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320300">
+                                        Environment and Sustainability</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320001">
+                                        Medicine</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320005">
+                                        Nursing</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320119">
+                                        Psychology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/life#s-lg-box-4320007">
+                                        Public Health</option>
+                                <optgroup label="Physical Sciences & Engineering">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507075">
+                                        Atmospheric and Oceanic Sciences</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291881">
+                                        Bioengineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291887">
+                                        Chemical and Biomolecular Engineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507135">
+                                        Chemistry and Biochemistry</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291888">
+                                        Civil and Environmental Engineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291903">
+                                        Computer Science</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507132">
+                                        Earth, Planetary, and Space Sciences</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291899">
+                                        Electrical Engineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291875">
+                                        Engineering, General</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4320300">
+                                        Environment and Sustainability</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291904">
+                                        Materials Science and Engineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507137">
+                                        Mathematics</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4291902">
+                                        Mechanical and Aerospace Engineering</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507138">
+                                        Physics and Astronomy</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/phys-sci#s-lg-box-4507169">
+                                        Statistics</option>
+                                <optgroup label="Social Sciences">
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4157576">
+                                        African American Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4157606">
+                                        American Indian Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4167553">
+                                        Anthropology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506741">
+                                        Archaeology</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4318022">
+                                        Asian American Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4318031">
+                                        Chicana and Chicano Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4292015">
+                                        Communication Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506806">
+                                        Economics</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506824">
+                                        Gender Studies</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506846">
+                                        Geography</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506850">
+                                        History</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4506945">
+                                        Political Science</option>
+                                    <option
+                                        value="http://guides.library.ucla.edu/databases-by-subject/soc#s-lg-box-4507014">
+                                        Sociology</option>
+                            </select>
+                        </form>
+                    </div>
+                    {{navbar_wide}}
+                </div>
+            </div>
+        </section>
+        <section>
+            <div id="s-lg-az-cols" class="row">
+                <div id="col1" class="col-md-8 center">
+                    <div id="s-lg-az-index" class="pad-right-sm">
+                        {{alpha_list}}
+                    </div>
+                    <div id="s-lg-az-search-reset" class="pad-top-med pad-bottom-med">
+                        {{search_reset}}
+                    </div>
+                    <div id="s-lg-az-content" class="pad-right-sm pad-top-med">
+                        <div class="bold s-lib-color-lt-grey pad-top-med text-center">Loading...</div>
+                    </div>
+                </div>
+                <style>
+                    .s-lib-box {
+                        border-color: #adcde5;
+                        border-width: 1px;
+                        box-shadow: 0 8px 6px -6px #AAAAAA;
+                        border-radius: 0;
+                        background-color: #ffffff;
+                    }
+
+                    .s-lib-box-std .s-lib-box-title {
+                        background-color: #c1daeb;
+                        background-image: none;
+                        color: #555555;
+                        border-bottom: 1px solid #adcde5;
+                    }
+
+                    .s-lib-box .s-lib-box-title {
+                        background-color: #c1daeb;
+                        background-image: none;
+                        color: #555555;
+                        border-bottom: 1px solid #adcde5;
+                        ;
+                        border-radius: 0;
+                    }
+                </style>
+                <style>
+                    #s-lg-az-trials-div {
+                        border: solid 1px #adcde5;
+                        box-shadow: 0 8px 6px -6px #AAAAAA;
+                        border-radius: 0;
+                        background-color: #ffffff;
+                    }
+
+                    #s-lg-az-trials-div .pad-top-sm {
+                        padding: 0px 10px;
+                    }
+
+                    #s-lg-az-trials-div .s-lg-az-result-badge-new {
+                        display: none;
+                    }
+
+                    .s-lib-public-side-header {
+                        background-color: #c1daeb;
+                        font-weight: 400;
+                        font-size: 17px;
+                        color: #555555;
+                        padding: 6px 8px;
+                        border: 0px;
+                        line-height: 20px;
+                    }
+                </style>
+                <div id="col2" class="col-md-4 center">
+                    {{content_box_4519018}}
+                    {{content_box_3596636}}
+                    {{content_box_3577872}}
+                    <div class="s-lg-db-panel">{{trials_box}}</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- END: content -->
+    <!-- BEGIN: Custom Footer -->
+    {{public_footer}}
+    <!-- END: Custom Footer -->
+    <!-- BEGIN: Page Footer -->
+    {{system_footer}}
+    <!-- END: Page Footer -->
+    <div id="s-lib-alert" title="">
+        <div id="s-lib-alert-content"></div>
+    </div>
+    <div id="s-lib-popover-title" class="hide">
+        <span class="text-info"><strong>title</strong></span>
+        <button type="button" id="popclose" class="close"
+            onclick="jQuery('.s-lib-popover').popover('hide')">&times;</button>
+    </div>
+    <div id="s-lib-popover-content" class="hide"><i class="fa fa-refresh fa-spin"></i> Loading...
+        <button class="btn btn-default btn-sm popclose" type="button">Close</button>
+    </div>
+    <div id="s-lib-scroll-top" title="Back to Top">
+        <span class="fa-stack fa-lg">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
+        </span>
+    </div>
+</body>
