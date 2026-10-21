@@ -1,0 +1,77 @@
+<body class="s-lib-public-body">
+    {{skip_link}}
+
+    {{public_header}}
+
+    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders">
+        <nav id="s-lib-bc" aria-label="breadcrumb">
+            {{breadcrumbs}}
+
+        </nav>
+        <h1 id="s-lib-public-header-title">{{page_title}}</h1>
+        <div id="s-lib-public-header-desc">{{page_description}}</div>
+    </div>
+    <div id="s-lib-public-nav" class="container s-lib-side-borders">
+        {{page_nav}}
+
+    </div>
+    <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" tabindex="-1">
+        <section aria-label="Subject Search Bar">
+            <div id="s-lg-sb-search-bar" class="row">
+                <div id="sb-search-col-1" class="col-md-12 center">
+                    {{navbar}}
+
+                </div>
+            </div>
+        </section>
+        <section aria-label="Content by Subject">
+            <div id="s-lg-sb-cols" class="row">
+                <div id="col1" class="col-md-8 center">
+                </div>
+                <div id="col2" class="col-md-4 center">
+                    <div style="padding-top: 9px;"></div>
+                    {{content_box_search}}
+
+                </div>
+            </div>
+        </section>
+    </div>
+    {{system_footer}}
+
+
+    <div id="s-lib-alert" title="">
+        <div id="s-lib-alert-content"></div>
+    </div>
+    <!-- popover.twig -->
+    <div id="s-lib-popover-title" class="hide">
+        <span class="text-info">
+            <strong>title</strong>
+        </span>
+
+        <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">
+            &times;
+        </button>
+    </div>
+
+    <div id="s-lib-popover-content" class="hide">
+        <i class="fa fa-refresh fa-spin"></i> Loading...
+        <button class="btn btn-default btn-sm popclose" type="button">Close</button>
+    </div>
+    <!-- !popover.twig -->
+
+    <!-- scroll_top.twig -->
+    <div id="s-lib-scroll-top">
+        <a href="javascript:void(0);" onclick="jQuery('body').focus();" title="Back to Top" aria-label="Back to Top">
+            <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
+            </span>
+        </a>
+    </div>
+    <!-- !scroll_top.twig -->
+
+
+    {{public_footer}}
+
+
+</body>
