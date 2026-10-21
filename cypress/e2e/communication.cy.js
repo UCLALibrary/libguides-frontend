@@ -1,4 +1,3 @@
-
 describe('Communication Guide', () => {
   it('renders the side-navigation guide', () => {
     cy.visit('/communication');

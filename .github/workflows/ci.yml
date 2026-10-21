@@ -9,6 +9,26 @@ on:
       - main
 
 jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
   cypress:
     name: Cypress E2E Tests
     runs-on: ubuntu-latest
@@ -19,11 +39,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check server syntax
+        run: node --check dev/server.mjs
+
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7.4.6
         with:
           start: npm run dev
-          wait-on: "http://localhost:3000"
+          wait-on: 'http://127.0.0.1:3000'
           browser: chrome
       - name: Publish Chromatic snapshots
         if: success()

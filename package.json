@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "node dev/server.mjs",
     "test": "cypress run",
-    "test:open": "cypress open"
+    "test:open": "cypress open",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -25,7 +29,13 @@
   },
   "devDependencies": {
     "@chromatic-com/cypress": "^1.0.0",
+    "@eslint/js": "^10.0.1",
     "chromatic": "^18.13.0",
-    "cypress": "^16.2.0"
+    "cypress": "^16.2.0",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-cypress": "^7.0.2",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10"
   }
 }

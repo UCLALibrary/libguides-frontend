@@ -1,4 +1,3 @@
-
 describe('LibGuides Homepage', () => {
   it('renders the homepage', () => {
     cy.visit('/');
