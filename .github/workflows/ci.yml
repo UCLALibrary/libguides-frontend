@@ -39,6 +39,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check server syntax
+        run: node --check dev/server.mjs
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
