@@ -1,0 +1,10 @@
+node_modules/
+dev/fixtures/
+**/legacy/
+cypress/downloads/
+cypress/e2e/examples/
+cypress/fixtures/
+package-lock.json
+build-archive.log
+.env
+.env.*
