@@ -19,3 +19,6 @@ build-archive.log
 # Cypress generated files
 cypress/screenshots/
 cypress/videos/
+
+# Generated static preview
+dist/
