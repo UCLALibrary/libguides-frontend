@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node dev/server.mjs",
-    "test": "cypress run",
+    "build:preview": "node dev/build-preview.mjs",
+    "test": "cypress run --browser chrome",
     "test:open": "cypress open",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
