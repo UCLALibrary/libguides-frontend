@@ -1,4 +1,4 @@
-const allGuidesTest = Cypress.env('chromatic') ? it.skip : it;
+const allGuidesTest = Cypress.expose('chromatic') ? it.skip : it;
 
 describe('LibGuides Homepage', () => {
   beforeEach(() => {
