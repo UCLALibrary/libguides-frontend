@@ -190,3 +190,9 @@ Future CSS development will use Sass, with compiled stylesheets hosted externall
 7. Coordinate manual LibApps updates and production activation.
 
 GitHub is the source of truth for UCLA-owned frontend code. Any emergency changes made directly in LibApps must be reflected back in this repository to avoid configuration drift.
+
+## Local Development
+
+See [Local Development & Homepage Preview](dev/README.md)
+for running the local server, testing Homepage fixtures,
+editing global CSS, and generating static previews.
