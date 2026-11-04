@@ -48,6 +48,20 @@ jobs:
           start: npm run dev
           wait-on: 'http://127.0.0.1:3000'
           browser: chrome
+
+      # Remove any snapshots from the functional test run.
+      - name: Clean Chromatic archives
+        if: success()
+        run: rm -rf cypress/downloads/chromatic-archives
+
+      # Run Cypress again to collect selected visual snapshots.
+      - name: Collect Chromatic snapshots
+        if: success()
+        run: npx cypress run --browser chrome
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          CYPRESS_VISUAL_PROVIDER: chromatic
+
       - name: Publish Chromatic snapshots
         if: success()
         run: >
