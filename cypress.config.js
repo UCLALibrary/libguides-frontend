@@ -14,6 +14,10 @@ module.exports = defineConfig({
     excludeSpecPattern: ['**/examples/**'],
 
     setupNodeEvents(on, config) {
+      config.expose = {
+        ...config.expose,
+        visualProvider: process.env.CYPRESS_VISUAL_PROVIDER || '',
+      };
       // Enable Chromatic only when a project token is available.
       if (process.env.CHROMATIC_PROJECT_TOKEN) {
         installPlugin(on, config);
