@@ -10,6 +10,7 @@ module.exports = [
       'dev/fixtures/**',
       'cypress/downloads/**',
       'cypress/e2e/examples/**',
+      'dist/**',
     ],
   },
   js.configs.recommended,
@@ -36,6 +37,16 @@ module.exports = [
   {
     ...cypress.configs.recommended,
     files: ['cypress/**/*.js'],
+  },
+  {
+    files: ['dev/static-homepage.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'script',
+      globals: {
+        ...globals.browser,
+      },
+    },
   },
   prettier,
 ];

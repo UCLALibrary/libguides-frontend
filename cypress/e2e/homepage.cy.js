@@ -1,9 +1,11 @@
+const allGuidesTest = Cypress.env('chromatic') ? it.skip : it;
+
 describe('LibGuides Homepage', () => {
   beforeEach(() => {
     cy.visit('/');
   });
 
-  it('renders All Guides', () => {
+  allGuidesTest('renders All Guides', () => {
     cy.contains('ALL GUIDES').click();
     cy.get('#s-lg-index-list-guides').should('be.visible');
   });
