@@ -353,6 +353,17 @@ npm run build:preview
 npm test
 ```
 
+## Test Routes
+
+The following pages are available for testing locally and through GitHub Pages.
+
+| Page                | Local Development                                                   | GitHub Pages                                                                     |
+| ------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Homepage            | [localhost:3000/](http://localhost:3000/)                           | [Homepage](https://uclalibrary.github.io/libguides-frontend/)                    |
+| Communication Guide | [localhost:3000/communication](http://localhost:3000/communication) | [Communication](https://uclalibrary.github.io/libguides-frontend/communication/) |
+| Subject Landing     | [localhost:3000/sb.php](http://localhost:3000/sb.php)               | [Subjects](https://uclalibrary.github.io/libguides-frontend/subjects/)           |
+| Africa Subject Info | [localhost:3000/africa-guides](http://localhost:3000/africa-guides) | [Africa Guides](https://uclalibrary.github.io/libguides-frontend/africa-guides/) |
+
 Push the feature branch and open a PR.
 
 Verify that:
@@ -361,6 +372,35 @@ Verify that:
 - Chromatic captures the new page and allows review of visual changes.
 - The static build includes the new page.
 - The GitHub Pages preview displays the new page correctly when deployed.
+
+### Testing the Static Preview Locally
+
+Before deploying to GitHub Pages, test the generated static site locally.
+
+1. Build the static preview:
+
+   ```bash
+   npm run build:preview
+   ```
+
+2. Serve the generated `dist/` directory:
+
+   ```bash
+   npx serve dist
+   ```
+
+3. Open the URL displayed in the terminal (usually `http://localhost:3000` or `http://localhost:3001`).
+
+   Test the following routes:
+
+   - `/` — Homepage
+   - `/communication/` — Communication Guide
+   - `/subjects/` — Subject Landing
+   - `/africa-guides/` — Africa Subject Info
+
+**Note:** The static preview uses generated HTML and JavaScript adapters instead of the local Node development server's AJAX mocks.
+
+After changing templates, fixtures, or global CSS, run `npm run build:preview` again to regenerate the static files.
 
 For PR-numbered deployments, the expected URL format is:
 
