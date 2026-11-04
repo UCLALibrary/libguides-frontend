@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('visualSnapshot', (name) => {
+  cy.env(['VISUAL_PROVIDER']).then(({ VISUAL_PROVIDER }) => {
+    if (VISUAL_PROVIDER === 'chromatic') {
+      const width = Cypress.config('viewportWidth');
+      const height = Cypress.config('viewportHeight');
+
+      cy.takeSnapshot(`${name} - ${width}x${height}`);
+    }
+  });
+});

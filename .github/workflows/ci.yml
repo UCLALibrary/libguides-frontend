@@ -58,6 +58,8 @@ jobs:
           --auto-accept-changes="${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
           --exit-zero-on-changes=true
         env:
+          env:
+          CYPRESS_VISUAL_PROVIDER: chromatic
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
       - name: Upload screenshots on failure
