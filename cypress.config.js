@@ -7,6 +7,10 @@ module.exports = defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.js',
     excludeSpecPattern: ['**/examples/**'],
     setupNodeEvents(on, config) {
+      config.expose = {
+        ...config.expose,
+        chromatic: process.env.CHROMATIC_RUN === 'true',
+      };
       installPlugin(on, config);
     },
   },
