@@ -1,9 +1,33 @@
 <style>
-  @import url("https://use.typekit.net/xso3wzv.css");
+  /* Proxima Nova light, regular, and semibold */
+  @font-face {
+    font-family: 'proxima-nova';
+    src: local('Proxima Nova Light'), local('ProximaNova-Light'), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Light.woff') format("woff"), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Light.eot') format("eot");
+    font-style: normal;
+    font-weight: 300;
+    font-display: auto;
+  }
 
   @font-face {
+    font-family: 'proxima-nova';
+    src: local('Proxima Nova Regular'), local('ProximaNova-Regular'), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Regular.woff') format("woff"), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Regular.eot') format("eot");
+    font-style: normal;
+    font-weight: 400;
+    font-display: auto;
+  }
+
+  @font-face {
+    font-family: 'proxima-nova';
+    src: local('Proxima Nova Semibold'), local('ProximaNova-Semibold'), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Semibold.woff') format("woff"), url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/ProximaNova-Semibold.eot') format("eot");
+    font-style: normal;
+    font-weight: 600;
+    font-display: auto;
+  }
+
+  /* Karbon light, regular, medium, semibold, bold */
+  @font-face {
     font-family: "Karbon";
-    src: url(//libapps.s3.amazonaws.com/sites/705/include/karbon-web-light.woff) format("woff");
+    src: url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/karbon-web-light.woff') format("woff");
     font-style: normal;
     font-weight: 300;
     font-display: auto;
@@ -11,7 +35,7 @@
 
   @font-face {
     font-family: "Karbon";
-    src: url(//libapps.s3.amazonaws.com/sites/705/include/karbon-web-regular.woff) format("woff");
+    src: url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/karbon-web-regular.woff') format("woff");
     font-style: normal;
     font-weight: 400;
     font-display: auto;
@@ -19,7 +43,7 @@
 
   @font-face {
     font-family: "Karbon";
-    src: url(//libapps.s3.amazonaws.com/sites/705/include/karbon-web-medium.woff) format("woff");
+    src: url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/karbon-web-medium.woff') format("woff");
     font-style: normal;
     font-weight: 500;
     font-display: auto;
@@ -27,7 +51,7 @@
 
   @font-face {
     font-family: "Karbon";
-    src: url(//libapps.s3.amazonaws.com/sites/705/include/karbon-web-semibold.woff) format("woff");
+    src: url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/karbon-web-semibold.woff') format("woff");
     font-style: normal;
     font-weight: 600;
     font-display: auto;
@@ -35,7 +59,7 @@
 
   @font-face {
     font-family: "Karbon";
-    src: url(//libapps.s3.amazonaws.com/sites/705/include/karbon-web-bold.woff) format("woff");
+    src: url('https://d2jv02qf7xgjwx.cloudfront.net/sites/705/include/karbon-web-bold.woff') format("woff");
     font-style: normal;
     font-weight: 700;
     font-display: auto;
@@ -237,6 +261,7 @@
   h3,
   h4,
   h5 {
+    font-family: 'Karbon', sans-serif;
     font-weight: 500
   }
 
