@@ -1471,6 +1471,15 @@ div.left { width: 45%;;}
       border-radius: 8px;
     }
   }
+
+  /* Targets sidebar buttons on homepage */
+  .btn-info,
+  .btn-info:hover,
+  .btn-info:active,
+  .btn-info:link,
+  a.btn-info:visited {
+    color: #ffffff;
+  }
 </style>
 </head>
 <body class="s-lib-public-body">
@@ -1537,7 +1546,7 @@ div.left { width: 45%;;}
             ALL GUIDES
         </button>
     </li>
-                {{button_by_group}}
+                <!-- {{button_by_group}} -->
                 <li id="s-lg-index-subject-btn" class="s-lg-index-nav-btn active" role="presentation">
         <button type="button" role="tab" aria-selected="true" aria-controls="s-lg-index-list" class="btn" onclick="springSpace.publicObj.loadHomepageList({
                         action: 172,
@@ -1550,7 +1559,7 @@ div.left { width: 45%;;}
             BY SUBJECT
         </button>
     </li>
-                {{button_by_type}}
+                <!-- {{button_by_type}} -->
                 <li id="s-lg-index-owner-btn" class="s-lg-index-nav-btn" role="presentation">
         <button type="button" role="tab" aria-selected="false" aria-controls="s-lg-index-list" class="btn" onclick="springSpace.publicObj.loadHomepageList({
                         action: 174,
