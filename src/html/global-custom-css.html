@@ -380,7 +380,7 @@
         padding-bottom: var(--space-l);
       }
 
-      ::before {
+      &::before {
         content: "";
         position: absolute;
         top: 0;
@@ -391,6 +391,8 @@
         background-repeat: no-repeat;
         background-position: center 60%;
         mix-blend-mode: soft-light;
+        height: 100%;
+        width: 100%;
       }
 
       #s-lib-public-header-title {
@@ -403,7 +405,6 @@
       }
 
       #s-lib-public-header-desc {
-        margin: 0;
         font-size: 20px;
         line-height: 32px;
         color: var(--color-white);
