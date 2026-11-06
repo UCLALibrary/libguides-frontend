@@ -1,0 +1,26 @@
+<body class="s-lib-public-body az-landing">
+    {{skip_link}}
+
+    {{public_header}}
+
+    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders">
+        {{breadcrumbs_section}}
+
+        {{page_title_section}}
+
+        {{page_alert_section}}
+
+    </div>
+    <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" tabindex="-1">
+        <section>
+            <div id="s-lg-az-cols" class="row">
+                <div id="col1" class="col-md-12 center">
+                    {{page_content_section}}
+
+                </div>
+            </div>
+        </section>
+    </div>
+    {{public_footer}}
+
+</body>
