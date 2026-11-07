@@ -3,7 +3,7 @@
   {{public_header}}
   <!-- END: Page Header -->
   <!-- BEGIN: Content Header -->
-  <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders image-background-header" role="banner">
+  <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders" role="banner">
     <div id="s-lib-bc">{{breadcrumbs}}</div>
     <h1 id="s-lib-public-header-title" style="width: 66%; float: left">{{title}}</h1>
 
@@ -53,21 +53,17 @@
       display: inline-block;
       vertical-align: top;
     }
-
     .carousel-indicators {
       position: relative;
       bottom: 10px;
       background-color: #c1daeb;
     }
-
     .carousel-caption h4 {
       margin: 10px 0px 0px 0px 0px;
     }
-
     .carousel-control {
       color: black;
     }
-
     .carousel-caption {
       position: initial;
       left: 0;
@@ -81,7 +77,6 @@
       text-align: center;
       text-shadow: none;
     }
-
     .carousel-control {
       padding: 0 12px 0 12px;
       background-image: none !important;
@@ -100,8 +95,11 @@
       </div>
       <div id="s-lib-footer-rights">All rights reserved.</div>
       <div id="s-lib-footer-login-link">
-        <a href="{{login_url}}
-">Login to LibApps</a>.
+        <a
+          href="{{login_url}}
+"
+          >Login to LibApps</a
+        >.
       </div>
     </div>
     <div>
@@ -117,7 +115,12 @@
   </div>
   <div id="s-lib-popover-title" class="hide">
     <span class="text-info"><strong>title</strong></span>
-    <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">
+    <button
+      type="button"
+      id="popclose"
+      class="close"
+      onclick="jQuery('.s-lib-popover').popover('hide')"
+    >
       &times;
     </button>
   </div>
