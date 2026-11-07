@@ -1,0 +1,82 @@
+name: LibGuides PR Preview
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build PR #${{ github.event.pull_request.number }}
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.head.repo.full_name == github.repository
+
+    concurrency:
+      group: pr-build-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static PR preview
+        env:
+          PREVIEW_BASE_PATH: /libguides-frontend/pr-${{ github.event.pull_request.number }}/
+        run: npm run build:preview
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-preview
+          path: dist/
+          retention-days: 3
+
+  deploy:
+    name: Publish PR #${{ github.event.pull_request.number }}
+    needs: build
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: libguides-pages-publish
+      cancel-in-progress: false
+
+    steps:
+      - name: Download preview artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pr-preview
+          path: dist/
+
+      - name: Deploy PR preview
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          destination_dir: pr-${{ github.event.pull_request.number }}
+          keep_files: true
+
+      - name: Add preview URL to summary
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          echo "## PR #${PR_NUMBER} Preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "[Open preview](https://uclalibrary.github.io/libguides-frontend/pr-${PR_NUMBER}/)" >> "$GITHUB_STEP_SUMMARY"
