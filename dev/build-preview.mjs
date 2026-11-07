@@ -1,5 +1,6 @@
 import { readFile, mkdir, writeFile, copyFile, rm } from 'node:fs/promises';
 import { resolve, join, dirname } from 'node:path';
+import { load } from 'cheerio';
 
 import { pages, getPage, renderTemplate } from './renderer.mjs';
 import { fetchSpringsharePage, fetchSpringshareAjax } from './springshare.mjs';
@@ -32,7 +33,33 @@ async function mapWithConcurrency(items, limit, callback) {
 
 // GitHub Pages cannot serve PHP files as dynamic routes.
 function getStaticRoute(route) {
-  return route === '/sb.php' ? '/subjects/' : route === '/' ? '/' : `${route.replace(/\/+$/, '')}/`;
+  const staticRoutes = {
+    '/sb.php': '/subjects/',
+    '/prf.php': '/profiles/',
+  };
+
+  if (Object.hasOwn(staticRoutes, route)) {
+    return staticRoutes[route];
+  }
+
+  return route === '/' ? '/' : `${route.replace(/\/+$/, '')}/`;
+}
+
+// Extract subject IDs from the Profile Landing dropdown.
+// This avoids assuming all profile subjects have Subject Info pages.
+function extractProfileSubjectIds(html) {
+  const $ = load(html);
+  const ids = new Set();
+
+  $('#s-lg-profile-subjects option').each((_, element) => {
+    const value = $(element).attr('value');
+
+    if (value && /^\d+$/.test(value) && value !== '0') {
+      ids.add(value);
+    }
+  });
+
+  return [...ids];
 }
 
 // Discover and validate all public pages.
@@ -142,6 +169,13 @@ for (const { route, page, productionHTML } of validPages) {
     );
   }
 
+  if (page.type === 'profile-landing') {
+    html = html.replace(
+      /<head[^>]*>/i,
+      (match) => `${match}\n<script src="../static-profile.js"></script>`
+    );
+  }
+
   const staticRoute = getStaticRoute(route);
 
   const relativePath =
@@ -199,7 +233,7 @@ console.log(`Generating AJAX for ${subjectIds.length} subjects.`);
 await mapWithConcurrency(subjectIds, CONCURRENCY, async (subjectId) => {
   const params = new URLSearchParams({
     action: '540',
-    subject_id: subjectId,
+    subject_id: String(subjectId),
   });
 
   const response = await fetchSpringshareAjax(`/sb_process.php?${params}`);
@@ -213,13 +247,75 @@ await mapWithConcurrency(subjectIds, CONCURRENCY, async (subjectId) => {
   console.log(`Generated Subject AJAX: ${subjectId}`);
 });
 
+// Generate Profile Landing AJAX responses.
+const profileLanding = validPages.find(({ page }) => page.type === 'profile-landing');
+
+let profileSubjectIds = [];
+
+if (profileLanding) {
+  profileSubjectIds = extractProfileSubjectIds(profileLanding.productionHTML);
+
+  console.log(`Generating Profile AJAX for ${profileSubjectIds.length} subjects.`);
+
+  // action=530: All profiles and profiles by subject.
+  const profileFilters = ['0', ...profileSubjectIds];
+
+  await mapWithConcurrency(profileFilters, CONCURRENCY, async (subjectId) => {
+    const params = new URLSearchParams({
+      action: '530',
+      subject_id: subjectId,
+    });
+
+    const response = await fetchSpringshareAjax(`/prf_process.php?${params}`);
+
+    await writeFile(
+      join(ajaxDir, `profile-530-${subjectId}.json`),
+      JSON.stringify(rewriteAjaxResponse(response)),
+      'utf8'
+    );
+
+    console.log(`Generated Profile AJAX: 530/${subjectId}`);
+  });
+
+  // action=531: Guides sidebar for selected subjects.
+  await mapWithConcurrency(profileSubjectIds, CONCURRENCY, async (subjectId) => {
+    const params = new URLSearchParams({
+      action: '531',
+      subject_id: subjectId,
+    });
+
+    const response = await fetchSpringshareAjax(`/prf_process.php?${params}`);
+
+    await writeFile(
+      join(ajaxDir, `profile-531-${subjectId}.json`),
+      JSON.stringify(rewriteAjaxResponse(response)),
+      'utf8'
+    );
+
+    console.log(`Generated Profile AJAX: 531/${subjectId}`);
+  });
+}
+
 // Copy static AJAX adapters.
-await Promise.all([
-  copyFile(resolve('dev/static-homepage.js'), join(outputDir, 'static-homepage.js')),
-  copyFile(resolve('dev/static-subject.js'), join(outputDir, 'static-subject.js')),
-]);
+const adapters = [
+  ['dev/static-homepage.js', 'static-homepage.js'],
+  ['dev/static-subject.js', 'static-subject.js'],
+];
+
+if (profileLanding) {
+  adapters.push(['dev/static-profile.js', 'static-profile.js']);
+}
+
+await Promise.all(
+  adapters.map(([source, destination]) => copyFile(resolve(source), join(outputDir, destination)))
+);
 
 console.log('');
 console.log('Static preview build complete.');
 console.log(`Generated ${validPages.length} pages.`);
 console.log(`Generated ${subjectIds.length} Subject AJAX responses.`);
+
+if (profileLanding) {
+  console.log(`Generated ${profileSubjectIds.length + 1} Profile listing AJAX responses.`);
+  console.log(`Generated ${profileSubjectIds.length} Profile Guides AJAX responses.`);
+}
