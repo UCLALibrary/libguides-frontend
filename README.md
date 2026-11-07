@@ -1,198 +1,144 @@
 # UCLA Library LibGuides Frontend
 
-Source of truth for UCLA Library's LibGuides frontend HTML templates, CSS, and related assets.
+This repository is the source of truth for UCLA Library's LibGuides frontend HTML templates, custom CSS, and related assets.
 
-## Project Overview
+LibGuides is hosted by Springshare. This repository allows UCLA Library developers to maintain frontend customizations in GitHub, preview changes before applying them to production, and support the migration from Bootstrap 3 to Bootstrap 5.
 
-This repository preserves the existing Bootstrap 3 frontend implementation and supports the migration to Bootstrap 5.
+## Project Goals
 
-LibGuides is hosted by Springshare. Frontend templates and global settings are managed through the LibApps administration interface.
+- Preserve UCLA Library's existing Bootstrap 3 templates and styles.
+- Develop and test frontend changes without modifying production.
+- Support the migration to Bootstrap 5.
+- Maintain version-controlled UCLA-owned frontend code.
+- Provide local and GitHub Pages previews for development and review.
+- Support future externally hosted compiled Sass/CSS assets.
 
-**Project goals:**
+## Production and Previews
 
-- Preserve existing Bootstrap 3 templates and styles.
-- Develop and test HTML template changes locally.
-- Migrate frontend customizations to Bootstrap 5.
-- Maintain UCLA-owned frontend code in GitHub.
-- Eventually build and host compiled Sass/CSS externally.
-- Test changes using Springshare's Bootstrap 5 Transition Tool.
+**Production:** https://guides.library.ucla.edu
 
-## Production
+The repository supports two preview environments:
 
-https://guides.library.ucla.edu
+| Environment       | Purpose                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| Local Development | Preview template and CSS changes using live Springshare content.     |
+| GitHub Pages      | Review generated static previews of frontend changes through GitHub. |
+
+GitHub Pages previews are generated from repository templates and build-time snapshots of Springshare content. They do not modify production.
+
+### Reviewing Changes
+
+Library staff and other reviewers can use the GitHub Pages preview associated with a pull request to review frontend changes without installing development tools.
+
+Reviewers should compare the preview with production and provide feedback on layout, styling, content presentation, and navigation.
+
+Some Springshare features may not be fully supported in static previews.
+
+## Getting Started
+
+### Requirements
+
+- Node.js and npm
+- Internet access to fetch Springshare content
+
+### Install Dependencies
+
+```bash
+npm ci
+```
+
+### Start Local Development
+
+```bash
+npm run dev
+```
+
+Open http://localhost:3000.
+
+The development server reads repository templates and CSS and fetches current content from Springshare.
+
+Changes to local templates and CSS are reflected when the page is refreshed.
+
+### Generate a Static Preview
+
+```bash
+npm run build:preview
+```
+
+Preview the generated site locally:
+
+```bash
+npx serve dist
+```
+
+The static build generates HTML pages and AJAX response snapshots for supported Springshare pages.
+
+### Run Lint
+
+```bash
+npm run lint
+```
+
+For detailed setup and technical information, see [Developer Documentation](dev/README.md).
 
 ## Repository Structure
 
 ```text
 libguides-frontend/
 ├── src/
-│   ├── html/                  # Editable LibApps HTML templates
-│   │   ├── home/
-│   │   └── guide/
-│   └── css/                   # UCLA custom CSS
-│
-├── dev/
-│   ├── server.mjs             # Local Node.js template renderer
-│   └── fixtures/              # Captured Springshare HTML
-│       ├── homepage.html
-│       └── communication.html
-│
-├── Dockerfile
-├── compose.yaml
-├── .dockerignore
-├── .gitignore
+│   └── html/             # Editable LibGuides HTML templates and global CSS
+│       ├── home/
+│       ├── guide/
+│       ├── subject/
+│       ├── profile/
+│       └── global-custom-css.html
+├── dev/                  # Local rendering and static preview tools
+│   ├── server.mjs
+│   ├── renderer.mjs
+│   ├── springshare.mjs
+│   ├── discover-routes.mjs
+│   ├── build-preview.mjs
+│   └── README.md
+├── .github/workflows/     # CI and preview workflows
 ├── package.json
-├── package-lock.json
 └── README.md
 ```
 
-## Local Development
-
-The local development environment allows developers to edit HTML templates and preview changes without modifying production LibGuides.
-
-### Requirements
-
-- Docker Desktop
-
-Alternatively, Node.js 22 can be used without Docker.
-
-### Run with Docker
-
-From the repository root:
-
-```bash
-docker compose up --build
-```
-
-Open the following URLs:
-
-| Page                | Local URL                           |
-| ------------------- | ----------------------------------- |
-| Homepage            | http://localhost:3000/              |
-| Communication Guide | http://localhost:3000/communication |
-
-To stop the server:
-
-```bash
-docker compose down
-```
-
-### Run without Docker
-
-Install dependencies:
-
-```bash
-npm ci
-```
-
-Start the local server:
-
-```bash
-node dev/server.mjs
-```
-
-### Editing Templates
-
-The local renderer reads HTML templates directly from `src/html/`.
-
-**Homepage:**
-
-```text
-src/html/home/three-column-guide-index-side.html
-```
-
-**Communication Guide (Side Navigation):**
-
-```text
-src/html/guide/side-nav-layout/ucla-default-template.html
-```
-
-To test a change:
-
-1. Open the appropriate HTML template.
-2. Make a change and save the file.
-3. Refresh the corresponding localhost page.
-4. Verify the change.
-
-The server reads templates on each request, so rebuilding Docker is not required for normal HTML edits, provided the repository is bind-mounted in Docker Compose.
-
-## How Local Rendering Works
-
-Springshare assembles LibGuides pages using server-side templates and dynamically generated content.
-
-Because that rendering engine is not available locally, this project uses a lightweight Node.js server and Cheerio to approximate the final page.
-
-```text
-Editable HTML template (src/html/)
-                +
-Captured HTML fixture (dev/fixtures/)
-                |
-                v
-       dev/server.mjs
-                |
-                v
-       Cheerio extracts content
-                |
-                v
-    Springshare placeholders replaced
-                |
-                v
-      localhost:3000
-```
-
-### `server.mjs`
-
-The local Node.js server:
-
-- Routes requests to the Homepage or Communication Guide.
-- Reads the corresponding HTML template and fixture.
-- Uses Cheerio to extract representative Springshare-generated content.
-- Replaces supported template placeholders such as `{{title}}` and `{{public_header}}`.
-- Returns the assembled HTML to the browser.
-- Reads source files on every request so changes appear after refreshing.
-
-### HTML Fixtures
-
-The `dev/fixtures/` directory contains captured HTML from production LibGuides pages.
-
-These files provide representative content for local rendering.
-
-Fixtures should generally remain unchanged during template development. They are not the source of truth for UCLA's editable templates.
-
-## Limitations
-
-The local environment is **not a complete Springshare LibGuides instance**.
-
-- Some Springshare placeholders may not yet be supported.
-- Dynamic features such as guide search, analytics, chat, and widgets may not work locally.
-- Captured content may become outdated.
-- Local rendering may differ from Springshare's actual HTML output.
-- Bootstrap 5 migration changes must still be tested in Springshare's Bootstrap 5 Transition Tool.
-
-**Important:** Changes made locally do not affect production. However, changes to guide content in Springshare's Bootstrap 5 preview may affect production because content is shared.
-
-## Deployment
-
-LibGuides HTML templates and Look & Feel configuration cannot be deployed automatically through this repository.
-
-Approved changes must be manually applied in Springshare's LibApps administration interface.
-
-Future CSS development will use Sass, with compiled stylesheets hosted externally through an approved CDN-backed service such as Netlify or AWS.
+The repository's `src/html/global-custom-css.html` is the source of truth for editable global custom CSS.
 
 ## Development Workflow
 
 1. Create a feature branch from `main`.
-2. Make HTML or CSS changes locally.
-3. Test using the local development environment.
-4. Validate Bootstrap 5 changes in Springshare's Transition Tool.
+2. Make HTML or CSS changes in the repository.
+3. Test changes using the local development server.
+4. Generate and validate the static preview.
 5. Open a pull request for review.
-6. Merge approved source changes.
-7. Coordinate manual LibApps updates and production activation.
+6. Review frontend changes through the GitHub Pages preview.
+7. Validate Bootstrap 5 changes using Springshare's Bootstrap 5 Transition Tool when applicable.
+8. Merge approved changes and coordinate production updates.
 
-GitHub is the source of truth for UCLA-owned frontend code. Any emergency changes made directly in LibApps must be reflected back in this repository to avoid configuration drift.
+## Production Deployment
 
-## Local Development
+LibGuides frontend templates and Look & Feel settings are managed through Springshare's LibApps administration interface.
 
-See [Local Development & Homepage Preview](dev/README.md)
-for running the local server, testing Homepage fixtures,
-editing global CSS, and generating static previews.
+**Merging changes into GitHub does not automatically update the production LibGuides website.**
+
+Approved frontend changes must be coordinated and applied through the appropriate Springshare administration workflow.
+
+Any emergency changes made directly in LibApps should also be reflected in this repository to prevent configuration drift.
+
+## Current Limitations
+
+The preview environment is not a complete Springshare LibGuides instance.
+
+- Some Springshare-specific functionality may not be available locally or in static previews.
+- GitHub Pages previews use build-time content snapshots rather than live PHP endpoints.
+- Certain nested Guide routes and special URL mappings may require additional support.
+- Individual Profile Detail pages are not yet fully supported in static previews.
+- Bootstrap 5 changes must still be validated in Springshare.
+
+## Documentation
+
+For local development, route discovery, template rendering, AJAX adapters, static builds, and troubleshooting, see:
+
+**[Developer Documentation](dev/README.md)**
