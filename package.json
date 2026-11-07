@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "fixtures:fetch": "node dev/fetch-fixtures.mjs"
   },
   "repository": {
     "type": "git",

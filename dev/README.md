@@ -1,386 +1,134 @@
-# LibGuides Local Development & Homepage Preview
+# LibGuides Developer Guide
 
-This directory contains the local development tools for testing UCLA Library LibGuides templates and global CSS during the Bootstrap 3 to Bootstrap 5 migration.
+This document explains how to develop, build, and test UCLA Library LibGuides frontend templates. For the project overview and production deployment policy, see the [root README](../README.md).
 
-The preview uses captured Springshare HTML and Cheerio to render pages without requiring access to the LibGuides administration server.
+## How previews work
 
-## 1. Development Files
+The repository contains editable Springshare HTML templates and `src/html/global-custom-css.html`, the source of truth for UCLA's global custom styling.
 
-| File                                 | Purpose                                          |
-| ------------------------------------ | ------------------------------------------------ |
-| `server.mjs`                         | Runs the local development server                |
-| `renderer.mjs`                       | Assembles LibGuides templates with captured HTML |
-| `homepage.mjs`                       | Provides mock AJAX responses for Homepage tabs   |
-| `build-preview.mjs`                  | Generates static HTML and JSON for GitHub Pages  |
-| `fixtures/homepage.html`             | Captured Homepage HTML                           |
-| `fixtures/communication.html`        | Captured Communication Guide HTML                |
-| `fixtures/ajax/`                     | Captured Homepage tab content                    |
-| `../src/html/global-custom-css.html` | Global CSS and related customization             |
+- **Development server:** `dev/server.mjs` fetches current production HTML and AJAX responses through `dev/springshare.mjs`. `dev/renderer.mjs` uses Cheerio to insert content into repository templates. `dev/preview-links.mjs` rewrites supported links for localhost.
+- **Static preview:** `dev/build-preview.mjs` discovers and validates public routes, renders static HTML into `dist/`, and captures supported AJAX responses as JSON. Browser-side adapters serve the captured data without PHP.
+- **Production:** Springshare remains the live hosting and content-management system. Preview builds do not deploy template changes to production.
 
-## 2. Run Local Development
+Static content is a **build-time snapshot**. The development server requests current production content on page loads; neither environment is a complete replacement for Springshare.
 
-Install dependencies:
+## Requirements and quick start
+
+Use a supported Node.js version compatible with the repository's `package.json` and npm. Network access to `guides.library.ucla.edu` is required for live fetching and static builds.
 
 ```bash
 npm ci
-```
-
-Start the development server:
-
-```bash
+npm run lint
 npm run dev
 ```
 
-Open:
+Open `http://localhost:3000/`. The server reads the HTML template and global CSS from the repository for each page request, so changes to those files appear after a refresh. Restart `npm run dev` when changing server-side JavaScript.
 
-- Homepage: http://localhost:3000/
-- Communication Guide: http://localhost:3000/communication
-
-The server reads templates, fixtures, and global CSS on every page request.
-
-**Changes appear after refreshing the browser.**
-
-## 3. Homepage AJAX Fixtures
-
-The Homepage uses Springshare JavaScript to load guide lists dynamically.
-
-Because the local server cannot execute Springshare PHP, `homepage.mjs` provides mock responses using captured production HTML.
-
-| Homepage tab | Action | Fixture                                    |
-| ------------ | ------ | ------------------------------------------ |
-| All Guides   | `170`  | `fixtures/ajax/homepage-all-guides.html`   |
-| By Subject   | `172`  | `fixtures/ajax/homepage-by-subject.html`   |
-| By Librarian | `174`  | `fixtures/ajax/homepage-by-librarian.html` |
-
-Guide-count requests (`176`, `177`, `178`) currently return empty mock data.
-
-### Test Homepage tabs
-
-1. Start `npm run dev`.
-2. Open the Homepage.
-3. Click All Guides, By Subject, and By Librarian.
-4. Verify the guide lists render and Bootstrap 3 accordions expand and collapse.
-
-### Test changes to fixture content
-
-Edit a file such as:
-
-```text
-dev/fixtures/ajax/homepage-by-subject.html
-```
-
-Change a subject heading, save, and refresh the Homepage.
-
-The server reads the fixture again when the AJAX request runs. No restart is required.
-
-Fixtures should contain **plain HTML**, not JSON-escaped strings. The server wraps the HTML in the Springshare-compatible JSON response.
-
-## 4. Test Global CSS
-
-Global customization is maintained in:
-
-```text
-src/html/global-custom-css.html
-```
-
-This file contains CSS styles, font definitions, and related global HTML customization.
-
-### Make a CSS change
-
-Find an existing CSS rule:
-
-```css
-#s-lg-hp-nav {
-  background: #eff3f4;
-}
-```
-
-Temporarily change it to:
-
-```css
-#s-lg-hp-nav {
-  background: #ffd100;
-}
-```
-
-Save and refresh:
-
-http://localhost:3000/
-
-The Homepage navigation background should turn yellow.
-
-Revert the temporary change after testing.
-
-**No server restart is required** because `server.mjs` reads the global customization file on every page request.
-
-Use Chrome DevTools → Elements → Styles to inspect CSS rules and verify which styles are applied.
-
-## 5. Test HTML Template Changes
-
-The local renderer uses the editable LibGuides templates stored under `src/html/`.
-
-To test a template change:
-
-1. Edit the appropriate Homepage or Communication Guide template.
-2. Save the file.
-3. Refresh the local page.
-4. Verify the updated HTML and layout.
-
-Changes to `server.mjs`, `renderer.mjs`, or `homepage.mjs` require restarting the Node.js server.
-
-## 6. Build Static Previews
-
-Generate static files:
+To generate and inspect static output:
 
 ```bash
 npm run build:preview
+npx serve dist -l 8080
 ```
 
-Expected output:
+Open `http://localhost:8080/`. Re-run `npm run build:preview` after changes; `dist/` is generated output, not the source of truth. Stop either server with Ctrl+C.
+
+## Test URL matrix
+
+This table is the **maintained checklist of representative URLs** for manual and automated testing. The local static URLs below assume the build uses `PREVIEW_BASE_PATH=/` and `npx serve dist -l 8080`. Production and GitHub Pages links are separate environments; a published GitHub Pages URL may represent the latest deployed build rather than your working branch.
+
+| Page / test case             | Production                                                                                    | Local dev (live data)                                                              | Local static (`dist/`)                               | GitHub Pages (deployed static)                                           | What to verify                                                    |
+| ---------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Homepage                     | [Production](https://guides.library.ucla.edu/)                                                | [Local dev](http://localhost:3000/)                                                | [Local static](http://localhost:8080/)               | [Pages](https://uclalibrary.github.io/libguides-frontend/)               | All Guides, By Subject, By Librarian, counts, links               |
+| Communication Guide          | [Production](https://guides.library.ucla.edu/communication)                                   | [Local dev](http://localhost:3000/communication)                                   | [Local static](http://localhost:8080/communication/) | [Pages](https://uclalibrary.github.io/libguides-frontend/communication/) | Guide navigation, content, page-specific CSS                      |
+| Africa Guide                 | [Production](https://guides.library.ucla.edu/africa)                                          | [Local dev](http://localhost:3000/africa)                                          | [Local static](http://localhost:8080/africa/)        | [Pages](https://uclalibrary.github.io/libguides-frontend/africa/)        | Active tab, colored boxes, guide content                          |
+| Subject Landing              | [Production](https://guides.library.ucla.edu/sb.php)                                          | [Local dev](http://localhost:3000/sb.php)                                          | [Local static](http://localhost:8080/subjects/)      | [Pages](https://uclalibrary.github.io/libguides-frontend/subjects/)      | Subject listing, links, search/sidebar                            |
+| Africa Subject Info          | [Production](https://guides.library.ucla.edu/africa-guides)                                   | [Local dev](http://localhost:3000/africa-guides)                                   | [Local static](http://localhost:8080/africa-guides/) | [Pages](https://uclalibrary.github.io/libguides-frontend/africa-guides/) | Guides AJAX, Experts, sidebar                                     |
+| Profile Landing              | [Production](https://guides.library.ucla.edu/prf.php)                                         | [Local dev](http://localhost:3000/prf.php)                                         | [Local static](http://localhost:8080/profiles/)      | [Pages](https://uclalibrary.github.io/libguides-frontend/profiles/)      | By Name, By Subject, profile cards, sidebar, AJAX                 |
+| Individual Profile (example) | [Production](https://guides.library.ucla.edu/prf.php?id=61f2b01e-7cdb-11ed-9922-0ad758b798c3) | [Local dev](http://localhost:3000/prf.php?id=61f2b01e-7cdb-11ed-9922-0ad758b798c3) | **Not generated yet**                                | **Not generated yet**                                                    | Detail template and query-string handling; static support pending |
+
+**Route rules:** Production and local development use `/sb.php` and `/prf.php`; GitHub Pages uses `/subjects/` and `/profiles/` because static hosting cannot execute PHP. Profile detail links with `?id=UUID` must remain on production until dedicated static detail pages exist. A working static landing page does not imply static detail-page support.
+
+### Pull request previews
+
+If the CI workflow publishes PR-numbered previews, use the deployed URL shown in that PR's workflow or deployment output. A possible path format is:
 
 ```text
-dist/
-├── index.html
-├── communication/
-│   └── index.html
-└── ajax/
-    ├── 170.json
-    ├── 172.json
-    └── 174.json
+https://uclalibrary.github.io/libguides-frontend/pr-<PR-number>/profiles/
 ```
 
-The build uses the same renderer and Homepage fixture data as local development.
+**Confirm the actual URL in CI; do not assume that path is deployed.** PR previews must be built with the matching `PREVIEW_BASE_PATH` and checked for working links and JSON requests. If the site is hosted under a repository or PR prefix, serving `dist/` at the root locally is not a complete base-path test.
 
-### Preview the static build locally
+### Maintain this matrix
+
+When adding or changing a supported page, update its production, local dev, local static, and GitHub Pages URLs here. Add a representative row for each new page _type_ or interaction; there is no need to list every discovered Guide route. Mark unsupported environments explicitly rather than inventing a link. Check both navigation and network requests in the deployed preview.
+
+## Key development files
+
+| File                                               | Responsibility                                                             |
+| -------------------------------------------------- | -------------------------------------------------------------------------- |
+| `dev/server.mjs`                                   | Local HTTP server, page routing, and live AJAX forwarding                  |
+| `dev/renderer.mjs`                                 | Template selection, placeholders, and assembled HTML                       |
+| `dev/springshare.mjs`                              | Production HTML/AJAX fetching, retries, and caching                        |
+| `dev/discover-routes.mjs`                          | Discover, classify, and identify public Guide and Subject routes           |
+| `dev/preview-links.mjs`                            | Rewrite supported URLs; preserve full-document DOCTYPE and fragment markup |
+| `dev/build-preview.mjs`                            | Generate static pages, route mappings, and AJAX snapshots                  |
+| `dev/static-homepage.js`                           | Homepage AJAX adapter for static hosting                                   |
+| `dev/static-subject.js`                            | Subject Info AJAX adapter for static hosting                               |
+| `dev/static-profile.js`                            | Profile Landing AJAX adapter for static hosting                            |
+| `src/html/global-custom-css.html`                  | Editable UCLA global custom CSS and related markup                         |
+| `src/html/home/`, `guide/`, `subject/`, `profile/` | Editable page-type templates                                               |
+
+The old `dev/fixtures/` HTML snapshots and mock `dev/homepage.mjs` / `dev/subject.mjs` modules are no longer part of the normal preview flow. Do not reintroduce fixture-based instructions when documenting new pages.
+
+## Working with templates and CSS
+
+Edit a template under `src/html/` or `src/html/global-custom-css.html`, save, and refresh the local development page. The renderer uses repository global CSS in place of the matching production global blocks while preserving production page-specific styles and dependencies. Do not remove page-specific styles or introduce duplicate global styles when changing `buildPreviewHead()`.
+
+Complete documents must retain `<!DOCTYPE html>` and render in standards mode (`document.compatMode === 'CSS1Compat'`). AJAX fragments must remain fragments. The preview link rewriter handles these differently to prevent the Quirks Mode layout regression previously seen on Profile Landing.
+
+For a visual regression, compare the same page at the same viewport size in production and local development. Inspect DevTools Network for missing CSS, fonts, images, and JSON, and check browser Console errors before adding CSS overrides.
+
+## Static AJAX behavior
+
+| Page                            | Springshare endpoint                                                   | Static data / adapter                                                         |
+| ------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Homepage                        | `/index_process.php`, actions `170`, `172`, `174`, `176`, `177`, `178` | `dist/ajax/<action>.json`; `static-homepage.js`                               |
+| Subject Info                    | `/sb_process.php`, action `540`                                        | `dist/ajax/subject-<subjectId>.json`; `static-subject.js`                     |
+| Profile Landing: listing        | `/prf_process.php`, action `530`                                       | `dist/ajax/profile-530-<subjectId>.json` (including `0`); `static-profile.js` |
+| Profile Landing: subject Guides | `/prf_process.php`, action `531`                                       | `dist/ajax/profile-531-<subjectId>.json`; `static-profile.js`                 |
+
+The build currently discovers Subject Info IDs and reads Profile Landing dropdown IDs for profile filters. Verify coverage when the production subject list changes. AJAX adapters must load before Springshare scripts initialize, and their JSON URLs must work under the configured preview base path.
+
+## Adding a new page or route
+
+1. Confirm the production URL, page type, and editable template. Reuse existing Guide, Subject, or Profile templates when appropriate.
+2. Check whether `discover-routes.mjs` and `getPage()` already support the route. Add an explicit route or classification only when needed.
+3. Test the local development URL with live Springshare content. Check placeholder mappings in `renderTemplate()` if content is missing.
+4. If the page uses a new AJAX action, extend static response generation and the appropriate browser adapter; do not assume GitHub Pages can serve PHP.
+5. Run lint and build, inspect `dist/`, and test the static URL. Add a representative entry to the test URL matrix above.
+6. Add or update Cypress tests as appropriate, then verify CI and the deployed preview.
+
+Some redirects, nested Guide routes, and special subject URL mappings need additional handling. A route discovered in production is not automatically proof that it is supported by the static build.
+
+## Testing and CI
 
 ```bash
-npx serve dist
-```
-
-Open the URL displayed by the static server.
-
-The static build does not update automatically. After changing templates, CSS, or fixtures, rerun:
-
-```bash
+npm run lint
 npm run build:preview
 ```
 
-Then refresh the browser.
+Use the test command configured in `package.json` for Cypress; verify the development server and expected base URL are available before running it. Review GitHub Actions results and deployed previews, not just a successful build log. For PRs, confirm that the preview is deployed even when an intermittent Cypress run fails; the workflow intentionally keeps preview deployment independent of Cypress success.
 
-**Current limitation:** Static Homepage tabs require a browser-side AJAX adapter because GitHub Pages cannot execute Springshare PHP endpoints. Until that adapter is implemented, the JSON files are generated but the tab interactions will not work in the static preview.
+**Manual smoke test:** Check the URL matrix, navigation, tabs/filters, cards, image spacing, sidebars, profile subject switching, and `CSS1Compat`. In static mode, inspect Fetch/XHR to confirm that supported AJAX requests use generated JSON rather than live PHP. Check for unexpected production links, broken assets, or console errors.
 
-## 7. Run Tests
+## Known limitations
 
-Start the development server, then run Cypress in a separate terminal:
+- Static GitHub Pages uses build-time content; changes in Springshare require a new build.
+- Individual Profile Detail pages with `?id=UUID` are not yet generated in static mode.
+- Some nested Guide paths, redirects, and special subject mappings are not fully supported.
+- Springshare authentication, administration, and some third-party widgets are outside the scope of the preview.
+- Live third-party resources can still be requested by the browser; the static preview is not necessarily fully offline.
+- Bootstrap 5 migration work still requires validation in Springshare's Transition Tool.
 
-```bash
-npm test
-```
-
-Cypress uses Chrome for local testing.
-
-Chromatic provides visual regression testing through the CI workflow.
-
-## 8. Known Limitations
-
-- Springshare authentication endpoints are not implemented locally.
-- Some production JavaScript may generate 404 errors for unavailable PHP endpoints.
-- Homepage fixtures contain captured data, not live guide listings.
-- Sorting, searching, and additional AJAX interactions may require more fixtures.
-- Live third-party scripts may make requests to production services.
-- Static GitHub Pages previews require additional handling for dynamic AJAX requests.
-
-The goal is to validate frontend templates, global styling, responsive layouts, and Bootstrap migration changes—not reproduce the entire Springshare backend.
-
-# Adding a New LibGuides Page to Local & CI Previews
-
-This guide explains how to add a new LibGuides page to the Bootstrap migration testing environment.
-
-**Goal:** A developer can edit a LibGuides template, preview it locally, run Cypress/Chromatic tests, and publish a static preview to GitHub Pages.
-
-## 1. Capture the Production Page
-
-Open the page in production and save:
-
-- **Page Source** — HTML returned by Springshare, including scripts, CSS, and metadata.
-- **Rendered HTML** — DOM captured from Chrome DevTools → Elements, including dynamically loaded content.
-- **AJAX responses** — Only if the page requires dynamic Springshare data.
-
-Save the HTML fixture under:
-
-```text
-dev/fixtures/<page-name>.html
-```
-
-Use the existing Homepage and Communication Guide fixtures as examples.
-
-Keep fixtures free of sensitive data, session cookies, and authentication tokens before committing them.
-
-## 2. Add the Editable Template
-
-Identify the LibGuides template used by the page.
-
-Store the template under the appropriate directory in `src/html/`.
-
-For example:
-
-```text
-src/html/guide/side-nav-layout/ucla-default-template.html
-```
-
-If multiple pages use the same template, reuse it rather than creating duplicates.
-
-## 3. Register the Page
-
-Open `dev/renderer.mjs`.
-
-Add the new route to the `pages` object:
-
-```javascript
-'/new-guide': {
-  template: 'src/html/guide/side-nav-layout/ucla-default-template.html',
-  fixture: 'dev/fixtures/new-guide.html',
-  type: 'guide',
-},
-```
-
-The existing `server.mjs` and `build-preview.mjs` use this configuration to render registered pages.
-
-If the new page type has different Springshare placeholders, extend `renderTemplate()` with the required mappings.
-
-## 4. Test Locally
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open:
-
-```text
-http://localhost:3000/new-guide
-```
-
-Verify that the template renders with the captured content, global CSS, fonts, and required JavaScript.
-
-Edit the template or `src/html/global-custom-css.html`, save, and refresh to confirm changes appear.
-
-No server restart is needed for template, fixture, or global CSS changes.
-
-## 5. Handle Dynamic Content (Only If Needed)
-
-Open Chrome DevTools → Network → Fetch/XHR.
-
-If the page makes requests to Springshare PHP endpoints that fail locally:
-
-1. Capture the successful production response.
-2. Save the required content under `dev/fixtures/ajax/`.
-3. Create or extend a page-specific module such as `dev/homepage.mjs`.
-4. Add a mock route in `dev/server.mjs`.
-5. Match the production response structure.
-
-For JSON responses containing HTML, store the extracted `data.content` as clean HTML and let the mock module construct the JSON response.
-
-Do not mock authentication or production services unless necessary for frontend testing.
-
-If the page has no required dynamic AJAX content, skip this step.
-
-## 6. Generate and Test Static Pages
-
-Run:
-
-```bash
-npm run build:preview
-npx serve dist
-```
-
-The build generates the new page automatically from the registered route.
-
-Expected output:
-
-```text
-dist/
-└── new-guide/
-    └── index.html
-```
-
-Open the static preview URL displayed by `serve`, followed by `/new-guide/`.
-
-Verify that styling, fonts, navigation, images, and content render correctly.
-
-**Important:** GitHub Pages cannot execute Springshare PHP. Pages requiring dynamic AJAX data need static fixture files and a browser-side adapter, following the Homepage implementation.
-
-## 7. Add Cypress Tests
-
-Create:
-
-```text
-cypress/e2e/new-guide.cy.js
-```
-
-Example:
-
-```javascript
-describe('New LibGuides Page', () => {
-  it('renders the guide', () => {
-    cy.visit('/new-guide');
-
-    cy.get('#s-lg-guide-name').should('be.visible');
-    cy.get('#s-lg-guide-main').should('exist');
-  });
-});
-```
-
-Use existing Homepage and Communication Guide tests as examples.
-
-Add a Chromatic visual snapshot using the project's existing Cypress/Chromatic integration and snapshot conventions.
-
-Run:
-
-```bash
-npm test
-```
-
-Verify the tests pass using Chrome.
-
-## 8. Verify CI and GitHub Pages
-
-Before opening a pull request:
-
-```bash
-npm run build:preview
-npm test
-```
-
-Push the feature branch and open a PR.
-
-Verify that:
-
-- Cypress tests pass in GitHub Actions.
-- Chromatic captures the new page and allows review of visual changes.
-- The static build includes the new page.
-- The GitHub Pages preview displays the new page correctly when deployed.
-
-For PR-numbered deployments, the expected URL format is:
-
-```text
-https://uclalibrary.github.io/libguides-frontend/pr-<PR-number>/new-guide/
-```
-
-This URL requires the PR preview deployment workflow to be configured.
-
-## Definition of Done
-
-- [ ] Production HTML and required AJAX fixtures captured.
-- [ ] Correct editable template identified and registered.
-- [ ] Page renders locally.
-- [ ] Global CSS and template changes appear on refresh.
-- [ ] Required dynamic interactions work locally.
-- [ ] Static preview renders without a Node.js backend.
-- [ ] Cypress test added and passing.
-- [ ] Chromatic snapshot reviewed.
-- [ ] CI passes and deployed preview verified.
-- [ ] No unintended production requests or sensitive fixture data.
-
-**Note:** Local and CI previews reproduce selected frontend behavior using captured production data. They do not replace final manual validation in Springshare's Bootstrap 5 preview environment.
+Changes committed or merged to this repository do **not** automatically update the Springshare production templates. Coordinate approved production updates through LibApps and keep this repository synchronized with any direct production changes.

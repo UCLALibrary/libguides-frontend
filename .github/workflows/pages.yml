@@ -9,12 +9,9 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: github-pages
-  cancel-in-progress: false
-
 jobs:
-  deploy:
+  build:
+    name: Build main preview
     runs-on: ubuntu-latest
 
     steps:
@@ -24,14 +21,39 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build static pages
+        env:
+          PREVIEW_BASE_PATH: /libguides-frontend/
         run: npm run build:preview
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-preview
+          path: dist/
+          retention-days: 3
+
+  deploy:
+    name: Publish main preview
+    needs: build
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: libguides-pages-publish
+      cancel-in-progress: false
+
+    steps:
+      - name: Download preview artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: main-preview
+          path: dist/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
