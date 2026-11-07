@@ -9,8 +9,10 @@ import { rewritePreviewLinks } from './preview-links.mjs';
 
 const outputDir = resolve('dist');
 const basePath = process.env.PREVIEW_BASE_PATH ?? '/';
-
 const CONCURRENCY = 4;
+
+const PRODUCTION_ORIGIN = 'https://guides.library.ucla.edu';
+const PROFILE_ID_PATTERN = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 
 const globalHTML = await readFile(resolve('src/html/global-custom-css.html'), 'utf8');
 
@@ -31,7 +33,7 @@ async function mapWithConcurrency(items, limit, callback) {
   return results;
 }
 
-// GitHub Pages cannot serve PHP files as dynamic routes.
+// GitHub Pages cannot execute PHP routes.
 function getStaticRoute(route) {
   const staticRoutes = {
     '/sb.php': '/subjects/',
@@ -45,8 +47,7 @@ function getStaticRoute(route) {
   return route === '/' ? '/' : `${route.replace(/\/+$/, '')}/`;
 }
 
-// Extract subject IDs from the Profile Landing dropdown.
-// This avoids assuming all profile subjects have Subject Info pages.
+// Extract subject IDs from Profile Landing.
 function extractProfileSubjectIds(html) {
   const $ = load(html);
   const ids = new Set();
@@ -62,7 +63,38 @@ function extractProfileSubjectIds(html) {
   return [...ids];
 }
 
-// Discover and validate all public pages.
+// Extract individual profile UUIDs from the Profile Landing AJAX response.
+function extractProfileIds(response) {
+  const $ = load(response.data?.html || '', null, false);
+  const ids = new Set();
+
+  $('a[href]').each((_, element) => {
+    const href = $(element).attr('href');
+    if (!href) return;
+
+    let url;
+
+    try {
+      url = new URL(href, PRODUCTION_ORIGIN);
+    } catch {
+      return;
+    }
+
+    if (url.origin !== PRODUCTION_ORIGIN || url.pathname !== '/prf.php') {
+      return;
+    }
+
+    const id = url.searchParams.get('id');
+
+    if (id && PROFILE_ID_PATTERN.test(id)) {
+      ids.add(id.toLowerCase());
+    }
+  });
+
+  return [...ids];
+}
+
+// Discover and validate public pages.
 console.log('Discovering Springshare routes...');
 
 const discoveredRoutes = await discoverRoutes();
@@ -76,6 +108,7 @@ const validated = await mapWithConcurrency(candidateRoutes, CONCURRENCY, async (
     const productionHTML = await fetchSpringsharePage(route);
 
     const explicitPage = pages[route];
+
     const type = explicitPage?.type ?? classifyRoute(route, productionHTML);
 
     if (!type) {
@@ -104,6 +137,7 @@ const validated = await mapWithConcurrency(candidateRoutes, CONCURRENCY, async (
     };
   } catch (error) {
     console.error(`Failed to validate ${route}: ${error.message}`);
+
     return null;
   }
 });
@@ -116,12 +150,29 @@ if (!validPages.length) {
   throw new Error('No valid pages discovered.');
 }
 
+// Find Profile Landing and discover individual profiles.
+const profileLanding = validPages.find(({ page }) => page.type === 'profile-landing');
+
+let allProfilesResponse = null;
+let profileIds = [];
+
+if (profileLanding) {
+  allProfilesResponse = await fetchSpringshareAjax('/prf_process.php?action=530&subject_id=0');
+
+  profileIds = extractProfileIds(allProfilesResponse);
+
+  console.log(`Discovered ${profileIds.length} individual profiles.`);
+}
+
 // Build route mappings only from validated pages.
 const generatedRoutes = Object.fromEntries(
   validPages.map(({ route }) => [route, getStaticRoute(route)])
 );
 
-// Rewrite links in AJAX HTML fragments.
+// Tracks only successfully generated individual profiles.
+const generatedProfileIds = new Set();
+
+// Rewrite links inside Springshare AJAX response HTML.
 function rewriteAjaxResponse(response) {
   const result = structuredClone(response);
 
@@ -131,6 +182,7 @@ function rewriteAjaxResponse(response) {
         staticPreview: true,
         basePath,
         generatedRoutes,
+        generatedProfileIds,
       });
     }
   }
@@ -139,8 +191,72 @@ function rewriteAjaxResponse(response) {
 }
 
 // Clean the output directory.
-await rm(outputDir, { recursive: true, force: true });
-await mkdir(outputDir, { recursive: true });
+await rm(outputDir, {
+  recursive: true,
+  force: true,
+});
+
+await mkdir(outputDir, {
+  recursive: true,
+});
+
+// Fetch and render Individual Profile Detail pages first.
+if (profileIds.length) {
+  const profileTemplate = await readFile(
+    resolve('src/html/profile/individual-profile/profile-page-swap-footers.html'),
+    'utf8'
+  );
+
+  const results = await mapWithConcurrency(profileIds, CONCURRENCY, async (profileId) => {
+    try {
+      const productionHTML = await fetchSpringsharePage(
+        `/prf.php?id=${encodeURIComponent(profileId)}`
+      );
+
+      return {
+        profileId,
+        html: renderTemplate(profileTemplate, productionHTML, 'profile-info', globalHTML),
+      };
+    } catch (error) {
+      console.warn(`Failed to generate profile ${profileId}: ${error.message}`);
+
+      return null;
+    }
+  });
+
+  const successfulProfiles = results.filter(Boolean);
+
+  // Register only profiles that were successfully rendered.
+  for (const { profileId } of successfulProfiles) {
+    generatedProfileIds.add(profileId);
+  }
+
+  for (const { profileId, html } of successfulProfiles) {
+    let rewritten = rewritePreviewLinks(html, {
+      staticPreview: true,
+      basePath,
+      generatedRoutes,
+      generatedProfileIds,
+    });
+
+    // Individual Profile pages can trigger Springshare profile AJAX.
+    // Install the static adapter before Springshare scripts execute.
+    rewritten = rewritten.replace(
+      /<head[^>]*>/i,
+      (match) => `${match}\n<script src="../../static-profile.js"></script>`
+    );
+
+    const outputPath = join(outputDir, 'profiles', profileId, 'index.html');
+
+    await mkdir(dirname(outputPath), {
+      recursive: true,
+    });
+
+    await writeFile(outputPath, rewritten, 'utf8');
+
+    console.log(`Generated Profile Detail: ${profileId}`);
+  }
+}
 
 // Render all validated pages.
 for (const { route, page, productionHTML } of validPages) {
@@ -152,6 +268,7 @@ for (const { route, page, productionHTML } of validPages) {
     staticPreview: true,
     basePath,
     generatedRoutes,
+    generatedProfileIds,
   });
 
   // Install static AJAX adapters before Springshare scripts.
@@ -183,7 +300,10 @@ for (const { route, page, productionHTML } of validPages) {
 
   const outputPath = join(outputDir, relativePath);
 
-  await mkdir(dirname(outputPath), { recursive: true });
+  await mkdir(dirname(outputPath), {
+    recursive: true,
+  });
+
   await writeFile(outputPath, html, 'utf8');
 
   console.log(`Generated: ${route}`);
@@ -191,7 +311,10 @@ for (const { route, page, productionHTML } of validPages) {
 
 // Create AJAX output directory.
 const ajaxDir = join(outputDir, 'ajax');
-await mkdir(ajaxDir, { recursive: true });
+
+await mkdir(ajaxDir, {
+  recursive: true,
+});
 
 // Fetch Homepage AJAX responses.
 const homepageActions = ['170', '172', '174', '176', '177', '178'];
@@ -223,7 +346,7 @@ for (const action of homepageActions) {
   console.log(`Generated Homepage AJAX: ${action}`);
 }
 
-// Generate Subject Info AJAX responses dynamically.
+// Generate Subject Info AJAX responses.
 const subjectPages = validPages.filter(({ page }) => page.type === 'subject-info');
 
 const subjectIds = [...new Set(subjectPages.map(({ subjectId }) => subjectId))];
@@ -248,8 +371,6 @@ await mapWithConcurrency(subjectIds, CONCURRENCY, async (subjectId) => {
 });
 
 // Generate Profile Landing AJAX responses.
-const profileLanding = validPages.find(({ page }) => page.type === 'profile-landing');
-
 let profileSubjectIds = [];
 
 if (profileLanding) {
@@ -257,7 +378,7 @@ if (profileLanding) {
 
   console.log(`Generating Profile AJAX for ${profileSubjectIds.length} subjects.`);
 
-  // action=530: All profiles and profiles by subject.
+  // action=530: All profiles and profiles filtered by subject.
   const profileFilters = ['0', ...profileSubjectIds];
 
   await mapWithConcurrency(profileFilters, CONCURRENCY, async (subjectId) => {
@@ -266,7 +387,10 @@ if (profileLanding) {
       subject_id: subjectId,
     });
 
-    const response = await fetchSpringshareAjax(`/prf_process.php?${params}`);
+    const response =
+      subjectId === '0'
+        ? allProfilesResponse
+        : await fetchSpringshareAjax(`/prf_process.php?${params}`);
 
     await writeFile(
       join(ajaxDir, `profile-530-${subjectId}.json`),
@@ -313,9 +437,11 @@ await Promise.all(
 console.log('');
 console.log('Static preview build complete.');
 console.log(`Generated ${validPages.length} pages.`);
+console.log(`Generated ${generatedProfileIds.size} Profile Detail pages.`);
 console.log(`Generated ${subjectIds.length} Subject AJAX responses.`);
 
 if (profileLanding) {
   console.log(`Generated ${profileSubjectIds.length + 1} Profile listing AJAX responses.`);
+
   console.log(`Generated ${profileSubjectIds.length} Profile Guides AJAX responses.`);
 }

@@ -2,11 +2,14 @@ import { load } from 'cheerio';
 
 const PRODUCTION_ORIGIN = 'https://guides.library.ucla.edu';
 
+const PROFILE_ID_PATTERN = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
+
 // Explicit local routes supported by renderer.mjs.
 const localRoutes = {
   '/': '/',
   '/communication': '/communication/',
   '/sb.php': '/sb.php',
+  '/prf.php': '/prf.php',
   '/africa-guides': '/africa-guides/',
 };
 
@@ -41,12 +44,17 @@ function getLocalPreviewPath(pathname) {
 
 export function rewritePreviewLinks(
   html,
-  { staticPreview = false, basePath = '/', generatedRoutes = {} } = {}
+  {
+    staticPreview = false,
+    basePath = '/',
+    generatedRoutes = {},
+    generatedProfileIds = new Set(),
+  } = {}
 ) {
   if (!html) return html;
 
-  // Parse HTML fragments without adding html/body wrappers.
-
+  // Preserve the DOCTYPE for complete HTML documents.
+  // Keep AJAX HTML fragments without html/body wrappers.
   const isDocument = /^\s*<!doctype\s+html/i.test(html);
 
   const $ = load(html, null, isDocument);
@@ -73,6 +81,7 @@ export function rewritePreviewLinks(
     // /#collapse4483 -> #collapse4483
     if (/^\/+#/.test(originalHref)) {
       $(element).attr('href', `#${originalHref.replace(/^\/+#/, '')}`);
+
       return;
     }
 
@@ -90,6 +99,34 @@ export function rewritePreviewLinks(
     }
 
     const pathname = normalizePath(url.pathname);
+
+    // Individual Profile Detail pages use /prf.php?id=UUID.
+    // Keep them separate from Profile Landing.
+    if (pathname === '/prf.php' && url.searchParams.has('id')) {
+      const profileId = url.searchParams.get('id');
+
+      if (!profileId || !PROFILE_ID_PATTERN.test(profileId)) {
+        return;
+      }
+
+      const normalizedId = profileId.toLowerCase();
+
+      if (staticPreview) {
+        if (generatedProfileIds.has(normalizedId)) {
+          // Rewrite only successfully generated profiles.
+          $(element).attr('href', `${prefix}/profiles/${normalizedId}/${url.hash}`);
+        } else {
+          // Profile was not generated.
+          // Keep its production URL.
+          $(element).attr('href', url.href);
+        }
+      } else {
+        // Local development supports dynamic profiles.
+        $(element).attr('href', `/prf.php?id=${encodeURIComponent(profileId)}${url.hash}`);
+      }
+
+      return;
+    }
 
     const previewPath = staticPreview
       ? (generatedRoutes[pathname] ?? null)
