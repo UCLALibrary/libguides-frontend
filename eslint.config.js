@@ -39,7 +39,7 @@ module.exports = [
     files: ['cypress/**/*.js'],
   },
   {
-    files: ['dev/static-homepage.js'],
+    files: ['dev/static-*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
