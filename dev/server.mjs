@@ -7,7 +7,12 @@ import { rewritePreviewLinks } from './preview-links.mjs';
 
 const port = 3000;
 
-const ajaxEndpoints = new Set(['/index_process.php', '/sb_process.php', '/prf_process.php']);
+const ajaxEndpoints = new Set([
+  '/index_process.php',
+  '/sb_process.php',
+  '/prf_process.php',
+  '/srch_process_cs.php',
+]);
 
 function rewriteAjaxResponse(response) {
   const result = structuredClone(response);
