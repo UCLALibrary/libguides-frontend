@@ -12,13 +12,13 @@
 <link data-n-head="ssr" rel="icon" type="image/x-icon" href="https://www.library.ucla.edu/favicon.ico">
 <link rel="stylesheet" href="https://static-assets-us.libguides.com/web/jquery/css/jquery-ui.min.css?2691">
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://static-assets-us.libguides.com/web/css3.31.3/lg-public.min.css">
+    <link rel="stylesheet" href="https://static-assets-us.libguides.com/web/css3.31.4/lg-public.min.css">
 <script src="https://static-assets-us.libguides.com/web/jquery/js/1.12.4_jquery.min.js"></script>
 <!-- js_include_fallback_lg.twig -->
 <script src="//code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script>jQuery.ui || document.write('<script src="https://static-assets-us.libguides.com/web/jquery/js/jquery-ui.min.js?2691">\x3C/script>');</script>
 <!-- !js_include_fallback_lg.twig -->
-    <script type="text/javascript" src="https://static-assets-us.libguides.com/web/js3.31.3/lg-public.min.js"></script>
+    <script type="text/javascript" src="https://static-assets-us.libguides.com/web/js3.31.4/lg-public.min.js"></script>
 
 
 
@@ -802,6 +802,13 @@
   a.btn-info:visited {
     color: #ffffff;
   }
+
+  /* hide new sort dropdown on blogs page*/
+  #s-lib-public-blog-main {
+    #sort_by_container {
+      display: none !important;
+    }
+  }
 </style><style type="text/css">
 @font-face {
     font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.ttf') format('truetype');
@@ -1252,7 +1259,7 @@ div.left { width: 45%;;}
     <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders" role="banner">
         <div id="s-lib-bc">
             
-                <ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="https://guides.library.ucla.edu/">Research Guides</a></li><li id="s-lib-bc-index" class="breadcrumb-item"><a href="/libguides-frontend/pr-17/profiles/">Profiles</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">Anthony Vuong</li></ol>
+                <ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="/libguides-frontend/pr-17/">Research Guides</a></li><li id="s-lib-bc-index" class="breadcrumb-item"><a href="/libguides-frontend/pr-17/profiles/">Profiles</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">Anthony Vuong</li></ol>
             
         </div>
         <h1 id="s-lib-public-header-title">Anthony Vuong
