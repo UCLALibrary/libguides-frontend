@@ -1,4 +1,3 @@
-/* global window, URL, XMLHttpRequest, Request */
 /**
  * Local A-Z Databases AJAX adapter.
  *

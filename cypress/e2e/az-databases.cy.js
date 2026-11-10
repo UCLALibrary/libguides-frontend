@@ -20,13 +20,23 @@ describe('LibGuides A-Z Databases', () => {
   }
 
   it('renders the A-Z Databases page', () => {
-    visitDatabases();
+    cy.visit('/az/databases?t=3846');
+
+    cy.wait('@databases', { timeout: 30000 }).then(({ response }) => {
+      expect(response.statusCode).to.eq(200);
+      expect(response.body.errText).to.eq('OK');
+      expect(response.body.data.html).to.be.a('string');
+      expect(response.body.data.html.length).to.be.greaterThan(0);
+    });
 
     cy.get('#s-lib-public-header-title').should('be.visible');
 
     cy.get('#s-lg-az-search-bar').should('exist');
 
     cy.get('.s-lg-az-search').should('be.visible');
+    if (isChromatic) {
+      cy.visualSnapshot('LibGuides A-Z Databases');
+    }
   });
 
   it('loads database results', () => {
@@ -45,7 +55,9 @@ describe('LibGuides A-Z Databases', () => {
   it('supports keyword search', () => {
     visitDatabases();
 
-    cy.get('.s-lg-az-search').clear().type('library{enter}');
+    cy.get('.s-lg-az-search').clear();
+
+    cy.get('.s-lg-az-search').type('library{enter}');
 
     cy.wait('@databases', { timeout: 30000 }).then(({ request, response }) => {
       const url = new URL(request.url);

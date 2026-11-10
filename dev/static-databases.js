@@ -1,6 +1,3 @@
-
-/* global window, document, URL, Request, XMLHttpRequest */
-
 /**
  * A-Z Databases adapter for static GitHub Pages previews.
  *
@@ -17,8 +14,7 @@
     return;
   }
 
-  const SPRINGSHARE_ORIGIN =
-    'https://guides.library.ucla.edu';
+  const SPRINGSHARE_ORIGIN = 'https://guides.library.ucla.edu';
 
   const DATABASE_ENDPOINT = '/process/az/render-list';
 
@@ -27,10 +23,7 @@
 
     if (
       requestUrl.pathname !== DATABASE_ENDPOINT ||
-      ![
-        SPRINGSHARE_ORIGIN,
-        window.location.origin,
-      ].includes(requestUrl.origin)
+      ![SPRINGSHARE_ORIGIN, window.location.origin].includes(requestUrl.origin)
     ) {
       return url;
     }
@@ -46,43 +39,23 @@
   // Intercept jQuery XMLHttpRequest calls.
   const nativeOpen = XMLHttpRequest.prototype.open;
 
-  XMLHttpRequest.prototype.open = function (
-    method,
-    url,
-    ...args
-  ) {
-    return nativeOpen.call(
-      this,
-      method,
-      rewriteUrl(url),
-      ...args
-    );
+  XMLHttpRequest.prototype.open = function (method, url, ...args) {
+    return nativeOpen.call(this, method, rewriteUrl(url), ...args);
   };
 
   // Support fetch-based requests as well.
   const nativeFetch = window.fetch;
 
   window.fetch = function (input, init) {
-    if (
-      typeof input === 'string' ||
-      input instanceof URL
-    ) {
-      return nativeFetch.call(
-        this,
-        rewriteUrl(input),
-        init
-      );
+    if (typeof input === 'string' || input instanceof URL) {
+      return nativeFetch.call(this, rewriteUrl(input), init);
     }
 
     if (input instanceof Request) {
       const rewrittenUrl = rewriteUrl(input.url);
 
       if (rewrittenUrl !== input.url) {
-        return nativeFetch.call(
-          this,
-          new Request(rewrittenUrl, input),
-          init
-        );
+        return nativeFetch.call(this, new Request(rewrittenUrl, input), init);
       }
     }
 
