@@ -83,3 +83,32 @@ export async function fetchSpringshareAjax(path) {
     }
   }
 }
+
+/**
+ * Fetch live A-Z Database HTML results.
+ *
+ * Unlike the existing Springshare AJAX endpoints,
+ * /process/az/render-list returns HTML.
+ */
+export async function fetchSpringshareHtml(path) {
+  const url = new URL(path, 'https://guides.library.ucla.edu');
+
+  if (url.origin !== 'https://guides.library.ucla.edu') {
+    throw new Error('Invalid Springshare origin');
+  }
+
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'text/html, */*; q=0.01',
+      'X-Requested-With': 'XMLHttpRequest',
+      Referer: 'https://guides.library.ucla.edu/az/databases',
+    },
+    signal: AbortSignal.timeout(30000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`A-Z Database request failed: ${response.status}`);
+  }
+
+  return response.text();
+}

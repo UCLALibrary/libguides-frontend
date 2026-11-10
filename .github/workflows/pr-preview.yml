@@ -41,6 +41,7 @@ jobs:
         env:
           PREVIEW_BASE_PATH: /libguides-frontend/pr-${{ github.event.pull_request.number }}/
           SEARCH_PROXY_URL: https://libguides-proxy.netlify.app/api/libguides/search/proxy
+          DATABASE_PROXY_URL: https://libguides-proxy.netlify.app/api/libguides/az/databases/proxy
         run: npm run build:preview
 
       - name: Upload preview artifact
