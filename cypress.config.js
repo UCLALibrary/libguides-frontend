@@ -2,12 +2,6 @@ const { defineConfig } = require('cypress');
 const { installPlugin } = require('@chromatic-com/cypress');
 
 module.exports = defineConfig({
-  env: {
-    // Only capture snapshots when explicitly requested.
-    disableAutoSnapshot: true,
-    delay: 500,
-  },
-
   e2e: {
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.cy.js',
@@ -17,6 +11,7 @@ module.exports = defineConfig({
       config.expose = {
         ...config.expose,
         visualProvider: process.env.CYPRESS_VISUAL_PROVIDER || '',
+        disableAutoSnapshot: true,
       };
       // Enable Chromatic only when a project token is available.
       if (process.env.CHROMATIC_PROJECT_TOKEN) {
