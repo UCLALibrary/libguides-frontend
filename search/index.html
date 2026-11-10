@@ -1796,6 +1796,7 @@ div.left { width: 45%;;}
 </head>
 <body class="s-lib-public-body">
     <a id="s-lg-public-skiplink" class="alert-info" href="#s-lib-public-main">Skip to Main Content</a>
+
     <!-- BEGIN: Page Header -->
     <header>
     <div class="header-container">
@@ -1808,14 +1809,16 @@ div.left { width: 45%;;}
         </div>
     </div>
 </header>
+
     <!-- END: Page Header -->
     <!-- BEGIN: Content Header -->
-    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders" role="banner">
-        <div id="s-lib-bc">
+    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders">
+        <nav id="s-lib-bc" aria-label="breadcrumb">
             
                 <ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="/libguides-frontend/">Research Guides</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">Search</li></ol>
             
-        </div>
+
+        </nav>
         <h1 id="s-lib-public-header-title">Search
         </h1>
         <div id="s-lib-public-header-desc">
@@ -1824,17 +1827,18 @@ div.left { width: 45%;;}
     </div>
     <!-- END: Content Header -->
     <!-- BEGIN: Nav Bar -->
-    <div id="s-lib-public-nav" class="container s-lib-side-borders">
+    <nav id="s-lib-public-nav" class="container s-lib-side-borders">
         
             
         
-    </div>
+
+    </nav>
     <!-- END: Nav Bar -->
     <!-- BEGIN: content -->
-    <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" role="main">
+    <main id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" tabindex="-1">
         <section>
             <div id="s-lg-srch-nav-col" class="row">
-                <div id="col0" class="col-md-12 center">
+                <div id="col0" class="col-md-12 text-center">
                     <div id="s-lg-srch-local">
     <nav class="navbar navbar-default" aria-label="Search Bar">
         <div class="container-fluid">
@@ -1870,12 +1874,13 @@ div.left { width: 45%;;}
         </div>
     </nav>
 </div>
+
                 </div>
-                <div id="s-lg-srch-results-msg" class="col-md-12 margin-bottom-sm"></div>
+                <div id="s-lg-srch-results-msg" class="col-md-12 mb-3"></div>
             </div>
         </section>
         <section>
-            <div id="s-lg-srch-cols" class="row">
+            <div id="s-lg-srch-cols">
                 
 					    <div id="s-lg-srch-content">
         <div id="s-lib-search-col-1" class="col-md-6"><div id="s-lg-box-2012-container" class="s-lib-box-container">
@@ -1900,31 +1905,53 @@ div.left { width: 45%;;}
     </div>
 
 				
+
             </div>
         </section>
-    </div>
+    </main>
     <!-- END: content -->
-    <!-- BEGIN: Custom Footer -->
-    <footer></footer>
-    <!-- END: Custom Footer -->
     <!-- BEGIN: Page Footer -->
-    <div role="contentinfo"><div id="s-lib-footer-public" class="s-lib-footer footer container s-lib-side-borders"><div><div id="s-lib-footer-brand">Powered by Springshare.</div><div id="s-lib-footer-rights">All rights reserved.</div><div id="s-lib-footer-login-link"><a href="https://ucla.libapps.com/libapps/login.php?site_id=705">Login to LibApps</a></div></div><div id="s-lib-footer-support-link"><a href="mailto:libapps@library.ucla.edu">Report a problem.</a></div></div></div>
+    <div id="s-lib-footer-public" class="s-lib-footer footer container s-lib-side-borders"><div><div id="s-lib-footer-brand">Powered by Springshare.</div><div id="s-lib-footer-rights">All rights reserved.</div><div id="s-lib-footer-login-link"><a href="https://ucla.libapps.com/libapps/login.php?site_id=705">Login to LibApps</a></div></div><div id="s-lib-footer-support-link"><a href="mailto:libapps@library.ucla.edu">Report a problem.</a></div></div>
+
     <!-- END: Page Footer -->
     <div id="s-lib-alert" title="">
         <div id="s-lib-alert-content"></div>
     </div>
+    <!-- popover.twig -->
     <div id="s-lib-popover-title" class="hide">
-        <span class="text-info"><strong>title</strong></span>
-        <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">×</button>
+        <span class="text-info">
+            <strong>title</strong>
+        </span>
+
+        <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">
+            ×
+        </button>
     </div>
-    <div id="s-lib-popover-content" class="hide"><i class="fa fa-refresh fa-spin"></i> Loading...
+
+    <div id="s-lib-popover-content" class="hide">
+        <i class="fa fa-refresh fa-spin"></i> Loading...
         <button class="btn btn-default btn-sm popclose" type="button">Close</button>
     </div>
-    <div id="s-lib-scroll-top" title="Back to Top">
-        <span class="fa-stack fa-lg">
-            <i class="fa fa-square-o fa-stack-2x"></i>
-            <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
-        </span>
+    <!-- !popover.twig -->
+
+    <!-- scroll_top.twig -->
+    <div id="s-lib-scroll-top">
+        <a href="javascript:void(0);" onclick="jQuery('body').focus();" title="Back to Top" aria-label="Back to Top">
+            <span class="fa-stack fa-lg" aria-hidden="true">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
+            </span>
+        </a>
     </div>
+    <!-- !scroll_top.twig -->
+
+
+    <!-- BEGIN: Custom Footer -->
+    
+
+
+    <!-- END: Custom Footer -->
+
+
 
 </body></html>
