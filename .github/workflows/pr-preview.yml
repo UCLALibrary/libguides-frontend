@@ -55,6 +55,16 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      deployments: write
+
+    environment:
+      name: pr-${{ github.event.pull_request.number }}
+      url: https://uclalibrary.github.io/libguides-frontend/pr-${{ github.event.pull_request.number }}/
+
     concurrency:
       group: libguides-pages-publish
       cancel-in-progress: false
