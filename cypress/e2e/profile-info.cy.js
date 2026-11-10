@@ -1,5 +1,5 @@
-const PROFILE_ID = '61f2b01e-7cdb-11ed-9922-0ad758b798c3';
-const isChromatic = Cypress.expose('visualProvider') === 'chromatic';
+// const PROFILE_ID = '61f2b01e-7cdb-11ed-9922-0ad758b798c3';
+// const isChromatic = Cypress.expose('visualProvider') === 'chromatic';
 
 // describe('LibGuides Individual Profile', () => {
 // TODO before each hook is failing with this error:
