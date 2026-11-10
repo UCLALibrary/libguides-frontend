@@ -293,6 +293,22 @@
     font-weight: 500
   }
 
+  /* overwrite libguides special cases in lookfeel.css */
+  #s-lg-guide-header-info h1,
+  .s-lib-header h1 {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  .public-collapsible-box h2.accordion-header>button {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  h2.s-lib-box-title button {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  /* end overwrite special cases */
+
   ::selection {
     background: var(--color-primary-blue-03);
     color: var(--color-white)
@@ -408,7 +424,7 @@
         padding-bottom: var(--space-l);
       }
 
-      ::before {
+      &::before {
         content: "";
         position: absolute;
         top: 0;
@@ -419,6 +435,8 @@
         background-repeat: no-repeat;
         background-position: center 60%;
         mix-blend-mode: soft-light;
+        height: 100%;
+        width: 100%;
       }
 
       #s-lib-public-header-title {
@@ -431,7 +449,6 @@
       }
 
       #s-lib-public-header-desc {
-        margin: 0;
         font-size: 20px;
         line-height: 32px;
         color: var(--color-white);
