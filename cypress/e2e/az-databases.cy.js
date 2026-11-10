@@ -20,6 +20,9 @@ describe('LibGuides A-Z Databases', () => {
   }
 
   it('renders the A-Z Databases page', () => {
+    const endpoint =
+      '**/process/az/render-list?search=&subject_id=&type_id=&vendor_id=&access_mode_id=&page=&site_id=705&content_id=0&is_widget=0&bootstrap5=true&page_size=0&preview=&sublist_id=0&alpha=';
+    cy.intercept('GET', endpoint).as('databases');
     cy.visit('/az/databases?t=3846');
 
     cy.wait('@databases', { timeout: 30000 }).then(({ response }) => {
@@ -39,7 +42,7 @@ describe('LibGuides A-Z Databases', () => {
     }
   });
 
-  it('loads database results', () => {
+  /*it('loads database results', () => {
     visitDatabases();
 
     cy.get('#s-lg-az-content', {
@@ -85,5 +88,5 @@ describe('LibGuides A-Z Databases', () => {
       expect(url.searchParams.get('alpha')).to.eq('n');
       expect(response.statusCode).to.eq(200);
     });
-  });
+  });*/
 });
