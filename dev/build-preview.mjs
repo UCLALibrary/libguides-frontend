@@ -5,13 +5,15 @@ import { load } from 'cheerio';
 import { pages, getPage, renderTemplate } from './renderer.mjs';
 import { fetchSpringsharePage, fetchSpringshareAjax } from './springshare.mjs';
 import { discoverRoutes, classifyRoute, extractSubjectId } from './discover-routes.mjs';
-import { rewritePreviewLinks } from './preview-links.mjs';
+import { rewritePreviewLinks, rewritePreviewUrl } from './preview-links.mjs';
 
 const outputDir = resolve('dist');
 const basePath = process.env.PREVIEW_BASE_PATH ?? '/';
+const searchProxyUrl = process.env.SEARCH_PROXY_URL;
 const CONCURRENCY = 4;
 
 const PRODUCTION_ORIGIN = 'https://guides.library.ucla.edu';
+
 const PROFILE_ID_PATTERN = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 
 const globalHTML = await readFile(resolve('src/html/global-custom-css.html'), 'utf8');
@@ -38,6 +40,7 @@ function getStaticRoute(route) {
   const staticRoutes = {
     '/sb.php': '/subjects/',
     '/prf.php': '/profiles/',
+    '/srch.php': '/search/',
   };
 
   if (Object.hasOwn(staticRoutes, route)) {
@@ -63,13 +66,14 @@ function extractProfileSubjectIds(html) {
   return [...ids];
 }
 
-// Extract individual profile UUIDs from the Profile Landing AJAX response.
+// Extract individual profile UUIDs from Profile Landing AJAX.
 function extractProfileIds(response) {
   const $ = load(response.data?.html || '', null, false);
   const ids = new Set();
 
   $('a[href]').each((_, element) => {
     const href = $(element).attr('href');
+
     if (!href) return;
 
     let url;
@@ -95,15 +99,23 @@ function extractProfileIds(response) {
 }
 
 // Discover and validate public pages.
+
 console.log('Discovering Springshare routes...');
 
 const discoveredRoutes = await discoverRoutes();
 
+// Combine explicitly configured pages and discovered routes.
 const candidateRoutes = [...new Set([...Object.keys(pages), ...discoveredRoutes])];
 
-console.log(`Found ${candidateRoutes.length} candidate routes.`);
+// Reserve /search/ for the LibGuides Search landing page.
+// Prevent a discovered Guide route from overwriting it.
+const filteredRoutes = candidateRoutes.filter(
+  (route) => route.toLowerCase().replace(/\/+$/, '') !== '/search'
+);
 
-const validated = await mapWithConcurrency(candidateRoutes, CONCURRENCY, async (route) => {
+console.log(`Found ${filteredRoutes.length} candidate routes.`);
+
+const validated = await mapWithConcurrency(filteredRoutes, CONCURRENCY, async (route) => {
   try {
     const productionHTML = await fetchSpringsharePage(route);
 
@@ -150,8 +162,27 @@ if (!validPages.length) {
   throw new Error('No valid pages discovered.');
 }
 
-// Find Profile Landing and discover individual profiles.
+// Identify special page types.
 const profileLanding = validPages.find(({ page }) => page.type === 'profile-landing');
+
+const hasSearchPage = validPages.some(({ page }) => page.type === 'search');
+
+// Require a live proxy when building Search.
+if (hasSearchPage) {
+  if (!searchProxyUrl) {
+    throw new Error('SEARCH_PROXY_URL is required for static Search previews.');
+  }
+
+  const parsedProxyUrl = new URL(searchProxyUrl);
+
+  if (
+    !['https:', 'http:'].includes(parsedProxyUrl.protocol) ||
+    (parsedProxyUrl.protocol === 'http:' &&
+      !['localhost', '127.0.0.1'].includes(parsedProxyUrl.hostname))
+  ) {
+    throw new Error('SEARCH_PROXY_URL must use HTTPS.');
+  }
+}
 
 let allProfilesResponse = null;
 let profileIds = [];
@@ -164,33 +195,48 @@ if (profileLanding) {
   console.log(`Discovered ${profileIds.length} individual profiles.`);
 }
 
-// Build route mappings only from validated pages.
+// Build route mappings from validated pages.
 const generatedRoutes = Object.fromEntries(
   validPages.map(({ route }) => [route, getStaticRoute(route)])
 );
 
-// Tracks only successfully generated individual profiles.
+// Track only successfully generated profiles.
 const generatedProfileIds = new Set();
 
-// Rewrite links inside Springshare AJAX response HTML.
+// Rewrite HTML fields in captured AJAX responses.
+// Homepage, Subjects, and Profiles still use static JSON.
 function rewriteAjaxResponse(response) {
   const result = structuredClone(response);
 
-  for (const key of ['content', 'html', 'guides']) {
+  const options = {
+    staticPreview: true,
+    basePath,
+    generatedRoutes,
+    generatedProfileIds,
+  };
+
+  for (const key of ['content', 'html', 'guides', 'results', 'facets']) {
     if (typeof result.data?.[key] === 'string') {
-      result.data[key] = rewritePreviewLinks(result.data[key], {
-        staticPreview: true,
-        basePath,
-        generatedRoutes,
-        generatedProfileIds,
-      });
+      result.data[key] = rewritePreviewLinks(result.data[key], options);
     }
+  }
+
+  if (typeof result.data?.fulllink === 'string') {
+    result.data.fulllink = rewritePreviewUrl(result.data.fulllink, options);
   }
 
   return result;
 }
 
-// Clean the output directory.
+// Insert an adapter script before Springshare scripts.
+function injectAdapter(html, scriptPath, attributes = '') {
+  return html.replace(
+    /<head[^>]*>/i,
+    (match) => `${match}\n<script src="${scriptPath}"${attributes}></script>`
+  );
+}
+
+// Clean and recreate output directory.
 await rm(outputDir, {
   recursive: true,
   force: true,
@@ -200,7 +246,7 @@ await mkdir(outputDir, {
   recursive: true,
 });
 
-// Fetch and render Individual Profile Detail pages first.
+// Generate individual Profile Detail pages first.
 if (profileIds.length) {
   const profileTemplate = await readFile(
     resolve('src/html/profile/individual-profile/profile-page-swap-footers.html'),
@@ -226,7 +272,6 @@ if (profileIds.length) {
 
   const successfulProfiles = results.filter(Boolean);
 
-  // Register only profiles that were successfully rendered.
   for (const { profileId } of successfulProfiles) {
     generatedProfileIds.add(profileId);
   }
@@ -239,12 +284,7 @@ if (profileIds.length) {
       generatedProfileIds,
     });
 
-    // Individual Profile pages can trigger Springshare profile AJAX.
-    // Install the static adapter before Springshare scripts execute.
-    rewritten = rewritten.replace(
-      /<head[^>]*>/i,
-      (match) => `${match}\n<script src="../../static-profile.js"></script>`
-    );
+    rewritten = injectAdapter(rewritten, '../../static-profile.js');
 
     const outputPath = join(outputDir, 'profiles', profileId, 'index.html');
 
@@ -271,29 +311,40 @@ for (const { route, page, productionHTML } of validPages) {
     generatedProfileIds,
   });
 
-  // Install static AJAX adapters before Springshare scripts.
+  // Install adapters before Springshare JavaScript.
   if (page.type === 'home') {
-    html = html.replace(
-      /<head[^>]*>/i,
-      (match) => `${match}\n<script src="./static-homepage.js"></script>`
-    );
+    html = injectAdapter(html, './static-homepage.js');
   }
 
   if (page.type === 'subject-info') {
-    html = html.replace(
-      /<head[^>]*>/i,
-      (match) => `${match}\n<script src="../static-subject.js"></script>`
-    );
+    html = injectAdapter(html, '../static-subject.js');
   }
 
   if (page.type === 'profile-landing') {
-    html = html.replace(
-      /<head[^>]*>/i,
-      (match) => `${match}\n<script src="../static-profile.js"></script>`
+    html = injectAdapter(html, '../static-profile.js');
+  }
+
+  if (page.type === 'search') {
+    // Safely encode the URL as an HTML attribute.
+    const escapedProxyUrl = searchProxyUrl
+      .replaceAll('&', '&amp;')
+      .replaceAll('"', '&quot;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;');
+
+    html = injectAdapter(
+      html,
+      '../static-search.js',
+      ` data-search-proxy-url="${escapedProxyUrl}"`
     );
   }
 
   const staticRoute = getStaticRoute(route);
+  // Prevent a Guide route from overwriting the Search landing page.
+  if (staticRoute === '/search/' && route !== '/srch.php') {
+    console.warn(`Skipping route ${route}: /search/ is reserved for LibGuides Search`);
+    continue;
+  }
 
   const relativePath =
     staticRoute === '/' ? 'index.html' : join(staticRoute.slice(1), 'index.html');
@@ -309,14 +360,14 @@ for (const { route, page, productionHTML } of validPages) {
   console.log(`Generated: ${route}`);
 }
 
-// Create AJAX output directory.
+// Create AJAX directory for Homepage, Subject, and Profile data.
 const ajaxDir = join(outputDir, 'ajax');
 
 await mkdir(ajaxDir, {
   recursive: true,
 });
 
-// Fetch Homepage AJAX responses.
+// Generate Homepage AJAX responses.
 const homepageActions = ['170', '172', '174', '176', '177', '178'];
 
 for (const action of homepageActions) {
@@ -378,7 +429,7 @@ if (profileLanding) {
 
   console.log(`Generating Profile AJAX for ${profileSubjectIds.length} subjects.`);
 
-  // action=530: All profiles and profiles filtered by subject.
+  // action=530: All profiles and subject-filtered profiles.
   const profileFilters = ['0', ...profileSubjectIds];
 
   await mapWithConcurrency(profileFilters, CONCURRENCY, async (subjectId) => {
@@ -420,7 +471,7 @@ if (profileLanding) {
   });
 }
 
-// Copy static AJAX adapters.
+// Copy all required static adapters automatically.
 const adapters = [
   ['dev/static-homepage.js', 'static-homepage.js'],
   ['dev/static-subject.js', 'static-subject.js'],
@@ -428,6 +479,10 @@ const adapters = [
 
 if (profileLanding) {
   adapters.push(['dev/static-profile.js', 'static-profile.js']);
+}
+
+if (hasSearchPage) {
+  adapters.push(['dev/static-search.js', 'static-search.js']);
 }
 
 await Promise.all(
@@ -444,4 +499,8 @@ if (profileLanding) {
   console.log(`Generated ${profileSubjectIds.length + 1} Profile listing AJAX responses.`);
 
   console.log(`Generated ${profileSubjectIds.length} Profile Guides AJAX responses.`);
+}
+
+if (hasSearchPage) {
+  console.log('Search uses live Netlify proxy requests.');
 }

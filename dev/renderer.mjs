@@ -73,7 +73,11 @@ export const pages = {
     productionUrl: '/prf.php',
     type: 'profile-landing',
   },
-  // profile-page-swap-footers.html
+  '/srch.php': {
+    template: 'src/html/search/flipped-footers.html',
+    productionUrl: '/srch.php',
+    type: 'search',
+  },
 };
 
 export function getPage(pathname, search = '') {
@@ -236,6 +240,15 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     guide_list: '',
     content_box_specialties: inner('#s-lg-profile-cols > #col3'),
   };
+  const search = {
+    skip_link: outer('#s-lg-public-skiplink'),
+    page_title: text('#s-lib-public-header-title'),
+    page_description: inner('#s-lib-public-header-desc'),
+    page_nav: inner('#s-lib-public-nav'),
+    content_box_search: outer('#s-lg-srch-local'),
+    content: inner('#s-lg-srch-cols'),
+    system_footer: outer('#s-lib-footer-public'),
+  };
 
   const pageValues = {
     home,
@@ -244,6 +257,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     'subject-info': subjectInfo,
     'profile-landing': profileLanding,
     'profile-info': profileInfo,
+    search,
   };
 
   const values = {
