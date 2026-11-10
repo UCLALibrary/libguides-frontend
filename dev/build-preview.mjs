@@ -9,9 +9,11 @@ import { rewritePreviewLinks, rewritePreviewUrl } from './preview-links.mjs';
 
 const outputDir = resolve('dist');
 const basePath = process.env.PREVIEW_BASE_PATH ?? '/';
-const searchProxyUrl = process.env.SEARCH_PROXY_URL;
-const CONCURRENCY = 4;
 
+const searchProxyUrl = process.env.SEARCH_PROXY_URL;
+const databaseProxyUrl = process.env.DATABASE_PROXY_URL;
+
+const CONCURRENCY = 4;
 const PRODUCTION_ORIGIN = 'https://guides.library.ucla.edu';
 
 const PROFILE_ID_PATTERN = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
@@ -35,12 +37,49 @@ async function mapWithConcurrency(items, limit, callback) {
   return results;
 }
 
+// Validate live proxy URLs used by static previews.
+function validateProxyUrl(value, name) {
+  if (!value) {
+    throw new Error(`${name} is required for static previews.`);
+  }
+
+  let url;
+
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error(`${name} must be a valid URL.`);
+  }
+
+  const isLocalhost = ['localhost', '127.0.0.1'].includes(url.hostname);
+
+  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && isLocalhost)) {
+    throw new Error(`${name} must use HTTPS.`);
+  }
+
+  if (url.username || url.password || url.hash || url.search) {
+    throw new Error(`${name} must be a base endpoint without credentials, query, or hash.`);
+  }
+
+  return url.href;
+}
+
+// Escape values inserted into HTML attributes.
+function escapeHtmlAttribute(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
 // GitHub Pages cannot execute PHP routes.
 function getStaticRoute(route) {
   const staticRoutes = {
     '/sb.php': '/subjects/',
     '/prf.php': '/profiles/',
     '/srch.php': '/search/',
+    '/az/databases': '/az/databases/',
   };
 
   if (Object.hasOwn(staticRoutes, route)) {
@@ -99,15 +138,13 @@ function extractProfileIds(response) {
 }
 
 // Discover and validate public pages.
-
 console.log('Discovering Springshare routes...');
 
 const discoveredRoutes = await discoverRoutes();
 
-// Combine explicitly configured pages and discovered routes.
 const candidateRoutes = [...new Set([...Object.keys(pages), ...discoveredRoutes])];
 
-// Reserve /search/ for the LibGuides Search landing page.
+// Reserve /search/ for the Search landing page.
 // Prevent a discovered Guide route from overwriting it.
 const filteredRoutes = candidateRoutes.filter(
   (route) => route.toLowerCase().replace(/\/+$/, '') !== '/search'
@@ -118,7 +155,6 @@ console.log(`Found ${filteredRoutes.length} candidate routes.`);
 const validated = await mapWithConcurrency(filteredRoutes, CONCURRENCY, async (route) => {
   try {
     const productionHTML = await fetchSpringsharePage(route);
-
     const explicitPage = pages[route];
 
     const type = explicitPage?.type ?? classifyRoute(route, productionHTML);
@@ -167,21 +203,20 @@ const profileLanding = validPages.find(({ page }) => page.type === 'profile-land
 
 const hasSearchPage = validPages.some(({ page }) => page.type === 'search');
 
-// Require a live proxy when building Search.
+const hasDatabasesPage = validPages.some(({ page }) => page.type === 'az-databases');
+
+// Require configured live proxies for dynamic static pages.
 if (hasSearchPage) {
-  if (!searchProxyUrl) {
-    throw new Error('SEARCH_PROXY_URL is required for static Search previews.');
-  }
+  validateProxyUrl(searchProxyUrl, 'SEARCH_PROXY_URL');
+}
 
-  const parsedProxyUrl = new URL(searchProxyUrl);
+if (hasDatabasesPage) {
+  validateProxyUrl(databaseProxyUrl, 'DATABASE_PROXY_URL');
+}
 
-  if (
-    !['https:', 'http:'].includes(parsedProxyUrl.protocol) ||
-    (parsedProxyUrl.protocol === 'http:' &&
-      !['localhost', '127.0.0.1'].includes(parsedProxyUrl.hostname))
-  ) {
-    throw new Error('SEARCH_PROXY_URL must use HTTPS.');
-  }
+// Ensure the explicit A-Z page was discovered and validated.
+if (Object.hasOwn(pages, '/az/databases') && !hasDatabasesPage) {
+  throw new Error('A-Z Databases page could not be validated. Static build aborted.');
 }
 
 let allProfilesResponse = null;
@@ -228,7 +263,7 @@ function rewriteAjaxResponse(response) {
   return result;
 }
 
-// Insert an adapter script before Springshare scripts.
+// Insert an adapter before Springshare scripts.
 function injectAdapter(html, scriptPath, attributes = '') {
   return html.replace(
     /<head[^>]*>/i,
@@ -325,12 +360,7 @@ for (const { route, page, productionHTML } of validPages) {
   }
 
   if (page.type === 'search') {
-    // Safely encode the URL as an HTML attribute.
-    const escapedProxyUrl = searchProxyUrl
-      .replaceAll('&', '&amp;')
-      .replaceAll('"', '&quot;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;');
+    const escapedProxyUrl = escapeHtmlAttribute(searchProxyUrl);
 
     html = injectAdapter(
       html,
@@ -339,10 +369,23 @@ for (const { route, page, productionHTML } of validPages) {
     );
   }
 
+  // A-Z Databases uses live Netlify requests.
+  if (page.type === 'az-databases') {
+    const escapedProxyUrl = escapeHtmlAttribute(databaseProxyUrl);
+
+    html = injectAdapter(
+      html,
+      '../../static-databases.js',
+      ` data-database-proxy-url="${escapedProxyUrl}"`
+    );
+  }
+
   const staticRoute = getStaticRoute(route);
-  // Prevent a Guide route from overwriting the Search landing page.
+
+  // Prevent a Guide route from overwriting Search.
   if (staticRoute === '/search/' && route !== '/srch.php') {
     console.warn(`Skipping route ${route}: /search/ is reserved for LibGuides Search`);
+
     continue;
   }
 
@@ -485,6 +528,11 @@ if (hasSearchPage) {
   adapters.push(['dev/static-search.js', 'static-search.js']);
 }
 
+// Copy A-Z Databases adapter automatically.
+if (hasDatabasesPage) {
+  adapters.push(['dev/static-databases.js', 'static-databases.js']);
+}
+
 await Promise.all(
   adapters.map(([source, destination]) => copyFile(resolve(source), join(outputDir, destination)))
 );
@@ -503,4 +551,10 @@ if (profileLanding) {
 
 if (hasSearchPage) {
   console.log('Search uses live Netlify proxy requests.');
+}
+
+if (hasDatabasesPage) {
+  console.log('A-Z Databases uses live Netlify proxy requests.');
+  console.log('Generated: dist/az/databases/index.html');
+  console.log('Copied: dist/static-databases.js');
 }

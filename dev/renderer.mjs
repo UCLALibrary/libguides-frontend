@@ -1,10 +1,25 @@
 import { load } from 'cheerio';
 
-function buildPreviewHead($, globalHTML) {
+/**
+ * Build the preview <head>.
+ *
+ * Most pages replace Springshare's global custom CSS
+ * with the repository version.
+ *
+ * A-Z Databases currently has a different production
+ * CSS structure, so repository CSS is appended last.
+ */
+function buildPreviewHead($, globalHTML, type) {
   const $local = load(globalHTML);
-
   const localStyles = $local('style').toArray();
   const productionStyles = $('head style').toArray();
+
+  // A-Z Databases uses a different production CSS structure.
+  // Preserve existing styles and apply repository CSS last.
+  if (type === 'az-databases') {
+    $('head').append(globalHTML);
+    return $('head').html() || '';
+  }
 
   // Identify the start of Springshare's global custom CSS.
   // Page-specific styles may appear before these blocks.
@@ -27,7 +42,7 @@ function buildPreviewHead($, globalHTML) {
     throw new Error('Production global CSS block count does not match repository CSS.');
   }
 
-  // Replace only the shared global CSS.
+  // Replace only shared global CSS.
   // Preserve page-specific CSS before and after it.
   const globalProductionStyles = productionStyles.slice(globalStartIndex, globalEndIndex);
 
@@ -47,49 +62,65 @@ function buildPreviewHead($, globalHTML) {
   return $('head').html() || '';
 }
 
+/**
+ * Explicit routes supported by the preview renderer.
+ */
 export const pages = {
   '/': {
     template: 'src/html/home/three-column-guide-index-side.html',
     productionUrl: '/',
     type: 'home',
   },
+
   '/communication': {
     template: 'src/html/guide/side-nav-layout/ucla-default-template.html',
     productionUrl: '/communication',
     type: 'guide',
   },
+
   '/sb.php': {
     template: 'src/html/subject/landing-page/system-default-landing-template.html',
     productionUrl: '/sb.php',
     type: 'subject-landing',
   },
+
   '/africa-guides': {
     template: 'src/html/subject/individual-subject/subject-page-sans-databases.html',
     productionUrl: '/africa-guides',
     type: 'subject-info',
   },
+
   '/prf.php': {
     template: 'src/html/profile/landing-page/system-default-profile-landing-template.html',
     productionUrl: '/prf.php',
     type: 'profile-landing',
   },
+
   '/srch.php': {
     template: 'src/html/search/flipped-footers.html',
     productionUrl: '/srch.php',
     type: 'search',
   },
+
+  '/az/databases': {
+    template: 'src/html/a-z-databases/az-new-2021.html',
+    productionUrl: '/az/databases',
+    type: 'az-databases',
+  },
 };
 
+/**
+ * Resolve local preview routes.
+ */
 export function getPage(pathname, search = '') {
   const normalized = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
 
-  // Profile Detail: /prf.php?id=UUID
+  // Individual Profile Detail: /prf.php?id=UUID
   if (normalized === '/prf.php') {
     const params = new URLSearchParams(search);
     const profileId = params.get('id');
 
     if (profileId) {
-      // Accept only UUID-shaped profile IDs.
       if (!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(profileId)) {
         return null;
       }
@@ -102,7 +133,7 @@ export function getPage(pathname, search = '') {
     }
   }
 
-  if (pages[normalized]) {
+  if (Object.hasOwn(pages, normalized)) {
     return pages[normalized];
   }
 
@@ -115,7 +146,7 @@ export function getPage(pathname, search = '') {
     };
   }
 
-  // Dynamic Guide pages.
+  // Dynamic single-segment Guide pages.
   if (/^\/[a-z0-9][a-z0-9-]*$/i.test(normalized)) {
     return {
       template: 'src/html/guide/side-nav-layout/ucla-default-template.html',
@@ -127,15 +158,22 @@ export function getPage(pathname, search = '') {
   return null;
 }
 
+/**
+ * Render a repository template using content captured
+ * from the corresponding production Springshare page.
+ */
 export function renderTemplate(template, fixture, type, globalHTML = '') {
   const $ = load(fixture);
 
   const outer = (selector) => $(selector).first().toString();
+
   const inner = (selector) => $(selector).first().html() || '';
+
   const text = (selector) => $(selector).first().text().trim();
 
   const noIndex = '<meta name="robots" content="noindex, nofollow, noarchive">';
 
+  // Shared template placeholders.
   const common = {
     public_header: outer('body > header'),
     public_footer: '',
@@ -143,6 +181,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     login_url: '#',
   };
 
+  // Homepage.
   const home = {
     title: text('#s-lib-public-header-title'),
     system_intro: inner('#s-lib-public-header-desc'),
@@ -155,6 +194,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     content_boxes: inner('#col2'),
   };
 
+  // Individual Guide pages.
   const guide = {
     skip_link: outer('#s-lg-public-skiplink'),
     guide_title: text('#s-lg-guide-name'),
@@ -175,9 +215,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     ADMIN_MINI_CMD_BAR: '',
   };
 
-  // Initial subject mappings. Confirm these against the
-  // placeholders in the actual Springshare subject templates.
-
+  // Shared Subject page placeholders.
   const subjectCommon = {
     skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
@@ -185,31 +223,28 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     page_nav: inner('#s-lib-public-nav'),
     navbar: inner('#sb-search-col-1'),
 
-    // Extract the complete Search section.
+    // Extract the complete Search sidebar section.
     content_box_search: $('#col2 .margin-bottom-xlg')
-      .filter(
-        (_, element) =>
-          $(element).find('.s-lib-public-side-header h2').first().text().trim() === 'Search'
-      )
+      .filter((_, element) => {
+        return $(element).find('.s-lib-public-side-header h2').first().text().trim() === 'Search';
+      })
       .first()
       .toString(),
   };
 
+  // Subject Landing.
   const subjectLanding = {
     ...subjectCommon,
     system_footer: outer('#s-lib-footer-public'),
   };
 
+  // Individual Subject page.
   const subjectInfo = {
     ...subjectCommon,
-
-    // Extract the Experts section separately.
     content_box_experts: outer('#s-lg-sb-experts-div'),
   };
 
-  // Profile Landing page.
-
-  // Profile Landing page.
+  // Profile Landing.
   const profileLanding = {
     skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
@@ -222,8 +257,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     // Subject dropdown/filter.
     subject_list: inner('#s-lg-profile-subjects'),
 
-    // Preserve the original container IDs so Springshare
-    // JavaScript can show, hide, and update these sections.
+    // Preserve original container IDs for Springshare JS.
     content_box_search: outer('#s-lg-profile-search-div'),
     content_box_az: outer('#s-lg-profile-az-div'),
     content_box_help: outer('#s-lg-profile-help-div'),
@@ -240,6 +274,8 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     guide_list: '',
     content_box_specialties: inner('#s-lg-profile-cols > #col3'),
   };
+
+  // Search Landing page.
   const search = {
     skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
@@ -250,6 +286,33 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     system_footer: outer('#s-lib-footer-public'),
   };
 
+  // A-Z Databases Landing page.
+  const azDatabases = {
+    skip_link: outer('#s-lg-public-skiplink'),
+    page_title: text('#s-lib-public-header-title'),
+    page_description: inner('#s-lib-public-header-desc'),
+    page_nav: inner('#s-lib-public-nav'),
+
+    // Search, subject, type, and vendor controls.
+    navbar_wide: inner('#az-search-col-1'),
+
+    // Alphabet navigation is populated by Springshare JS.
+    alpha_list: inner('#s-lg-az-index'),
+
+    // Reset controls.
+    search_reset: inner('#s-lg-az-search-reset'),
+
+    // Sidebar accordions.
+    content_box_3872822: outer('#s-lg-az-custom-box-3872822'),
+    content_box_3577872: outer('#s-lg-az-custom-box-3577872'),
+
+    // New / Trial Databases accordion.
+    trials_box: outer('#s-lg-az-trials'),
+
+    system_footer: outer('#s-lib-footer-public'),
+  };
+
+  // Select placeholders for the requested page type.
   const pageValues = {
     home,
     guide,
@@ -258,6 +321,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     'profile-landing': profileLanding,
     'profile-info': profileInfo,
     search,
+    'az-databases': azDatabases,
   };
 
   const values = {
@@ -265,7 +329,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     ...(pageValues[type] || {}),
   };
 
-  // Preserve HTML comments, including commented placeholders.
+  // Replace placeholders while preserving HTML comments.
   let body = template.replace(/<!--[\s\S]*?-->|{{([A-Za-z0-9_]+)}}/g, (match, key) => {
     if (match.startsWith('<!--')) {
       return match;
@@ -279,6 +343,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     return values[key];
   });
 
+  // Restore dynamic Subject content from production.
   if (type === 'subject-landing' || type === 'subject-info') {
     const rendered = load(body);
 
@@ -295,8 +360,8 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     body = rendered('body').toString();
   }
 
-  // Prevent LibCal widget errors when its trigger is missing
-  // from the captured local fixture.
+  // Prevent LibCal widget errors when its trigger
+  // is missing from the captured local fixture.
   if (type === 'subject-info') {
     body = body.replace(
       /document\.getElementById\((["'])(lc_appointments_\d+)\1\)\.addEventListener\(/g,
@@ -304,8 +369,8 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     );
   }
 
-  // Preserve the captured page's CSS, scripts, and metadata.
-  const head = buildPreviewHead($, globalHTML);
+  // Preserve production metadata, CSS, and JavaScript.
+  const head = buildPreviewHead($, globalHTML, type);
 
   return `<!DOCTYPE html>
 <html lang="en">

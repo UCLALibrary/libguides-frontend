@@ -12,6 +12,7 @@ const localRoutes = {
   '/prf.php': '/prf.php',
   '/srch.php': '/srch.php',
   '/africa-guides': '/africa-guides/',
+  '/az/databases': '/az/databases/',
 };
 
 function normalizePath(pathname) {
