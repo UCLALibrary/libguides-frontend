@@ -2,18 +2,16 @@ const { defineConfig } = require('cypress');
 const { installPlugin } = require('@chromatic-com/cypress');
 
 module.exports = defineConfig({
-  env: {
-    // Only capture snapshots when explicitly requested.
-    disableAutoSnapshot: true,
-    delay: 500,
-  },
-
   e2e: {
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.cy.js',
     excludeSpecPattern: ['**/examples/**'],
 
     setupNodeEvents(on, config) {
+      config.env = {
+        ...config.env,
+        disableAutoSnapshot: true,
+      };
       config.expose = {
         ...config.expose,
         visualProvider: process.env.CYPRESS_VISUAL_PROVIDER || '',

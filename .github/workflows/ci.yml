@@ -62,12 +62,21 @@ jobs:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           CYPRESS_VISUAL_PROVIDER: chromatic
 
-      - name: Publish Chromatic snapshots
-        if: success()
+      - name: Publish Chromatic snapshots (PR)
+        if: github.event_name == 'pull_request'
         run: >
           npx chromatic --cypress
           --project-token="$CHROMATIC_PROJECT_TOKEN"
-          --auto-accept-changes="${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}"
+          --exit-zero-on-changes=true
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Publish Chromatic snapshots (main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: >
+          npx chromatic --cypress
+          --project-token="$CHROMATIC_PROJECT_TOKEN"
+          --auto-accept-changes
           --exit-zero-on-changes=true
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
