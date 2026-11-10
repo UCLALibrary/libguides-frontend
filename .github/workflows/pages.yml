@@ -30,6 +30,7 @@ jobs:
       - name: Build static pages
         env:
           PREVIEW_BASE_PATH: /libguides-frontend/
+          SEARCH_PROXY_URL: https://libguides-proxy.netlify.app/api/libguides/search/proxy
         run: npm run build:preview
 
       - name: Upload preview artifact
