@@ -95,8 +95,51 @@ createServer(async (req, res) => {
      *
      * Homepage, Subjects, Profiles, and Search.
      */
+
     if (ajaxEndpoints.has(pathname)) {
-      const response = await fetchSpringshareAjax(`${pathname}${url.search}`);
+      const params = new URLSearchParams(url.searchParams);
+
+      if (pathname === '/index_process.php') {
+        console.log('\n--- Homepage AJAX Debug ---');
+
+        console.log('Original request:', `${pathname}${url.search}`);
+
+        console.log('Incoming bs5:', params.get('bs5'));
+
+        // Force Bootstrap 5 for Homepage requests.
+        params.set('bs5', '1');
+
+        console.log('Forwarded bs5:', params.get('bs5'));
+      }
+
+      const upstreamPath = `${pathname}?${params.toString()}`;
+
+      console.log('Fetching Springshare AJAX:', upstreamPath);
+
+      const response = await fetchSpringshareAjax(upstreamPath);
+
+      if (pathname === '/index_process.php') {
+        const content = response.data?.content || '';
+
+        console.log('Response status:', response.errText);
+        console.log('Response data keys:', Object.keys(response.data || {}));
+        console.log('Item count:', response.data?.item_count);
+        console.log('List header:', response.data?.list_header);
+
+        console.log('Contains Bootstrap 3 markup:', {
+          panelGroup: content.includes('panel-group'),
+          panelDefault: content.includes('panel-default'),
+          dataToggle: content.includes('data-toggle='),
+        });
+
+        console.log('Contains Bootstrap 5 markup:', {
+          accordionItem: content.includes('accordion-item'),
+          dataBsToggle: content.includes('data-bs-toggle='),
+        });
+
+        console.log('Content preview:', content.slice(0, 350));
+        console.log('--- End Homepage AJAX Debug ---\n');
+      }
 
       res.writeHead(200, {
         'Content-Type': 'application/json; charset=utf-8',

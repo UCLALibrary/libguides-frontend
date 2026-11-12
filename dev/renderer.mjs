@@ -192,6 +192,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     search_guides: outer('#s-lg-hp-nav form'),
     content: inner('#s-lg-index-list'),
     content_boxes: inner('#col2'),
+    guide_list_controls: inner('#s-lg-list-controls'),
   };
 
   // Individual Guide pages.
