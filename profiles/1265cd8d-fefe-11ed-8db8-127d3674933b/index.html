@@ -823,7 +823,7 @@
 
   /* Targets 'Email Me' buttons on Guide and Profile pages */
   .s-lib-profile-email a {
-    font-size: 1.1em;
+    font-size: 1.1em  !important;
   }
 </style><style type="text/css">
 @font-face {
@@ -1519,4 +1519,21 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
         </span>
     </div>
 
+<style>
+    .s-lib-profile-container {
+        .s-lib-profile-subjects {
+            display: none !important;
+        }
+
+        .s-lib-profile-div.s-lib-profile-center.s-lib-profile-image>img {
+            margin: 0 auto;
+        }
+    }
+
+    .s-lib-box-content {
+        .s-lg-gmeta.pull-right.s-lg-small.s-lib-color-lt-grey {
+            display: none !important;
+        }
+    }
+</style>
 </body></html>
