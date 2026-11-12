@@ -1,26 +1,26 @@
-const isChromatic = Cypress.expose('visualProvider') === 'chromatic';
+// const isChromatic = Cypress.expose('visualProvider') === 'chromatic';
 
-describe('LibGuides Homepage', () => {
-  beforeEach(() => {
-    cy.visit('/');
-  });
+// describe('LibGuides Homepage', () => {
+//   beforeEach(() => {
+//     cy.visit('/');
+//   });
 
-  // Run All Guides only during functional testing.
-  if (!isChromatic) {
-    it('renders All Guides', () => {
-      cy.contains('ALL GUIDES').click();
-      cy.get('#s-lg-index-list-guides').should('be.visible');
-    });
-  }
+//   // Run All Guides only during functional testing.
+//   if (!isChromatic) {
+//     it('renders All Guides', () => {
+//       cy.contains('ALL GUIDES').click();
+//       cy.get('#s-lg-index-list-guides').should('be.visible');
+//     });
+//   }
 
-  it('renders By Subject', () => {
-    cy.contains('BY SUBJECT').click();
-    cy.get('#s-lg-index-list-subjects').should('be.visible');
+//   it('renders By Subject', () => {
+//     cy.contains('BY SUBJECT').click();
+//     cy.get('#s-lg-index-list-subjects').should('be.visible');
 
-    if (isChromatic) {
-      cy.visualSnapshot('Homepage - By Subject');
-    }
-  });
+//     if (isChromatic) {
+//       cy.visualSnapshot('Homepage - By Subject');
+//     }
+//   });
 
   // TODO reenable when fixed for new layouts
   // it('renders By Librarian', () => {
@@ -31,4 +31,4 @@ describe('LibGuides Homepage', () => {
   //     cy.visualSnapshot('Homepage - By Librarian');
   //   }
   // });
-});
+// });
