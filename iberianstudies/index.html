@@ -1060,6 +1060,22 @@
       display: none !important;
     }
   }
+
+  /* Align icons in content boxes on Guide page */
+  #s-lg-guide-main .s-lg-link-list {
+    a img {
+      display: inline;
+    }
+
+    a i {
+      margin-left: .5em;
+    }
+  }
+
+  /* Targets 'Email Me' buttons on Guide and Profile pages */
+  .s-lib-profile-email a {
+    font-size: 1.1em;
+  }
 </style><style type="text/css">
 @font-face {
     font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.ttf') format('truetype');
@@ -1464,7 +1480,7 @@ div.left { width: 45%;;}
       <div class="row">
         <div class="col-md-3 s-lg-tabs-side pad-bottom-med">
           <nav>
-            <ul class="nav nav-pills nav-stacked">
+            <ul class="nav nav-pills flex-column">
 
 
     <li class="active">
@@ -1667,7 +1683,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Nov 4, 2026
 								</span>
-								<span class="s-lg-guide-info-views">22837 views this year
+								<span class="s-lg-guide-info-views">22977 views this year
 								</span>
 							</div>
 					</li>
@@ -1681,7 +1697,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 30, 2026
 								</span>
-								<span class="s-lg-guide-info-views">4573 views this year
+								<span class="s-lg-guide-info-views">4606 views this year
 								</span>
 							</div>
 					</li>
@@ -1695,7 +1711,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 6, 2026
 								</span>
-								<span class="s-lg-guide-info-views">4004 views this year
+								<span class="s-lg-guide-info-views">4015 views this year
 								</span>
 							</div>
 					</li>
@@ -1709,7 +1725,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">3015 views this year
+								<span class="s-lg-guide-info-views">3057 views this year
 								</span>
 							</div>
 					</li>
@@ -1723,7 +1739,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 28, 2026
 								</span>
-								<span class="s-lg-guide-info-views">6346 views this year
+								<span class="s-lg-guide-info-views">6373 views this year
 								</span>
 							</div>
 					</li></ul> 

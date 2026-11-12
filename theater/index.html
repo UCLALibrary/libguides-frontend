@@ -1060,6 +1060,22 @@
       display: none !important;
     }
   }
+
+  /* Align icons in content boxes on Guide page */
+  #s-lg-guide-main .s-lg-link-list {
+    a img {
+      display: inline;
+    }
+
+    a i {
+      margin-left: .5em;
+    }
+  }
+
+  /* Targets 'Email Me' buttons on Guide and Profile pages */
+  .s-lib-profile-email a {
+    font-size: 1.1em;
+  }
 </style><style type="text/css">
 @font-face {
     font-family: 'ProximaNova';src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot');src: url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.woff') format('woff'),url('//s3.amazonaws.com/libapps/sites/705/include/ProximaNova-Light.ttf') format('truetype');
@@ -1464,7 +1480,7 @@ div.left { width: 45%;;}
       <div class="row">
         <div class="col-md-3 s-lg-tabs-side pad-bottom-med">
           <nav>
-            <ul class="nav nav-pills nav-stacked">
+            <ul class="nav nav-pills flex-column">
 
 
     <li class="active">
@@ -1800,7 +1816,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
         
         
     
-    <div id="s-lib-cpane-39324337" aria-label="Slideshow - contains rotating images">
+    <div id="s-lib-cpane-32630249" aria-label="Slideshow - contains rotating images">
                                                                     
             
             
@@ -1930,12 +1946,12 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
             </div>
 
             <div class="text-center slick_play_pause">
-            <button id="toggle_s-lib-cpane-39324337" aria-label="Pause" type="button">
+            <button id="toggle_s-lib-cpane-32630249" aria-label="Pause" type="button">
                 <i class="fa fa-solid fa-pause-circle-o"></i>
             </button>
         </div>
     
-    <script>jQuery("#s-lib-cpane-39324337").parent().css("opacity", 0);</script>
+    <script>jQuery("#s-lib-cpane-32630249").parent().css("opacity", 0);</script>
     <link rel="stylesheet" href="//lgapi-us.libapps.com/web/slick-1.8.1/slick/slick.css">
     <link rel="stylesheet" href="//lgapi-us.libapps.com/web/slick-1.8.1/slick/slick-theme.css">
 
@@ -1954,8 +1970,8 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
             color: black;
         }
 
-        #s-lib-cpane-39324337 .slick-slide a img,
-        #s-lib-cpane-39324337 .slick-slide img {
+        #s-lib-cpane-32630249 .slick-slide a img,
+        #s-lib-cpane-32630249 .slick-slide img {
             min-width: 100%;
             width: 100%;
                 }
@@ -1972,14 +1988,14 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
             min-width: 100%;
         }
 
-        #s-lib-cpane-39324337 .s-lib-cpane-caption {
+        #s-lib-cpane-32630249 .s-lib-cpane-caption {
          padding: 10px;
             width: 100%;
             display: block;
             vertical-align: top;
         }
 
-        #s-lib-cpane-39324337 h3 a {
+        #s-lib-cpane-32630249 h3 a {
                 }
 
         .s-lib-box-content[max-width~="269px"] .dl-horizontal dt {
@@ -2032,12 +2048,12 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 
     <script>
         jQuery(function () {
-            jQuery("#s-lib-cpane-39324337").on("init", function () {
-                jQuery("#s-lib-cpane-39324337").parent().css("opacity", 1);
+            jQuery("#s-lib-cpane-32630249").on("init", function () {
+                jQuery("#s-lib-cpane-32630249").parent().css("opacity", 1);
             });
 
             var initCarousel = function () {
-                jQuery("#s-lib-cpane-39324337").slick({"pane_id_list":["5210642","5034432","5129014","5034519","7213110","5210713"],"autoplay":true,"fade":true,"max_height":"50%","responsive":[{"breakpoint":600,"settings":{"slidesToShow":1,"slidesPerRow":1,"slidesToScroll":1,"dots":false}}]});
+                jQuery("#s-lib-cpane-32630249").slick({"pane_id_list":["5210642","5034432","5129014","5034519","7213110","5210713"],"autoplay":true,"fade":true,"max_height":"50%","responsive":[{"breakpoint":600,"settings":{"slidesToShow":1,"slidesPerRow":1,"slidesToScroll":1,"dots":false}}]});
             };
 
             if (jQuery("#s-lg-box-27747340").parents().eq(1).attr("id")?.includes("widget")) {
@@ -2046,11 +2062,11 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 initCarousel();
             }
 
-            jQuery("#toggle_s-lib-cpane-39324337").on("click", function () {
+            jQuery("#toggle_s-lib-cpane-32630249").on("click", function () {
                 var $btn = jQuery(this);
                 var isPaused = $btn.attr("aria-label") === "Pause";
 
-                jQuery("#s-lib-cpane-39324337").slick(isPaused ? "slickPause" : "slickPlay");
+                jQuery("#s-lib-cpane-32630249").slick(isPaused ? "slickPause" : "slickPlay");
                 $btn.attr("aria-label", isPaused ? "Play" : "Pause");
                 $btn.html('<i class="fa fa-solid ' + (isPaused ? 'fa-play-circle-o' : 'fa-pause-circle-o') + '"></i>');
             });

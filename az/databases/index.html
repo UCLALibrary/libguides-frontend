@@ -483,6 +483,22 @@
     font-weight: 500
   }
 
+  /* overwrite libguides special cases in lookfeel.css */
+  #s-lg-guide-header-info h1,
+  .s-lib-header h1 {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  .public-collapsible-box h2.accordion-header>button {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  h2.s-lib-box-title button {
+    font-family: 'Karbon', sans-serif;
+  }
+
+  /* end overwrite special cases */
+
   ::selection {
     background: var(--color-primary-blue-03);
     color: var(--color-white)
@@ -598,7 +614,7 @@
         padding-bottom: var(--space-l);
       }
 
-      ::before {
+      &::before {
         content: "";
         position: absolute;
         top: 0;
@@ -609,6 +625,8 @@
         background-repeat: no-repeat;
         background-position: center 60%;
         mix-blend-mode: soft-light;
+        height: 100%;
+        width: 100%;
       }
 
       #s-lib-public-header-title {
@@ -621,7 +639,6 @@
       }
 
       #s-lib-public-header-desc {
-        margin: 0;
         font-size: 20px;
         line-height: 32px;
         color: var(--color-white);
@@ -968,14 +985,21 @@
     }
   }
 
-/* Targets sidebar buttons on homepage */
-.btn-info,
-.btn-info:hover,
-.btn-info:active,
-.btn-info:link,
-a.btn-info:visited {
- color: #ffffff;
-}
+  /* Targets sidebar buttons on homepage */
+  .btn-info,
+  .btn-info:hover,
+  .btn-info:active,
+  .btn-info:link,
+  a.btn-info:visited {
+    color: #ffffff;
+  }
+
+  /* hide new sort dropdown on blogs page*/
+  #s-lib-public-blog-main {
+    #sort_by_container {
+      display: none !important;
+    }
+  }
 </style>
     <style>
   /* Proxima Nova light, regular, and semibold */
@@ -1760,6 +1784,22 @@ a.btn-info:visited {
     #sort_by_container {
       display: none !important;
     }
+  }
+
+  /* Align icons in content boxes on Guide page */
+  #s-lg-guide-main .s-lg-link-list {
+    a img {
+      display: inline;
+    }
+
+    a i {
+      margin-left: .5em;
+    }
+  }
+
+  /* Targets 'Email Me' buttons on Guide and Profile pages */
+  .s-lib-profile-email a {
+    font-size: 1.1em;
   }
 </style>
 </head>
