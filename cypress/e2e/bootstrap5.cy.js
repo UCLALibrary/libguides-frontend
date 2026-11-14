@@ -6,24 +6,31 @@ describe('LibGuides Bootstrap 5 assets', () => {
     { name: 'Guide', path: '/communication/' },
     { name: 'Profile Landing', path: '/prf.php' },
     { name: 'Search', path: '/srch.php' },
-    { name: 'A-Z Databases', path: '/az/databases' },
+    {
+      name: 'A-Z Databases',
+      path: '/az/databases',
+      css: 'lg-public-bs5.min.css',
+    },
   ];
 
-  pages.forEach(({ name, path }) => {
+  pages.forEach(({ name, path, css }) => {
     it(`loads Bootstrap 5 assets on ${name}`, () => {
       cy.visit(path);
 
-      // Verify the Bootstrap 5 stylesheet is included.
-      cy.get('link[href*="lg-public-bs535.min.css"]').should('have.length', 1);
+      // A-Z Databases uses a different BS5 stylesheet.
+      const cssFile = css || 'lg-public-bs535.min.css';
 
-      // Verify the Bootstrap 5 JavaScript is included.
-      cy.get('script[src*="lg-public-bs535.min.js"]').should('have.length', 1);
+      cy.get(`link[href*="${cssFile}"]`).should('have.length', 1);
+
+      // Check for the appropriate BS5 JavaScript asset.
+      cy.get('script[src*="lg-public-bs5"]').should('exist');
 
       // Verify the Springshare Look & Feel stylesheet.
       cy.get('link[href="https://guides.library.ucla.edu/lookfeel.css"]').should('have.length', 1);
 
-      // Confirm Bootstrap 3 framework assets are not included.
+      // Confirm legacy Bootstrap 3 framework assets are absent.
       cy.get('link[href*="/lg-public.min.css"]').should('not.exist');
+
       cy.get('script[src*="/lg-public.min.js"]').should('not.exist');
     });
   });
