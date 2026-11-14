@@ -68,37 +68,37 @@ function buildPreviewHead($, globalHTML, type) {
 export const pages = {
   '/': {
     template: 'src/html/home/three-column-guide-index-side.html',
-    productionUrl: '/',
+    productionUrl: '/?bs5=1',
     type: 'home',
   },
 
   '/communication': {
     template: 'src/html/guide/side-nav-layout/ucla-default-template.html',
-    productionUrl: '/communication',
+    productionUrl: '/communication?bs5=1',
     type: 'guide',
   },
 
   '/sb.php': {
     template: 'src/html/subject/landing-page/system-default-landing-template.html',
-    productionUrl: '/sb.php',
+    productionUrl: '/sb.php?bs5=1',
     type: 'subject-landing',
   },
 
   '/africa-guides': {
     template: 'src/html/subject/individual-subject/subject-page-sans-databases.html',
-    productionUrl: '/africa-guides',
+    productionUrl: '/africa-guides?bs5=1',
     type: 'subject-info',
   },
 
   '/prf.php': {
     template: 'src/html/profile/landing-page/system-default-profile-landing-template.html',
-    productionUrl: '/prf.php',
+    productionUrl: '/prf.php?bs5=1',
     type: 'profile-landing',
   },
 
   '/srch.php': {
     template: 'src/html/search/flipped-footers.html',
-    productionUrl: '/srch.php',
+    productionUrl: '/srch.php?bs5=1',
     type: 'search',
   },
 
@@ -127,7 +127,7 @@ export function getPage(pathname, search = '') {
 
       return {
         template: 'src/html/profile/individual-profile/profile-page-swap-footers.html',
-        productionUrl: `/prf.php?id=${encodeURIComponent(profileId)}`,
+        productionUrl: `/prf.php?id=${encodeURIComponent(profileId)}&bs5=1`,
         type: 'profile-info',
       };
     }
@@ -141,7 +141,7 @@ export function getPage(pathname, search = '') {
   if (/^\/[a-z0-9-]+-guides?$/i.test(normalized)) {
     return {
       template: 'src/html/subject/individual-subject/subject-page-sans-databases.html',
-      productionUrl: normalized,
+      productionUrl: `${normalized}?bs5=1`,
       type: 'subject-info',
     };
   }
@@ -150,7 +150,7 @@ export function getPage(pathname, search = '') {
   if (/^\/[a-z0-9][a-z0-9-]*$/i.test(normalized)) {
     return {
       template: 'src/html/guide/side-nav-layout/ucla-default-template.html',
-      productionUrl: normalized,
+      productionUrl: `${normalized}?bs5=1`,
       type: 'guide',
     };
   }
@@ -175,6 +175,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
 
   // Shared template placeholders.
   const common = {
+    skip_link: outer('#s-lg-public-skiplink'),
     public_header: outer('body > header'),
     public_footer: '',
     breadcrumbs: inner('#s-lib-bc'),
@@ -193,11 +194,12 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     content: inner('#s-lg-index-list'),
     content_boxes: inner('#col2'),
     guide_list_controls: inner('#s-lg-list-controls'),
+    system_footer: outer('#s-lib-footer-public'),
   };
 
   // Individual Guide pages.
   const guide = {
-    skip_link: outer('#s-lg-public-skiplink'),
+    // skip_link: outer('#s-lg-public-skiplink'),
     guide_title: text('#s-lg-guide-name'),
     guide_description: inner('#s-lg-guide-description'),
     guide_search: inner('#s-lg-guide-header-search'),
@@ -218,7 +220,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
 
   // Shared Subject page placeholders.
   const subjectCommon = {
-    skip_link: outer('#s-lg-public-skiplink'),
+    // skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
     page_description: inner('#s-lib-public-header-desc'),
     page_nav: inner('#s-lib-public-nav'),
@@ -247,7 +249,7 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
 
   // Profile Landing.
   const profileLanding = {
-    skip_link: outer('#s-lg-public-skiplink'),
+    // skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
     page_description: inner('#s-lib-public-header-desc'),
     page_nav: inner('#s-lib-public-nav'),
@@ -274,11 +276,17 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
     personal_statement: inner('#s-lg-profile-cols > #col2'),
     guide_list: '',
     content_box_specialties: inner('#s-lg-profile-cols > #col3'),
+    // Profile Detail production HTML does not provide a skip link.
+    // Use the production link when available; otherwise provide
+    // an accessible link targeting this template's main content.
+    skip_link:
+      outer('#s-lg-public-skiplink') ||
+      '<a id="s-lg-public-skiplink" class="alert-info" href="#s-lib-public-main">Skip to Main Content</a>',
   };
 
   // Search Landing page.
   const search = {
-    skip_link: outer('#s-lg-public-skiplink'),
+    //skip_link: outer('#s-lg-public-skiplink'),
     page_title: text('#s-lib-public-header-title'),
     page_description: inner('#s-lib-public-header-desc'),
     page_nav: inner('#s-lib-public-nav'),
@@ -288,29 +296,20 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
   };
 
   // A-Z Databases Landing page.
+
   const azDatabases = {
-    skip_link: outer('#s-lg-public-skiplink'),
-    page_title: text('#s-lib-public-header-title'),
-    page_description: inner('#s-lib-public-header-desc'),
-    page_nav: inner('#s-lib-public-nav'),
+    ...common,
 
-    // Search, subject, type, and vendor controls.
-    navbar_wide: inner('#az-search-col-1'),
+    breadcrumbs_section: outer('#s-lib-bc'),
+    page_title_section: outer('#s-lib-public-header-title'),
+    page_description_section: outer('#s-lib-public-header-desc'),
 
-    // Alphabet navigation is populated by Springshare JS.
-    alpha_list: inner('#s-lg-az-index'),
+    // Preserve the production alert if one exists.
+    page_alert_section: outer('#s-lib-public-header .alert'),
 
-    // Reset controls.
-    search_reset: inner('#s-lg-az-search-reset'),
-
-    // Sidebar accordions.
-    content_box_3872822: outer('#s-lg-az-custom-box-3872822'),
-    content_box_3577872: outer('#s-lg-az-custom-box-3577872'),
-
-    // New / Trial Databases accordion.
-    trials_box: outer('#s-lg-az-trials'),
-
-    system_footer: outer('#s-lib-footer-public'),
+    // The template already contains these outer wrappers.
+    search_bar_section: inner('#s-lib-public-main-searchbar'),
+    page_content_section: inner('#s-lib-public-main > section'),
   };
 
   // Select placeholders for the requested page type.
@@ -371,7 +370,12 @@ export function renderTemplate(template, fixture, type, globalHTML = '') {
   }
 
   // Preserve production metadata, CSS, and JavaScript.
-  const head = buildPreviewHead($, globalHTML, type);
+  // Resolve Springshare's root-relative Look & Feel stylesheet
+  // to its production URL for local and static previews.
+  const head = buildPreviewHead($, globalHTML, type).replace(
+    /(<link\b[^>]*\bhref=["'])\/lookfeel\.css(["'][^>]*>)/gi,
+    '$1https://guides.library.ucla.edu/lookfeel.css$2'
+  );
 
   return `<!DOCTYPE html>
 <html lang="en">

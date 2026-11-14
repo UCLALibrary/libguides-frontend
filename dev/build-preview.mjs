@@ -154,8 +154,17 @@ console.log(`Found ${filteredRoutes.length} candidate routes.`);
 
 const validated = await mapWithConcurrency(filteredRoutes, CONCURRENCY, async (route) => {
   try {
-    const productionHTML = await fetchSpringsharePage(route);
     const explicitPage = pages[route];
+
+    // Use the configured production URL for explicitly
+    // registered pages, including Bootstrap 5 previews.
+    const productionUrl = new URL(explicitPage?.productionUrl ?? route, PRODUCTION_ORIGIN);
+
+    productionUrl.searchParams.set('bs5', '1');
+
+    const productionHTML = await fetchSpringsharePage(
+      `${productionUrl.pathname}${productionUrl.search}`
+    );
 
     const type = explicitPage?.type ?? classifyRoute(route, productionHTML);
 
@@ -291,7 +300,7 @@ if (profileIds.length) {
   const results = await mapWithConcurrency(profileIds, CONCURRENCY, async (profileId) => {
     try {
       const productionHTML = await fetchSpringsharePage(
-        `/prf.php?id=${encodeURIComponent(profileId)}`
+        `/prf.php?id=${encodeURIComponent(profileId)}&bs5=1`
       );
 
       return {
@@ -422,7 +431,7 @@ for (const action of homepageActions) {
     group_id: '0',
     num_cols: '3',
     search: '',
-    bs5: '0',
+    bs5: '1',
   });
 
   if (['176', '177', '178'].includes(action)) {
