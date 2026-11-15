@@ -60,7 +60,7 @@ export async function discoverRoutes() {
       group_id: '0',
       num_cols: '3',
       search: '',
-      bs5: '0',
+      bs5: '1',
     });
 
     const response = await fetchSpringshareAjax(`/index_process.php?${params}`);

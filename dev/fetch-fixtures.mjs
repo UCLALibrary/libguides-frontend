@@ -11,7 +11,7 @@ const homepageParams = {
   group_id: '0',
   num_cols: '3',
   search: '',
-  bs5: '0',
+  bs5: '1',
 };
 
 const fixtures = [

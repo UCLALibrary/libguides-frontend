@@ -8,19 +8,16 @@ module.exports = defineConfig({
     excludeSpecPattern: ['**/examples/**'],
 
     setupNodeEvents(on, config) {
-      config.env = {
-        ...config.env,
-        disableAutoSnapshot: true,
-      };
       config.expose = {
         ...config.expose,
         visualProvider: process.env.CYPRESS_VISUAL_PROVIDER || '',
+        disableAutoSnapshot: true,
       };
+
       // Enable Chromatic only when a project token is available.
       if (process.env.CHROMATIC_PROJECT_TOKEN) {
         installPlugin(on, config);
       } else {
-        // Fallback tasks used by Chromatic support.
         on('task', {
           log(message) {
             console.log(message);

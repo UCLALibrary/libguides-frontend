@@ -95,8 +95,20 @@ createServer(async (req, res) => {
      *
      * Homepage, Subjects, Profiles, and Search.
      */
+
     if (ajaxEndpoints.has(pathname)) {
-      const response = await fetchSpringshareAjax(`${pathname}${url.search}`);
+      const params = new URLSearchParams(url.searchParams);
+
+      // Temporary compatibility fix:
+      // Request Bootstrap 5 Homepage AJAX content until the
+      // renderer initializes Springshare with Bootstrap 5.
+      if (pathname === '/index_process.php') {
+        params.set('bs5', '1');
+      }
+
+      const upstreamPath = `${pathname}?${params.toString()}`;
+
+      const response = await fetchSpringshareAjax(upstreamPath);
 
       res.writeHead(200, {
         'Content-Type': 'application/json; charset=utf-8',
