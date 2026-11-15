@@ -1,4 +1,10 @@
 describe('LibGuides Bootstrap 5 assets', () => {
+  before(() => {
+    console.log({
+      visualProvider: Cypress.expose('visualProvider'),
+      disableAutoSnapshot: Cypress.expose('disableAutoSnapshot'),
+    });
+  });
   const pages = [
     { name: 'Homepage', path: '/' },
     { name: 'Subject Landing', path: '/sb.php' },
