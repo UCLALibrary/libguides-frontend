@@ -1,4 +1,4 @@
-(function () {
+(() => {
   const supportedActions = new Set(['170', '172', '174', '176', '177', '178']);
 
   const originalOpen = XMLHttpRequest.prototype.open;
@@ -12,8 +12,11 @@
     ) {
       const action = requestUrl.searchParams.get('action');
 
-      // Resolve relative to the current Homepage directory.
-      url = new URL(`ajax/${action}.json`, window.location.href).href;
+      // Resolve from the Homepage's base directory.
+      // Works locally and under GitHub Pages PR paths.
+      const homepageUrl = new URL('./', window.location.href);
+
+      url = new URL(`ajax/${action}.json`, homepageUrl).href;
     }
 
     return originalOpen.call(this, method, url, ...args);
