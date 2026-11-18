@@ -798,4 +798,10 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage */
+  body:not(#lib-homepage) #s-lib-bc,
+  body:not(#lib-homepage) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
