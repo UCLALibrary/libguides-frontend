@@ -1057,9 +1057,16 @@
     font-size: 1.1em !important;
   }
 
-  /* Left aligns breadcrumbs to header except on Homepage */
-  body:not(#lib-homepage) #s-lib-bc,
-  body:not(#lib-homepage) #s-lib-bc-site.breadcrumb-item {
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
 </style><style type="text/css">ul.s-lg-link-list {

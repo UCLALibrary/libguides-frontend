@@ -28,10 +28,10 @@
 <meta property="og:description" content="Welcome to the UCLA Library Guide to researching Black art and artists. The focus of this guide is on Black art and artists in the English-speaking diaspora.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://guides.library.ucla.edu/blackart/home">
-    <meta property="og:image" content="https://guides.library.ucla.edu/ld.php?screenshot=bbjfbgj.png&amp;size=facebook&amp;cb=1794961550">
+    <meta property="og:image" content="https://guides.library.ucla.edu/ld.php?screenshot=bbjfbgj.png&amp;size=facebook&amp;cb=1794968281">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="627">
-    <meta name="twitter:image" content="https://guides.library.ucla.edu/ld.php?screenshot=bbjfbgj.png&amp;size=twitter&amp;cb=1794961550">
+    <meta name="twitter:image" content="https://guides.library.ucla.edu/ld.php?screenshot=bbjfbgj.png&amp;size=twitter&amp;cb=1794968281">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@springshare">
 
@@ -1101,9 +1101,16 @@
     font-size: 1.1em !important;
   }
 
-  /* Left aligns breadcrumbs to header except on Homepage */
-  body:not(#lib-homepage) #s-lib-bc,
-  body:not(#lib-homepage) #s-lib-bc-site.breadcrumb-item {
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
 </style>
