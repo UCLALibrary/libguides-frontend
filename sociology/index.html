@@ -1096,6 +1096,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1685,7 +1698,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 29, 2026
 								</span>
-								<span class="s-lg-guide-info-views">5309 views this year
+								<span class="s-lg-guide-info-views">5320 views this year
 								</span>
 							</div>
 					</li>
@@ -1699,7 +1712,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 23, 2026
 								</span>
-								<span class="s-lg-guide-info-views">1186 views this year
+								<span class="s-lg-guide-info-views">1199 views this year
 								</span>
 							</div>
 					</li>
@@ -1713,7 +1726,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 23, 2026
 								</span>
-								<span class="s-lg-guide-info-views">3112 views this year
+								<span class="s-lg-guide-info-views">3118 views this year
 								</span>
 							</div>
 					</li></ul> 

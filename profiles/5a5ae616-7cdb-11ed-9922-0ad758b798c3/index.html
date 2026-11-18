@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1094,9 +1107,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1583
+                    <i class="fa fa-eye icon-small"></i> 1608
                 </span>
-                <span class="sr-only">1583 views</span>
+                <span class="sr-only">1608 views</span>
             </div>
         </div>
     </div>
@@ -1116,9 +1129,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 16, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 576
+                    <i class="fa fa-eye icon-small"></i> 581
                 </span>
-                <span class="sr-only">576 views</span>
+                <span class="sr-only">581 views</span>
             </div>
         </div>
     </div>
@@ -1138,9 +1151,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 387
+                    <i class="fa fa-eye icon-small"></i> 393
                 </span>
-                <span class="sr-only">387 views</span>
+                <span class="sr-only">393 views</span>
             </div>
         </div>
     </div>
@@ -1160,9 +1173,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 4213
+                    <i class="fa fa-eye icon-small"></i> 4235
                 </span>
-                <span class="sr-only">4213 views</span>
+                <span class="sr-only">4235 views</span>
             </div>
         </div>
     </div>
@@ -1182,9 +1195,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 2587
+                    <i class="fa fa-eye icon-small"></i> 2605
                 </span>
-                <span class="sr-only">2587 views</span>
+                <span class="sr-only">2605 views</span>
             </div>
         </div>
     </div>
@@ -1204,9 +1217,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1173
+                    <i class="fa fa-eye icon-small"></i> 1183
                 </span>
-                <span class="sr-only">1173 views</span>
+                <span class="sr-only">1183 views</span>
             </div>
         </div>
     </div>
@@ -1226,9 +1239,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Sep 23, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 547
+                    <i class="fa fa-eye icon-small"></i> 551
                 </span>
-                <span class="sr-only">547 views</span>
+                <span class="sr-only">551 views</span>
             </div>
         </div>
     </div>
@@ -1248,9 +1261,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1737
+                    <i class="fa fa-eye icon-small"></i> 1746
                 </span>
-                <span class="sr-only">1737 views</span>
+                <span class="sr-only">1746 views</span>
             </div>
         </div>
     </div>

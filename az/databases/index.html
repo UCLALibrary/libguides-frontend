@@ -1817,6 +1817,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
 </head>
 <body class="s-lib-public-body">
@@ -1838,7 +1851,7 @@
     </header>
 
 
-    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders image-background-header">
+    <div id="s-lib-public-header" class="s-lib-header container s-lib-side-borders image-background-header no-left-aligned-breadcrumbs">
         <nav id="s-lib-bc" aria-label="breadcrumb"><ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="/libguides-frontend/">Research Guides</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">A-Z Databases</li></ol></nav>
 
         <h1 id="s-lib-public-header-title">
@@ -1928,7 +1941,7 @@
                                                     <div class="d-flex justify-content-start align-items-baseline">
                                                         <img src="/web/assets/media/icons/duotune/abstract/abs009.svg" role="presentation" alt="" style="display:none">
                                                             <select data-placeholder="Vendors" name="s-lg-sel-az-vendors" aria-label="Database Vendors Filter" class="s-lg-sel-az-vendors form-control form-control-select2-multi" multiple="multiple">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="148641">1000 Cookbooks Ltd</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="148641">1000 Cookbooks Ltd</option>
         <option value="46940">ABC-CLIO</option>
         <option value="148599">Academic Studies Press</option>
         <option value="26471">Alexander Street Press</option>
@@ -1959,6 +1972,7 @@
         <option value="46947">Gale</option>
         <option value="125895">Geolytics</option>
         <option value="90685">Historical Information Gatherers, Inc.</option>
+        <option value="159538">HSD Media</option>
         <option value="100153">IBISWorld</option>
         <option value="143912">iG Publishing</option>
         <option value="140236">J-DAC</option>
@@ -2080,7 +2094,7 @@
 
     <div class="form-group">
             <select data-placeholder="Vendors" name="s-lg-sel-az-vendors" aria-label="Database Vendors Filter" class="s-lg-sel-az-vendors form-control form-control-select2-multi" multiple="multiple">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="148641">1000 Cookbooks Ltd</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="148641">1000 Cookbooks Ltd</option>
         <option value="46940">ABC-CLIO</option>
         <option value="148599">Academic Studies Press</option>
         <option value="26471">Alexander Street Press</option>
@@ -2111,6 +2125,7 @@
         <option value="46947">Gale</option>
         <option value="125895">Geolytics</option>
         <option value="90685">Historical Information Gatherers, Inc.</option>
+        <option value="159538">HSD Media</option>
         <option value="100153">IBISWorld</option>
         <option value="143912">iG Publishing</option>
         <option value="140236">J-DAC</option>
@@ -2237,7 +2252,7 @@
 
     <div class="form-group">
             <select data-placeholder="Vendors" name="s-lg-sel-az-vendors" aria-label="Database Vendors Filter" class="s-lg-sel-az-vendors form-control form-control-select2-multi" multiple="multiple">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <option value="148641">1000 Cookbooks Ltd</option>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <option value="148641">1000 Cookbooks Ltd</option>
         <option value="46940">ABC-CLIO</option>
         <option value="148599">Academic Studies Press</option>
         <option value="26471">Alexander Street Press</option>
@@ -2268,6 +2283,7 @@
         <option value="46947">Gale</option>
         <option value="125895">Geolytics</option>
         <option value="90685">Historical Information Gatherers, Inc.</option>
+        <option value="159538">HSD Media</option>
         <option value="100153">IBISWorld</option>
         <option value="143912">iG Publishing</option>
         <option value="140236">J-DAC</option>
@@ -2376,11 +2392,13 @@
                     
 
 
+
+
     <div id="s-lg-box-3872822-container" class="s-lib-box-container">
         <div id="s-lg-box-3872822" class="s-lib-box s-lib-box-std">
                             <h2 class="s-lib-box-title sr-only">
-                    Other Ways to Find Databases
-                                    </h2>
+                                            Other Ways to Find Databases
+                                                            </h2>
                         <div id="s-lg-box-collapse-3872822">
                 <div class="s-lib-box-content">
                     
@@ -2488,7 +2506,7 @@
         <ul id="s-lg-link-list-8315021" class="s-lg-link-list s-lg-link-list-10">
 
 <li class="">
-    <div id="s-lg-content-5618641" class="">
+    <div id="s-lg-content-5618641" class="w-100 clearfix">
 
     
 
@@ -2551,6 +2569,7 @@
         </div>
     </div>
 
+
             </div>
         </div>
     </div>
@@ -2568,11 +2587,13 @@
                     
 
 
+
+
     <div id="s-lg-box-3577872-container" class="s-lib-box-container">
         <div id="s-lg-box-3577872" class="s-lib-box s-lib-box-std">
                             <h2 class="s-lib-box-title sr-only">
-                    Research Help
-                                    </h2>
+                                            Research Help
+                                                            </h2>
                         <div id="s-lg-box-collapse-3577872">
                 <div class="s-lib-box-content">
                     <div id="s-lg-content-6764243" class="  clearfix">
@@ -2614,6 +2635,7 @@ opacity: 0.6;
             </div>
         </div>
     </div>
+
 
             </div>
         </div>
@@ -3077,6 +3099,28 @@ opacity: 0.6;
             <div class="justify-content-start">
             <div class="az-description-full mt-2">
                 Covers developments in disease prevention, outbreak management, sanitation, and public welfare, as well as the spread and treatment of major epidemics and pandemics across the globe in the nineteenth and twentieth centuries.
+            </div>
+        </div>
+    </div>                                
+<div class="mb-4">
+    <div class="d-flex justify-content-start">
+                <div class="flex-fill">
+                            <a href="https://db.hitsongsdeconstructed.com/" target="_blank" onclick="return springSpace.springTrack.trackLink({link: this,_st_type_id: '16',_st_content_id: '86920235',_st_inc_return: this});" data-landing-page="">Hit Songs Deconstructed<i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span></a>
+            
+                            <div class="az-flags ms-0 me-2">
+                                        <span class="margin-left-sm s-lg-az-result-badge-new badge rounded-pill">
+                New
+            </span>
+                    
+                </div>
+                                        <div class="az-icons ms-0">
+                    <ul class=""><li><a href="http://www.library.ucla.edu/service/campus-access" target="_blank"><img loading="lazy" alt="Requires UCLA authentication" class="s-lg-icon" src="//d2jv02qf7xgjwx.cloudfront.net/sites/705/icons/983/key-newblue-transp.gif"><i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span></a> </li></ul>
+                </div>
+                    </div>
+    </div>
+            <div class="justify-content-start">
+            <div class="az-description-full mt-2">
+                <p>Hit Songs Deconstructed provides in-depth analyses of popular songs, including structure, instrumentation and arrangement, lyrics, and more.</p>
             </div>
         </div>
     </div>                                
@@ -3627,28 +3671,6 @@ opacity: 0.6;
             <div class="justify-content-start">
             <div class="az-description-full mt-2">
                 <p>Question bank for the INBDE (Integrated National Board Dental Examination).</p>
-            </div>
-        </div>
-    </div>                                
-<div class="mb-4">
-    <div class="d-flex justify-content-start">
-                <div class="flex-fill">
-                            <a href="https://da.thehistorymakers.org" target="_blank" onclick="return springSpace.springTrack.trackLink({link: this,_st_type_id: '16',_st_content_id: '85898240',_st_inc_return: this});" data-landing-page="">The HistoryMakers Digital Archive<i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span></a>
-            
-                            <div class="az-flags ms-0 me-2">
-                                        <span class="margin-left-sm s-lg-az-result-badge-new badge rounded-pill">
-                New
-            </span>
-                    
-                </div>
-                                        <div class="az-icons ms-0">
-                    <ul class=""><li><a href="http://www.library.ucla.edu/service/campus-access" target="_blank"><img loading="lazy" alt="Requires UCLA authentication" class="s-lg-icon" src="//d2jv02qf7xgjwx.cloudfront.net/sites/705/icons/983/key-newblue-transp.gif"><i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span></a> </li></ul>
-                </div>
-                    </div>
-    </div>
-            <div class="justify-content-start">
-            <div class="az-description-full mt-2">
-                Video oral history interviews highlighting the accomplishments of individual African Americans and African-American-led groups and movements, with memories stretching from the 1890s to the present.
             </div>
         </div>
     </div>                                

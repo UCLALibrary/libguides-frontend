@@ -1098,6 +1098,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1675,7 +1688,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">3099 views this year
+								<span class="s-lg-guide-info-views">3117 views this year
 								</span>
 							</div>
 					</li></ul> 
@@ -1692,7 +1705,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Sep 23, 2026
 								</span>
-								<span class="s-lg-guide-info-views">799 views this year
+								<span class="s-lg-guide-info-views">808 views this year
 								</span>
 							</div>
 					</li></ul> 
@@ -1709,7 +1722,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">880 views this year
+								<span class="s-lg-guide-info-views">891 views this year
 								</span>
 							</div>
 					</li></ul> 
@@ -1726,7 +1739,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Nov 5, 2026
 								</span>
-								<span class="s-lg-guide-info-views">4439 views this year
+								<span class="s-lg-guide-info-views">4471 views this year
 								</span>
 							</div>
 					</li></ul> 
@@ -1767,7 +1780,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Aug 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">3170 views this year
+								<span class="s-lg-guide-info-views">3189 views this year
 								</span>
 							</div>
 					</li></ul> 
@@ -1784,7 +1797,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 13, 2026
 								</span>
-								<span class="s-lg-guide-info-views">2240 views this year
+								<span class="s-lg-guide-info-views">2281 views this year
 								</span>
 							</div>
 					</li></ul> 

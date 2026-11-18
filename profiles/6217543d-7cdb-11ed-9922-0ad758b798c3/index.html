@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1072,9 +1085,9 @@
                 </span>
                 <span class="sr-only">Last update: Aug 17, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 5605
+                    <i class="fa fa-eye icon-small"></i> 5670
                 </span>
-                <span class="sr-only">5605 views</span>
+                <span class="sr-only">5670 views</span>
             </div>
         </div>
     </div>
@@ -1094,9 +1107,9 @@
                 </span>
                 <span class="sr-only">Last update: Sep 25, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1187
+                    <i class="fa fa-eye icon-small"></i> 1197
                 </span>
-                <span class="sr-only">1187 views</span>
+                <span class="sr-only">1197 views</span>
             </div>
         </div>
     </div>
@@ -1116,9 +1129,9 @@
                 </span>
                 <span class="sr-only">Last update: Oct 29, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 3215
+                    <i class="fa fa-eye icon-small"></i> 3232
                 </span>
-                <span class="sr-only">3215 views</span>
+                <span class="sr-only">3232 views</span>
             </div>
         </div>
     </div>

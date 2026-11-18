@@ -1096,6 +1096,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1336,7 +1349,7 @@
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Apr 3, 2026
 								</span>
-								<span class="s-lg-guide-info-views">1423 views this year
+								<span class="s-lg-guide-info-views">1454 views this year
 								</span>
 							</div>
 					</li></ul> 

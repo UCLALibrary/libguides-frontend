@@ -21,7 +21,7 @@
     <meta name="DC.Language" content="en">
     <meta name="DC.Identifier" content="https://guides.library.ucla.edu/disney/home">
     <meta name="DC.Date.Created" content="Jul 14, 2022">
-    <meta name="DC.Date.Modified" content="Nov 9, 2026">
+    <meta name="DC.Date.Modified" content="Nov 16, 2026">
     
 
 <meta property="og:title" content="Research Guides: Disney: Home">
@@ -1095,6 +1095,19 @@
   /* Targets 'Email Me' buttons on Guide and Profile pages */
   .s-lib-profile-email a {
     font-size: 1.1em !important;
+  }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
   }
 </style>
 </head>
@@ -2392,7 +2405,7 @@ opacity: 0.6;
       <ul id="s-lg-guide-header-attributes" class="">
         <li id="s-lg-guide-header-updated" class="s-lg-h-separator">
           
-                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 9, 2026 9:18 AM</span>                     </li>
+                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 16, 2026 10:39 AM</span>                     </li>
         <li id="s-lg-guide-header-url" class="s-lg-h-separator">
           
                         <span class="s-lg-guide-label">URL:</span> <span class="s-lg-text-greyout">https://guides.library.ucla.edu/disney</span>

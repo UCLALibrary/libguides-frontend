@@ -21,7 +21,7 @@
     <meta name="DC.Language" content="en">
     <meta name="DC.Identifier" content="https://guides.library.ucla.edu/Cluster27/home">
     <meta name="DC.Date.Created" content="Aug 21, 2020">
-    <meta name="DC.Date.Modified" content="Nov 9, 2026">
+    <meta name="DC.Date.Modified" content="Nov 17, 2026">
     
 
 <meta property="og:title" content="Research Guides: Cluster 27: Global Islam : Home">
@@ -1096,6 +1096,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1513,7 +1526,7 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
       <ul id="s-lg-guide-header-attributes" class="">
         <li id="s-lg-guide-header-updated" class="s-lg-h-separator">
           
-                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 9, 2026 9:23 AM</span>                     </li>
+                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 16, 2026 9:33 PM</span>                     </li>
         <li id="s-lg-guide-header-url" class="s-lg-h-separator">
           
                         <span class="s-lg-guide-label">URL:</span> <span class="s-lg-text-greyout">https://guides.library.ucla.edu/Cluster27</span>

@@ -1054,6 +1054,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style type="text/css">
 .s-lg-system-list { background-color: #FFFFFF; border: 1px solid #c1daeb; padding: 5px; padding-left: 20px; }
 </style><script>
@@ -1637,7 +1650,7 @@
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">12392 views this year
+								<span class="s-lg-guide-info-views">12479 views this year
 								</span>
 							</div>
 					</li>
@@ -1651,7 +1664,7 @@
 								<span class="s-lg-guide-info-updated pad-right-sm">
 									Last Updated Oct 19, 2026
 								</span>
-								<span class="s-lg-guide-info-views">6191 views this year
+								<span class="s-lg-guide-info-views">6228 views this year
 								</span>
 							</div>
 					</li></ul> 

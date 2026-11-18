@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1070,9 +1083,9 @@ Wm. Andrews Clark Memorial Library<br>2520 Cimarron Street<br> Los Angeles, CA  
                 </span>
                 <span class="sr-only">Last update: May 8, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 308
+                    <i class="fa fa-eye icon-small"></i> 311
                 </span>
-                <span class="sr-only">308 views</span>
+                <span class="sr-only">311 views</span>
             </div>
         </div>
     </div>

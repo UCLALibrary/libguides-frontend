@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1093,9 +1106,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Sep 3, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 11972
+                    <i class="fa fa-eye icon-small"></i> 12099
                 </span>
-                <span class="sr-only">11972 views</span>
+                <span class="sr-only">12099 views</span>
             </div>
         </div>
     </div>
@@ -1115,9 +1128,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 395
+                    <i class="fa fa-eye icon-small"></i> 396
                 </span>
-                <span class="sr-only">395 views</span>
+                <span class="sr-only">396 views</span>
             </div>
         </div>
     </div>
@@ -1137,9 +1150,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1911
+                    <i class="fa fa-eye icon-small"></i> 1924
                 </span>
-                <span class="sr-only">1911 views</span>
+                <span class="sr-only">1924 views</span>
             </div>
         </div>
     </div>
@@ -1159,9 +1172,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Aug 17, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 9124
+                    <i class="fa fa-eye icon-small"></i> 9150
                 </span>
-                <span class="sr-only">9124 views</span>
+                <span class="sr-only">9150 views</span>
             </div>
         </div>
     </div>
@@ -1181,9 +1194,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 6191
+                    <i class="fa fa-eye icon-small"></i> 6228
                 </span>
-                <span class="sr-only">6191 views</span>
+                <span class="sr-only">6228 views</span>
             </div>
         </div>
     </div>
@@ -1203,9 +1216,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1487
+                    <i class="fa fa-eye icon-small"></i> 1491
                 </span>
-                <span class="sr-only">1487 views</span>
+                <span class="sr-only">1491 views</span>
             </div>
         </div>
     </div>
@@ -1225,9 +1238,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Sep 23, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1311
+                    <i class="fa fa-eye icon-small"></i> 1360
                 </span>
-                <span class="sr-only">1311 views</span>
+                <span class="sr-only">1360 views</span>
             </div>
         </div>
     </div>
@@ -1247,9 +1260,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 428
+                    <i class="fa fa-eye icon-small"></i> 429
                 </span>
-                <span class="sr-only">428 views</span>
+                <span class="sr-only">429 views</span>
             </div>
         </div>
     </div>
@@ -1269,9 +1282,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 848
+                    <i class="fa fa-eye icon-small"></i> 851
                 </span>
-                <span class="sr-only">848 views</span>
+                <span class="sr-only">851 views</span>
             </div>
         </div>
     </div>
@@ -1291,9 +1304,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 27, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 411
+                    <i class="fa fa-eye icon-small"></i> 412
                 </span>
-                <span class="sr-only">411 views</span>
+                <span class="sr-only">412 views</span>
             </div>
         </div>
     </div>
@@ -1313,9 +1326,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 12392
+                    <i class="fa fa-eye icon-small"></i> 12479
                 </span>
-                <span class="sr-only">12392 views</span>
+                <span class="sr-only">12479 views</span>
             </div>
         </div>
     </div>
@@ -1335,9 +1348,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Aug 18, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1114
+                    <i class="fa fa-eye icon-small"></i> 1118
                 </span>
-                <span class="sr-only">1114 views</span>
+                <span class="sr-only">1118 views</span>
             </div>
         </div>
     </div>
@@ -1379,9 +1392,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1307
+                    <i class="fa fa-eye icon-small"></i> 1314
                 </span>
-                <span class="sr-only">1307 views</span>
+                <span class="sr-only">1314 views</span>
             </div>
         </div>
     </div>
@@ -1423,9 +1436,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 660
+                    <i class="fa fa-eye icon-small"></i> 674
                 </span>
-                <span class="sr-only">660 views</span>
+                <span class="sr-only">674 views</span>
             </div>
         </div>
     </div>
@@ -1467,9 +1480,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Nov 9, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 15304
+                    <i class="fa fa-eye icon-small"></i> 15443
                 </span>
-                <span class="sr-only">15304 views</span>
+                <span class="sr-only">15443 views</span>
             </div>
         </div>
     </div>
@@ -1489,9 +1502,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Oct 10, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 3213
+                    <i class="fa fa-eye icon-small"></i> 3235
                 </span>
-                <span class="sr-only">3213 views</span>
+                <span class="sr-only">3235 views</span>
             </div>
         </div>
     </div>
@@ -1533,9 +1546,9 @@ jQuery.getScript("https://api3.libcal.com/js/myscheduler.min.js", function() {
                 </span>
                 <span class="sr-only">Last update: Nov 2, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 13228
+                    <i class="fa fa-eye icon-small"></i> 13385
                 </span>
-                <span class="sr-only">13228 views</span>
+                <span class="sr-only">13385 views</span>
             </div>
         </div>
     </div>

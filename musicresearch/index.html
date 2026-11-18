@@ -21,7 +21,7 @@
     <meta name="DC.Language" content="en">
     <meta name="DC.Identifier" content="https://guides.library.ucla.edu/musicresearch/home">
     <meta name="DC.Date.Created" content="Apr 24, 2013">
-    <meta name="DC.Date.Modified" content="Nov 4, 2026">
+    <meta name="DC.Date.Modified" content="Nov 17, 2026">
     
 
 <meta property="og:title" content="Research Guides: Music Research: Home">
@@ -1095,6 +1095,19 @@
   /* Targets 'Email Me' buttons on Guide and Profile pages */
   .s-lib-profile-email a {
     font-size: 1.1em !important;
+  }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
   }
 </style>
 </head>
@@ -2780,6 +2793,32 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
 
 </li>
 
+
+
+
+<li class="">
+    <div id="s-lg-content-86920235" class="w-100 clearfix">
+
+    
+
+    <a href="https://db.hitsongsdeconstructed.com/" target="_blank" onclick="return springSpace.springTrack.trackLink({link: this,_st_type_id: '16',_st_content_id: '86920235',_st_inc_return: this});">
+        Hit Songs Deconstructed
+    </a> <i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span>
+
+    
+
+    
+    <div class="s-lg-icons pad-left-sm"><ul class=""><li><a href="http://www.library.ucla.edu/service/campus-access" target="_blank"><img loading="lazy" alt="Requires UCLA authentication" class="s-lg-icon" src="//d2jv02qf7xgjwx.cloudfront.net/sites/705/icons/983/key-newblue-transp.gif"><i class="fa fa-fw fa-external-link " aria-hidden="true" title="This link opens in a new window"></i><span class="sr-only">This link opens in a new window</span></a> </li></ul></div>
+
+    
+            <div id="s-lg-database-desc-86920235" class="s-lg-database-desc">
+            <p>Hit Songs Deconstructed provides in-depth analyses of popular songs, including structure, instrumentation and arrangement, lyrics, and more.</p>
+        </div>
+    
+    </div>
+
+</li>
+
         </ul>
 
         
@@ -4271,7 +4310,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
       <ul id="s-lg-guide-header-attributes" class="">
         <li id="s-lg-guide-header-updated" class="s-lg-h-separator">
           
-                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 4, 2026 2:37 PM</span>                     </li>
+                        <span class="s-lg-guide-label">Last Updated:</span> <span class="s-lg-text-greyout">Nov 17, 2026 9:43 AM</span>                     </li>
         <li id="s-lg-guide-header-url" class="s-lg-h-separator">
           
                         <span class="s-lg-guide-label">URL:</span> <span class="s-lg-text-greyout">https://guides.library.ucla.edu/musicresearch</span>

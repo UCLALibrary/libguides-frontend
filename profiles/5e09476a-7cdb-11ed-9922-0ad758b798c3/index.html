@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1096,9 +1109,9 @@ Los Angeles, CA 90095</div>
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 459
+                    <i class="fa fa-eye icon-small"></i> 460
                 </span>
-                <span class="sr-only">459 views</span>
+                <span class="sr-only">460 views</span>
             </div>
         </div>
     </div>
@@ -1118,9 +1131,9 @@ Los Angeles, CA 90095</div>
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 4325
+                    <i class="fa fa-eye icon-small"></i> 4353
                 </span>
-                <span class="sr-only">4325 views</span>
+                <span class="sr-only">4353 views</span>
             </div>
         </div>
     </div>
@@ -1140,9 +1153,9 @@ Los Angeles, CA 90095</div>
                 </span>
                 <span class="sr-only">Last update: Oct 13, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 2240
+                    <i class="fa fa-eye icon-small"></i> 2281
                 </span>
-                <span class="sr-only">2240 views</span>
+                <span class="sr-only">2281 views</span>
             </div>
         </div>
     </div>

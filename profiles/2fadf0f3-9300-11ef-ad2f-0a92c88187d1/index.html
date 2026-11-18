@@ -954,6 +954,19 @@
   .s-lib-profile-email a {
     font-size: 1.1em !important;
   }
+
+  /* Left aligns breadcrumbs to header except on Homepage, AZ Database */
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc {
+    padding-left: 0;
+
+    @media(max-width: 1196px) {
+      padding-left: var(--unit-gutter);
+    }
+  }
+
+  #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
+    padding-left: 0;
+  }
 </style><style>
     .pad-left-sm { margin-left:10px; }
     .s-lib-featured-profile-container { width: 160px; margin:0 10px 20px 10px !important; }
@@ -1092,9 +1105,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Sep 23, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 906
+                    <i class="fa fa-eye icon-small"></i> 916
                 </span>
-                <span class="sr-only">906 views</span>
+                <span class="sr-only">916 views</span>
             </div>
         </div>
     </div>
@@ -1114,9 +1127,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 5, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 6132
+                    <i class="fa fa-eye icon-small"></i> 6210
                 </span>
-                <span class="sr-only">6132 views</span>
+                <span class="sr-only">6210 views</span>
             </div>
         </div>
     </div>
@@ -1136,9 +1149,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Sep 1, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 655
+                    <i class="fa fa-eye icon-small"></i> 662
                 </span>
-                <span class="sr-only">655 views</span>
+                <span class="sr-only">662 views</span>
             </div>
         </div>
     </div>
@@ -1158,9 +1171,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Oct 19, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 385
+                    <i class="fa fa-eye icon-small"></i> 388
                 </span>
-                <span class="sr-only">385 views</span>
+                <span class="sr-only">388 views</span>
             </div>
         </div>
     </div>
@@ -1180,9 +1193,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Sep 28, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 1495
+                    <i class="fa fa-eye icon-small"></i> 1506
                 </span>
-                <span class="sr-only">1495 views</span>
+                <span class="sr-only">1506 views</span>
             </div>
         </div>
     </div>
@@ -1224,9 +1237,9 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
                 </span>
                 <span class="sr-only">Last update: Sep 28, 2026</span>
                 <span aria-hidden="true" title="Views" class="pad-left-med hitst">
-                    <i class="fa fa-eye icon-small"></i> 6416
+                    <i class="fa fa-eye icon-small"></i> 6448
                 </span>
-                <span class="sr-only">6416 views</span>
+                <span class="sr-only">6448 views</span>
             </div>
         </div>
     </div>
