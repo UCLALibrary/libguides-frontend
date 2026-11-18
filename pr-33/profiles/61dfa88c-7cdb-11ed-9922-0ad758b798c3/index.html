@@ -955,17 +955,9 @@
     font-size: 1.1em !important;
   }
 
-  #s-lib-bc {
-    padding-left: 0;
-  }
-
-  #s-lib-bc-site.breadcrumb-item {
-    padding-left: 0;
-  }
-
   /* Left aligns breadcrumbs to header except on Homepage */
-  body:not(#homepage) #s-lib-bc,
-  body:not(#homepage) #s-lib-bc-site.breadcrumb-item {
+  body:not(#lib-homepage) #s-lib-bc,
+  body:not(#lib-homepage) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
 </style><style>
@@ -1096,7 +1088,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
     <div class="s-lib-box s-lib-border-round s-lib-box-idx-guide-list">
         <div class="s-lib-box-content">
             <div class="s-lg-gtitle s-lib-color-lt-grey">
-                <a class="bold" href="https://guides.library.ucla.edu/Cluster10" aria-label="Cluster 10: Data, Justice, and Society Library Guide Guide">
+                <a class="bold" href="/libguides-frontend/pr-33/Cluster10/" aria-label="Cluster 10: Data, Justice, and Society Library Guide Guide">
                     Cluster 10: Data, Justice, and Society Library Guide
                 </a>
                 <div class="s-ui-helptip"><button id="s-ui-helptip-btn-guide-info-1342076" type="button" class="btn btn-link btn-help-popover" data-ajload="/index_process.php?action=175&amp;guide_id=1342076&amp;group_id=0" data-title="Cluster 10: Data, Justice, and Society Library Guide"><i class="fa fa-info-circle"></i><span class="sr-only">View Guide Info</span></button></div>
