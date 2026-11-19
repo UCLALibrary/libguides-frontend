@@ -1072,6 +1072,17 @@
   #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
+
+  /* Ensure enough contrast for tabs on homepage and profile landing page*/
+  .nav .s-lg-index-nav-btn>button,
+  .nav .s-lg-index-nav-btn>.nav-link {
+    font-weight: bold;
+  }
+
+  .nav .s-lg-index-nav-btn:not(.active)>button,
+  .nav .s-lg-index-nav-btn>.nav-link:not(.active) {
+    color: #0C6AB7;
+  }
 </style><style>
 #s-lib-bc-group { display: none; }
 </style><script src="https://ucla.libanswers.com/load_chat.php?hash=5a44dfe7cc29aaee5bba635ab13fa753"></script>

@@ -1067,6 +1067,17 @@
   #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
+
+  /* Ensure enough contrast for tabs on homepage and profile landing page*/
+  .nav .s-lg-index-nav-btn>button,
+  .nav .s-lg-index-nav-btn>.nav-link {
+    font-weight: bold;
+  }
+
+  .nav .s-lg-index-nav-btn:not(.active)>button,
+  .nav .s-lg-index-nav-btn>.nav-link:not(.active) {
+    color: #0C6AB7;
+  }
 </style><style>
 #examples .slick-prev { left: -25px; opacity: 0.5; }
 #examples .slick-next { right: -25px; opacity: 0.5; }
