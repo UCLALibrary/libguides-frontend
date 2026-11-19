@@ -42,7 +42,7 @@
 <link rel="stylesheet" type="text/css" href="https://static-assets-us.libguides.com/web/slick-1.8.1/slick/slick.css">
 <link rel="stylesheet" type="text/css" href="https://static-assets-us.libguides.com/web/slick-1.8.1/slick/slick-theme.css">
 
-    <link rel="stylesheet" href="https://static-assets-us.libguides.com/web/css3.31.5/lg-public-bs535.min.css">
+    <link rel="stylesheet" href="https://static-assets-us.libguides.com/web/css3.31.6/lg-public-bs535.min.css">
 <link rel="stylesheet" href="https://guides.library.ucla.edu/lookfeel.css">
 <script type="text/javascript" src="https://static-assets-us.libguides.com/web/jquery/js/jquery-3.7.1.min.js"></script>
 <script>
@@ -62,7 +62,7 @@
         document.write('<script src="https://static-assets-us.libguides.com/web/jquery/js/jquery-ui.min.js?2691">\x3C/script>');
     </script>
 
-    <script type="text/javascript" src="https://static-assets-us.libguides.com/web/js3.31.5/lg-public-bs535.min.js"></script>
+    <script type="text/javascript" src="https://static-assets-us.libguides.com/web/js3.31.6/lg-public-bs535.min.js"></script>
 <style>/** bs5/bootstrap_tab_box_css.twig **/
 
             
@@ -1109,6 +1109,17 @@
   #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
+
+  /* Ensure enough contrast for tabs on homepage and profile landing page*/
+  .nav .s-lg-index-nav-btn>button,
+  .nav .s-lg-index-nav-btn>.nav-link {
+    font-weight: bold;
+  }
+
+  .nav .s-lg-index-nav-btn:not(.active)>button,
+  .nav .s-lg-index-nav-btn>.nav-link:not(.active) {
+    color: #0C6AB7;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1577,7 +1588,7 @@ jQuery.getScript("https://calendar.library.ucla.edu/js/myscheduler.min.js", func
       </ul>
       <div id="s-lib-footer-login-link" class="pull-right pad-right-med">
         
-                    <a href="https://ucla.libapps.com/libapps/login.php?site_id=705&amp;target64=L2xpYmd1aWRlcy9hZG1pbl9jLnBocD9nPTE4MDI2NyZwPTExODcyNzI=">Login to LibApps</a>                 </div>
+                    <a href="https://ucla.libapps.com/libapps/login.php?site_id=705&amp;target64=L2xpYmd1aWRlcy9ndWlkZXMvZWRpdC8xODAyNjcvMTE4NzI3Mg==">Login to LibApps</a>                 </div>
     </div>
     <div class="pad-bottom-sm clearfix">
       <div id="s-lib-footer-support-link" class="pull-right pad-right-med">
