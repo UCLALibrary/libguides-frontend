@@ -1111,6 +1111,17 @@
   #s-lib-public-header:not(.no-left-aligned-breadcrumbs) #s-lib-bc-site.breadcrumb-item {
     padding-left: 0;
   }
+
+  /* Ensure enough contrast for tabs on homepage and profile landing page*/
+  .nav .s-lg-index-nav-btn>button,
+  .nav .s-lg-index-nav-btn>.nav-link {
+    font-weight: bold;
+  }
+
+  .nav .s-lg-index-nav-btn:not(.active)>button,
+  .nav .s-lg-index-nav-btn>.nav-link:not(.active) {
+    color: #0C6AB7;
+  }
 </style>
 </head>
 <!-- SIDE NAV -->
@@ -1136,7 +1147,7 @@
   <div id="s-lg-guide-header" class="container s-lib-header s-lib-side-borders" role="banner">
     <div id="s-lib-bc">
       
-                <ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="/libguides-frontend/pr-35/">Research Guides</a></li><li id="s-lib-bc-guide" class="breadcrumb-item"><a href="/libguides-frontend/pr-35/communication/">Communication</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">Home</li></ol>
+                <ol id="s-lib-bc-list" class="breadcrumb"><li id="s-lib-bc-customer" class="breadcrumb-item"><a href="http://www.library.ucla.edu">UCLA Library</a></li><li id="s-lib-bc-site" class="breadcrumb-item"><a href="https://guides.library.ucla.edu/">Research Guides</a></li><li id="s-lib-bc-guide" class="breadcrumb-item"><a href="/libguides-frontend/pr-35/communication/">Communication</a></li><li id="s-lib-bc-page" class="active breadcrumb-item">Home</li></ol>
             
     </div>
     <div class="pull-right">
