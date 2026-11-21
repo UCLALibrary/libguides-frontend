@@ -527,7 +527,7 @@
     text-decoration: underline;
   }
 
-  #s-lib-public-main:not(#profile-landing-page),
+  #s-lib-public-main,
   #s-lib-footer-public {
     max-width: 1065px;
 
@@ -1028,7 +1028,30 @@
     <!-- END: Nav Bar -->
     <!-- BEGIN: content -->
     <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" tabindex="-1">
-        
+        <div class="clearfix">
+    <div id="s-lg-profile-nav">
+        <ul class="list-unstyled mb-0">
+            <li>
+                <ul class="nav nav-pills mb-0">
+                    <li id="s-lg-profile-count-btn" class="nav-item">
+                        <span id="s-lg-profile-count" class="badge bg-secondary me-1">0</span>
+                        PROFILES
+                    </li>
+                    <li id="s-lg-profile-name-btn" class="nav-item s-lg-index-nav-btn">
+                        <a href="#" class="nav-link active" onclick="loadProfileList(0);">
+                            BY NAME
+                        </a>
+                    </li>
+                    <li id="s-lg-profile-subject-btn" class="nav-item s-lg-index-nav-btn">
+                        <a href="#" class="nav-link" onclick="handleSubjectBtnClick();">
+                            BY SUBJECT
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
 
         <section aria-label="List of Profiles">
             <div id="s-lg-profile-cols" class="row">
