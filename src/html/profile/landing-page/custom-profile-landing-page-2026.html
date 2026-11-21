@@ -22,8 +22,7 @@
   </div>
   <!-- END: Nav Bar -->
   <!-- BEGIN: content -->
-  <div id="s-lib-public-main profile-landing-page" class="s-lib-main container s-lib-side-borders" tabindex="-1"
-    role="main">
+  <div id="s-lib-public-main" class="s-lib-main container s-lib-side-borders" tabindex="-1" role="main">
     {{navbar}}
 
     <section aria-label="List of Profiles">
@@ -97,5 +96,15 @@
 <style>
   a:focus .s-lib-featured-profile-image {
     outline: 3px solid black;
+  }
+
+  .s-lib-featured-profile-container {
+    margin-right: 0 !important;
+  }
+
+  @media (max-width: 991.98px) {
+    #s-lib-public-header {
+      padding-left: 0;
+    }
   }
 </style>
