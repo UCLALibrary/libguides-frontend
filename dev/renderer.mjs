@@ -91,7 +91,7 @@ export const pages = {
   },
 
   '/prf.php': {
-    template: 'src/html/profile/landing-page/legacy/system-default-profile-landing-template.html',
+    template: 'src/html/profile/landing-page/custom-profile-landing-page-2026.html',
     productionUrl: '/prf.php?bs5=1',
     type: 'profile-landing',
   },
