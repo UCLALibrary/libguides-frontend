@@ -4,9 +4,14 @@
   {{public_header}}
 
 
-  <div id="s-lib-public-header"
-    class="container container-fluid s-lib-header s-lib-side-borders image-background-header no-left-aligned-breadcrumbs">
-    <nav id="s-lib-bc" aria-label="breadcrumb">
+  <div
+    id="s-lib-public-header"
+    class="container container-fluid s-lib-header s-lib-side-borders image-background-header no-left-aligned-breadcrumbs"
+  >
+    <nav
+      id="s-lib-bc"
+      aria-label="breadcrumb"
+    >
       {{breadcrumbs}}
 
     </nav>
@@ -22,18 +27,37 @@
     </div>
   </div>
 
-  <nav id="s-lib-public-nav" class="container container-fluid s-lib-side-borders">
+  <nav
+    id="s-lib-public-nav"
+    class="container container-fluid s-lib-side-borders"
+  >
     {{page_nav}}
 
   </nav>
 
-  <main id="s-lib-public-main" class="container container-fluid s-lib-main s-lib-side-borders" tabindex="-1">
-    <div id="s-lg-index-cols" class="row g-4">
-      <section id="col1" class="col-md-8">
-        <div id="s-lg-hp-nav" class="mb-3">
+  <main
+    id="s-lib-public-main"
+    class="container container-fluid s-lib-main s-lib-side-borders"
+    tabindex="-1"
+  >
+    <div
+      id="s-lg-index-cols"
+      class="row g-4 ucla-col-md"
+    >
+      <section
+        id="col1"
+        class="col-md-8"
+      >
+        <div
+          id="s-lg-hp-nav"
+          class="mb-3"
+        >
           <ul class="list-unstyled">
             <li>
-              <ul class="nav nav-pills flex-wrap mb-3" role="tablist">
+              <ul
+                class="nav nav-pills flex-wrap mb-3"
+                role="tablist"
+              >
                 {{button_all_guides}}
                 <!-- {{button_by_group}} -->
                 {{button_by_subject}}
@@ -52,7 +76,10 @@
           </ul>
         </div>
 
-        <div id="s-lg-list-controls" class="mb-3">
+        <div
+          id="s-lg-list-controls"
+          class="mb-3"
+        >
           {{guide_list_controls}}
 
         </div>
@@ -63,7 +90,10 @@
         </div>
       </section>
 
-      <aside id="col2" class="col-md-4">
+      <aside
+        id="col2"
+        class="col-md-4"
+      >
         {{content_boxes}}
 
       </aside>
@@ -72,38 +102,70 @@
 
   {{system_footer}}
 
-  <div id="s-lib-alert" title="">
+  <div
+    id="s-lib-alert"
+    title=""
+  >
     <div id="s-lib-alert-content"></div>
   </div>
   <!-- popover.twig -->
-  <div id="s-lib-popover-title" class="hide">
+  <div
+    id="s-lib-popover-title"
+    class="hide"
+  >
     <span class="text-info">
       <strong>title</strong>
     </span>
 
-    <button type="button" id="popclose" class="close" onclick="jQuery('.s-lib-popover').popover('hide')">
+    <button
+      type="button"
+      id="popclose"
+      class="close"
+      onclick="jQuery('.s-lib-popover').popover('hide')"
+    >
       &times;
     </button>
   </div>
 
-  <div id="s-lib-popover-content" class="hide">
+  <div
+    id="s-lib-popover-content"
+    class="hide"
+  >
     <i class="fa fa-refresh fa-spin"></i> Loading...
-    <button class="btn btn-default btn-sm popclose" type="button">Close</button>
+    <button
+      class="btn btn-default btn-sm popclose"
+      type="button"
+    >Close</button>
   </div>
   <!-- !popover.twig -->
 
   <!-- scroll_top.twig -->
   <div id="s-lib-scroll-top">
-    <a href="javascript:void(0);" onclick="jQuery('body').focus();" title="Back to Top" aria-label="Back to Top">
-      <span class="fa-stack fa-lg" aria-hidden="true">
+    <a
+      href="javascript:void(0);"
+      onclick="jQuery('body').focus();"
+      title="Back to Top"
+      aria-label="Back to Top"
+    >
+      <span
+        class="fa-stack fa-lg"
+        aria-hidden="true"
+      >
         <i class="fa fa-square-o fa-stack-2x"></i>
-        <i class="fa fa-angle-double-up fa-stack-1x" style="position:relative; bottom:2px;"></i>
+        <i
+          class="fa fa-angle-double-up fa-stack-1x"
+          style="position:relative; bottom:2px;"
+        ></i>
       </span>
     </a>
   </div>
   <!-- !scroll_top.twig -->
 
   {{public_footer}}
-
-
 </body>
+
+<style>
+  .ucla-col-md {
+    margin-top: 0px;
+  }
+</style>
